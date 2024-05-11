@@ -1,9 +1,13 @@
-import { Button } from "@/components/ui/button"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Error, Home } from "./pages";
 
 export default function App() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path='*' element={<Error />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
