@@ -1,18 +1,51 @@
-import { Input } from "@/components/ui/input"
 import { Link } from 'react-router-dom'
+
+// UI
+import { Input } from '@/components/ui/input';
+import { Button } from "../ui/button"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+
+// ICONS
+import { CiSearch } from "react-icons/ci";
 
 export default function Navbar() {
     return (
-        <div className="container bg-white">
-            <nav className="border-gray-200 dark:bg-gray-900 ">
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="container-fluid bg-white">
+            <nav>
+                <div className="max-w-screen-xl flex flex-row justify-between mx-auto p-4">
 
                     {/* Logo & Search bar section */}
-                    <div className="flex items-center space-x-3 ">
+                    <div className="flex items-center space-x-3 w-full">
                         <Link to="/">
-                            <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+                            <img src="https://flowbite.com/docs/images/logo.svg" className="h-10" alt="Glori" />
                         </Link>
-                        <Input placeholder="Search for Products"/>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" className="text-slate-500 pr-5">
+                                    <CiSearch size="20px" className="mr-2" />
+                                    Find Perfumes
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-80">
+                                <div className="grid gap-4">
+                                    <div className="space-y-2">
+                                        <h4 className="font-medium leading-none">Find Your Perfect Scent</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                        Enter the name of a perfume or a keyword related to your search. For instance, "Chanel No. 5"
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            <Input placeholder='Search for products...' className='mb-1 focus-visible:ring-0' />
+                                            <i className="text-xs float-right">Hit "Enter / Return" to see results</i>
+                                        </p>
+                                    </div>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
+
                     </div>
 
                     {/* User section */}

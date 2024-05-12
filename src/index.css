@@ -71,7 +71,7 @@
       @apply border-border;
     }
     body {
-      background-color: #f1f2f6;
+      background-color: #fafafa;
       @apply text-foreground;
     }
   }
