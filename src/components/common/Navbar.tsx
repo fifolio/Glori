@@ -46,7 +46,7 @@ export default function Navbar() {
                                     <NavigationMenuContent>
                                         <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                             <li className="row-span-3 ">
-                                                    <img src="https://i.pinimg.com/736x/20/c1/45/20c14504e43b6c80150f1a0bd8498f7c.jpg" className='w-full h-full mb-0 pb-0 rounded-md'/>
+                                                    <img src="/src/assets/images/dicover-img.jpg" className='w-full h-full mb-0 pb-0 rounded-md'/>
                                                 <NavigationMenuLink asChild>
                                                     <a
                                                         className="flex select-none mt-[-180px] flex-col justify-end p-6 no-underline outline-none focus:shadow-md"
@@ -139,7 +139,7 @@ export default function Navbar() {
                                     <PopoverContent className="w-80">
                                         <div className="grid gap-4">
                                             <div className="space-y-3">
-                                                <img src='https://image.adsoftheworld.com/pwyc7kyn0obilehtcdckdgjc3nvw' className='w-full rounded-md' />
+                                                <img src='/src/assets/images/search-img.png' className='w-full rounded-md' />
                                                 <h4 className="font-medium leading-none">Find Your Perfect Scent</h4>
                                                 <p className="text-sm text-muted-foreground">
                                                     Enter the name of a perfume or a keyword related to your search. For instance, "Chanel No. 5"
