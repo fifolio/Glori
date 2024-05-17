@@ -47,7 +47,9 @@ export default function Navbar() {
         <div className="container-fluid bg-white">
             <nav>
                 <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-2">
+                    
                     {/* Logo + Main section */}
+
                     {/* Logo */}
                     <div className="flex items-center">
                         <Link to="/" className="mr-4">
@@ -374,13 +376,9 @@ export default function Navbar() {
 
                         </DropdownMenu>
 
-
-
                     </div>
-
                 </div>
             </nav>
-
         </div>
     )
 }
