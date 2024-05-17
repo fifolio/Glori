@@ -2,7 +2,16 @@ import { Link } from 'react-router-dom'
 
 // UI
 import { Input } from '@/components/ui/input';
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
     Popover,
     PopoverContent,
@@ -22,6 +31,14 @@ import {
 
 // ICONS
 import { CiSearch } from "react-icons/ci";
+import { LuPackagePlus } from "react-icons/lu";
+import { CgProfile } from "react-icons/cg";
+import { SlSettings } from "react-icons/sl";
+import { CgLogOut } from "react-icons/cg";
+import { BiLogIn } from "react-icons/bi";
+import { PiUserCirclePlusFill } from "react-icons/pi";
+import { RiShoppingCartLine } from "react-icons/ri";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 
 export default function Navbar() {
@@ -37,7 +54,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Main sections */}
-                    <div className='flex items-center space-x-3'>
+                    <div className='flex items-center space-x-3 hidden lg:block'>
                         <NavigationMenu>
                             <NavigationMenuList>
                                 {/* Discover section */}
@@ -46,7 +63,7 @@ export default function Navbar() {
                                     <NavigationMenuContent>
                                         <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                             <li className="row-span-3 ">
-                                                    <img src="images/dicover-img.jpg" className='w-full h-full mb-0 pb-0 rounded-md'/>
+                                                <img src="images/dicover-img.jpg" className='w-full h-full mb-0 pb-0 rounded-md' />
                                                 <NavigationMenuLink asChild>
                                                     <a
                                                         className="flex select-none mt-[-180px] flex-col justify-end p-6 no-underline outline-none focus:shadow-md"
@@ -128,6 +145,27 @@ export default function Navbar() {
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
 
+                                {/* About section */}
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger className='bg-transparent'>About</NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                            <Link to="https://github.com/fifolio/Glori" target="_blank">
+                                                <li className='hover:bg-gray-100 p-3 rounded-md'>
+                                                    <span className="text-sm font-semibold">Github Repository</span>
+                                                    <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
+                                                </li>
+                                            </Link>
+                                            <Link to="#">
+                                                <li className='hover:bg-gray-100 p-3 rounded-md'>
+                                                    <span className="text-sm font-semibold">About</span>
+                                                    <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
+                                                </li>
+                                            </Link>
+                                        </ul>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+
                                 {/* Search section */}
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -153,44 +191,78 @@ export default function Navbar() {
                                     </PopoverContent>
                                 </Popover>
 
+
+
                             </NavigationMenuList>
                         </NavigationMenu>
                     </div>
 
                     {/* User section */}
                     <div className="flex items-center space-x-3">
-                        <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-                            <span className="sr-only">Open user menu</span>
-                            <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo" />
-                        </button>
 
-                        {/* <!-- Dropdown menu --> */}
-                        {/* <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                            <div className="px-4 py-3">
-                                <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-                                <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-                            </div>
-                            <ul className="py-2" aria-labelledby="user-menu-button">
-                                <li>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
-                            <span className="sr-only">Open main menu</span>
-                            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-                            </svg>
-                        </button> */}
+                        {/* Cart */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline">
+                                    <RiShoppingCartLine />
+                                    {/* <span className="flex item-center bg-red-400 px-1 mx-1 text-xs text-white rounded-full">1 </span> */}
+                                    </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-52">
+                                <DropdownMenuLabel>Cart</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                <IoBagCheckOutline className='mr-2' /> Checkout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+
+                        </DropdownMenu>
+
+                        {/* User Panel */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline">Join Now</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-52">
+                                <div className="userLoggedin hidden">
+                                    <DropdownMenuLabel>Activities</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <LuPackagePlus className="mr-2" /> Sell Product
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem>
+                                            <CgProfile className="mr-2" /> Profile
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <SlSettings className="mr-2" /> Settings
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <CgLogOut className="mr-2" /> Log out
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                </div>
+
+                                {/* Login / Signup Forms */}
+                                <DropdownMenuItem>
+                                    <BiLogIn className="mr-2" /> Login
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <PiUserCirclePlusFill className="mr-2" /> Signup
+                                </DropdownMenuItem>
+
+                            </DropdownMenuContent>
+
+                        </DropdownMenu>
+
+
+
                     </div>
 
                 </div>
