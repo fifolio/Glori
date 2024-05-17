@@ -334,7 +334,7 @@ export default function Navbar() {
                         {/* User Panel */}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline">Join Now</Button>
+                                <Button variant="outline">Join</Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-52">
                                 <div className="userLoggedin hidden">
