@@ -44,9 +44,9 @@ import { IoBagCheckOutline } from "react-icons/io5";
 
 export default function Navbar() {
     return (
-        <div className="container-fluid bg-white">
+        <div className="containerbg-white">
             <nav>
-                <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-2">
+                <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-6">
                     
                     {/* Logo + Main section */}
 
