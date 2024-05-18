@@ -73,7 +73,7 @@
       @apply border-border;
     }
     body {
-      background-color: #fafafa;
+      background-color: white;
       font-family: "Chivo", sans-serif;
       @apply text-foreground;
     }
