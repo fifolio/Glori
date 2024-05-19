@@ -52,8 +52,8 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <div className="flex items-center">
-                        <Link to="/" className="mr-4">
-                            <img src="images/logo.png" className="w-8" alt="Glori" />
+                        <Link to="/" className="mr-3 w-8">
+                            <img src="images/logo.png" className="w-full" alt="Glori" />
                         </Link>
 
                         {/* Main sections */}
