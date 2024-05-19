@@ -44,9 +44,9 @@ import { IoBagCheckOutline } from "react-icons/io5";
 
 export default function Navbar() {
     return (
-        <div className="containerbg-white">
+        <div className="container fixed bg-white z-50">
             <nav>
-                <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-6">
+                <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-3">
                     
                     {/* Logo + Main section */}
 
@@ -338,7 +338,7 @@ export default function Navbar() {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline">Join</Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-52">
+                            <DropdownMenuContent className="w-50">
                                 <div className="userLoggedin hidden">
                                     <DropdownMenuLabel>Activities</DropdownMenuLabel>
                                     <DropdownMenuSeparator />

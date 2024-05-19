@@ -5,7 +5,10 @@ import { Navbar } from "./components";
 export default function App() {
   return (
     <BrowserRouter>
+    <div>
       <Navbar />
+      <div className="pb-10"></div>
+    </div>
       <Routes>
         <Route index element={<Home />} />
         <Route path='*' element={<Error />} />
