@@ -6,15 +6,11 @@ import {
 } from "@/components/ui/carousel"
 import { Button } from "../ui/button"
 
-const style = {
-    backgroundColor: "#f1f2f6",  // fallback for old browsers
-    backgroundImage: "-webkit-linear-gradient(to top, #ffffff, #abbaab), linear-gradient(to top, #ffffff, #abbaab)"  // Chrome 10-25, Safari 5.1-6 and modern browsers
-};
 
 // type Props = {}
 export default function TopSelling() {
     return (
-        <div style={style} className="rounded-xl shadow-lg">
+        <div className="rounded-xl shadow-lg bg-[#f8f9fb]">
 
             {/* Header section */}
             <div className="sm:container text-center header py-12 mt-6" >
@@ -52,7 +48,7 @@ export default function TopSelling() {
                                 <span>$16.99</span>
                             </div>
                             <div className="w-full">
-                                <Button variant="outline" className="w-full font-light shadow-none">Add to Cart</Button>
+                                <Button variant="outline" className="w-full font-light">Add to Cart</Button>
                             </div>
                         </div>
                     </div>
@@ -82,7 +78,7 @@ export default function TopSelling() {
                                 <span>$16.99</span>
                             </div>
                             <div className="w-full">
-                                <Button variant="outline" className="w-full font-light shadow-none">Add to Cart</Button>
+                                <Button variant="outline" className="w-full font-light">Add to Cart</Button>
                             </div>
                         </div>
                     </div>
@@ -112,7 +108,7 @@ export default function TopSelling() {
                                 <span>$16.99</span>
                             </div>
                             <div className="w-full">
-                                <Button variant="outline" className="w-full font-light shadow-none">Add to Cart</Button>
+                                <Button variant="outline" className="w-full font-light">Add to Cart</Button>
                             </div>
                         </div>
                     </div>
