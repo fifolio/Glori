@@ -10,10 +10,10 @@ import { Button } from "../ui/button"
 
 export default function Features() {
     return (
-        <div className="container">
+        <>
 
             {/* Header section */}
-            <div className="header mb-6">
+            <div className="text-center header mb-6">
                 <h2 className="text-2xl font-bold">Featured Perfumes</h2>
                 <p className="text-gray-500 dark:text-gray-400">
                     Check out our latest collection of stylish and high-quality perfumes.
@@ -146,6 +146,6 @@ export default function Features() {
 
             </div>
 
-        </div>
+        </>
     )
 }
