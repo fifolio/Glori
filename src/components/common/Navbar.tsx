@@ -44,7 +44,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 
 export default function Navbar() {
     return (
-        <div className="container fixed bg-white z-50">
+        <div className="md:container container-fluid fixed bg-white z-50">
             <nav>
                 <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-3">
                     
@@ -52,7 +52,7 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <div className="flex items-center">
-                        <Link to="/" className="md:ml-auto mr-3 w-8 ml-[-35px]">
+                        <Link to="/" className="mr-3 w-8">
                             <img src="images/logo.png" className="w-full" alt="Glori" />
                         </Link>
 
