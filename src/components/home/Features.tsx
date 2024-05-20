@@ -24,7 +24,7 @@ export default function Features() {
             {/* Featured Products section */}
             <div className="flex flex-wrap justify-evenly">
 
-                <div className="w-[280px] h-[280px] mb-32 capitalize product-card">
+                <div className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
 
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
@@ -54,7 +54,7 @@ export default function Features() {
                     </div>
                 </div>
 
-                <div className="w-[280px] h-[280px] mb-32 capitalize product-card">
+                <div className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
 
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
@@ -84,7 +84,7 @@ export default function Features() {
                     </div>
                 </div>
 
-                <div className="w-[280px] h-[280px] mb-32 capitalize product-card">
+                <div className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
 
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
@@ -114,7 +114,7 @@ export default function Features() {
                     </div>
                 </div>
 
-                <div className="w-[280px] h-[280px] mb-32 capitalize product-card">
+                <div className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
 
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
