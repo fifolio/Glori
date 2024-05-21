@@ -75,9 +75,9 @@ export default function Footer() {
                         </ul>
                         <ul className="mr-3">
                             <li className="text-gray-200">Discover</li>
-                            <li className="text-gray-400 hover:text-white"><Link to="/">Discover Perfumes</Link></li>
-                            <li className="text-gray-400 hover:text-white"><Link to="/">Explore Brands</Link></li>
-                            <li className="text-gray-400 hover:text-white"><Link to="/">Browse Collections</Link></li>
+                            <li className="text-gray-400 hover:text-white"><Link to="/">Perfumes</Link></li>
+                            <li className="text-gray-400 hover:text-white"><Link to="/">Brands</Link></li>
+                            <li className="text-gray-400 hover:text-white"><Link to="/">Collections</Link></li>
                             <li className="text-gray-400 hover:text-white"><Link to="/">Find Deals</Link></li>
                         </ul>
                         <ul className="mr-3">
@@ -98,8 +98,8 @@ export default function Footer() {
 
                 <div className="mx-auto flex flex-col lg:flex-row items-center justify-between px-4 md:px-6">
                     <div className="flex items-center space-x-4">
-                        <span className="text-lg font-semibold">Glori Perfumes</span>
-                        <span className="text-sm">© {new Date().getFullYear()} Glori. All rights reserved.</span>
+                        <span className="text-lg font-semibold">Glori</span>
+                        <span className="text-sm">© {new Date().getFullYear()} All rights reserved</span>
                     </div>
 
 
