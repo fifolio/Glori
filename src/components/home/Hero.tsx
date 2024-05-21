@@ -19,26 +19,60 @@ interface Images {
 export default function Hero() {
 
     // Store photos from API
-    const [images, setImages] = useState<Images[]>([])
+    const [images, setImages] = useState<Images[]>([]);
+
+    // Store the current month number for the Hero title
+    const currentMonth: number = new Date().getMonth();
 
     useEffect(() => {
         const clientId: string = `${import.meta.env.VITE_UNSPLASH_CLIENT_ID}` as string
-        axios.get(`${import.meta.env.VITE_UNSPLASH_API_URL}/search/photos?query=perfumes&client_id=${clientId}&per_page=5&orientation=landscape`)
+        axios.get(`${import.meta.env.VITE_UNSPLASH_API_URL}/search/photos?query=perfume-models&client_id=${clientId}&per_page=5&orientation=landscape`)
             .then((res) => {
                 setImages(res.data.results as Images[])
             })
             .catch(error => console.error(error));
     }, []);
 
+
+
+
     return (
         <section className="py-12 md:py-24 lg:py-12">
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
                 <div className="space-y-3">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                        Welcome to Our Autumn Collection
+                        Welcome to Our 
+                        {
+                        currentMonth === 3 || 
+                        currentMonth === 4 || 
+                        currentMonth === 5 ? ' Spring ' : 
+                        currentMonth === 6 || 
+                        currentMonth === 7 || 
+                        currentMonth === 8 ? ' Summer ' : 
+                        currentMonth === 9 || 
+                        currentMonth === 10 || 
+                        currentMonth === 11 ? ' Autumn ' : 
+                        currentMonth === 12 || 
+                        currentMonth === 1 || 
+                        currentMonth === 2 ? ' Winter ' : ' '
+                        } 
+                        Collection
                     </h1>
                     <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                        Discover our latest selection of cozy and stylish autumn-inspired Perfumes.
+                        Discover our latest selection of cozy and stylish {
+                        currentMonth === 3 || 
+                        currentMonth === 4 || 
+                        currentMonth === 5 ? ' spring' : 
+                        currentMonth === 6 || 
+                        currentMonth === 7 || 
+                        currentMonth === 8 ? ' summer' : 
+                        currentMonth === 9 || 
+                        currentMonth === 10 || 
+                        currentMonth === 11 ? ' autumn' : 
+                        currentMonth === 12 || 
+                        currentMonth === 1 || 
+                        currentMonth === 2 ? ' winter' : ' '
+                        }-inspired Perfumes.
                     </p>
                 </div>
 
