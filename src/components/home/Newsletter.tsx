@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 
 export default function Newsletter() {
     return (
-        <div className="mb-6">
+        <div className="my-[200px] ">
             {/* Header section */}
             <div className="container text-center header py-5 mt-6" >
                 <h2 className="text-2xl font-bold">Subscribe to Our Newsletter</h2>
