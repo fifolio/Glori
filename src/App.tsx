@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Error, Home } from "./pages";
-import { Navbar } from "./components";
+import { Navbar, Footer } from "./components";
 
 export default function App() {
   return (
@@ -13,6 +13,9 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path='*' element={<Error />} />
       </Routes>
+      <div>
+        <Footer />
+      </div>
     </BrowserRouter>
   )
 }
