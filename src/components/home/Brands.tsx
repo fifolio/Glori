@@ -3,7 +3,7 @@ export default function Brands() {
         <div className="rounded-xl">
 
             {/* Header section */}
-            <div className="sm:container text-center header py-6 mt-3" >
+            <div className="sm:container text-center header py-6 mt-3 sm:px-auto px-3" >
                 <h2 className="text-2xl font-bold">Luxury Brands We Love</h2>
                 <p className="text-gray-500">
                     Experience the finest perfumes from the world's most prestigious brands, curated just for you.
