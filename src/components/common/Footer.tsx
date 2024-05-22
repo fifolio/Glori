@@ -94,7 +94,7 @@ export default function Footer() {
             </div>
 
 
-            <div className="mx-auto flex flex-col lg:flex-row justify-between px-4 md:px-6">
+            <div className="mx-auto flex flex-col lg:flex-row items-center justify-between px-4 md:px-6 mt-5">
                 <div className="flex items-center space-x-4">
                     <span className="text-lg font-semibold">Glorious</span>
                     <span className="text-sm">© {new Date().getFullYear()} All rights reserved</span>
