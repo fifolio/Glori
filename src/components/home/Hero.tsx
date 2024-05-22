@@ -18,11 +18,14 @@ interface Images {
 
 export default function Hero() {
 
+
     // Store photos from API
     const [images, setImages] = useState<Images[]>([]);
 
+
     // Store the current month number for the Hero title
     const currentMonth: number = new Date().getMonth();
+
 
     useEffect(() => {
         const url = "https://api.unsplash.com/photos/random";
@@ -40,6 +43,8 @@ export default function Hero() {
 
     }, []);
 
+
+    
     return (
         <section className="py-12 md:py-24 lg:py-12">
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
