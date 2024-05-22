@@ -40,7 +40,6 @@ export default function Hero() {
 
     }, []);
 
-
     return (
         <section className="py-12 md:py-24 lg:py-12">
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
