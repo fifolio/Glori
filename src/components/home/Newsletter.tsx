@@ -18,7 +18,7 @@ export default function Newsletter() {
                 </p>
             </div>
 
-            <div className="relative flex w-full max-w-sm items-center space-x-2 mx-auto z-10">
+            <div className="relative flex w-full max-w-sm items-center space-x-2 mx-auto z-10 sm:p-auto p-3">
                 <Input type="email" placeholder="Email" className="bg-white text-black" />
                 <Button type="submit" variant="secondary">Subscribe</Button>
             </div>
