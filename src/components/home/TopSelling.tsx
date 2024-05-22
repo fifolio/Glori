@@ -10,7 +10,7 @@ import { Button } from "../ui/button"
 // type Props = {}
 export default function TopSelling() {
     return (
-        <div className="rounded-xl shadow-lg bg-[#f8f9fb]">
+        <div className="rounded-xl shadow-sm bg-[#f8f9fb]">
 
             {/* Header section */}
             <div className="sm:container text-center header py-12 mt-6" >
