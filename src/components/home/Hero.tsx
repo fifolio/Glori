@@ -25,15 +25,20 @@ export default function Hero() {
     const currentMonth: number = new Date().getMonth();
 
     useEffect(() => {
-        const clientId: string = `${import.meta.env.VITE_UNSPLASH_CLIENT_ID}` as string
-        axios.get(`${import.meta.env.VITE_UNSPLASH_API_URL}/search/photos?query=perfume-models&client_id=${clientId}&per_page=5&orientation=landscape`)
-            .then((res) => {
-                setImages(res.data.results as Images[])
-            })
-            .catch(error => console.error(error));
+        const url = "https://api.unsplash.com/photos/random";
+        const query = "perfume-bottle";
+        axios.get(url, {
+            params: {
+                query,
+                count: 5,
+                client_id: `${import.meta.env.VITE_UNSPLASH_CLIENT_ID}`,
+                orientation: 'landscape',
+            },
+        }).then((res) => {
+            setImages(res.data as Images[])
+        })
+
     }, []);
-
-
 
 
     return (
@@ -41,37 +46,37 @@ export default function Hero() {
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
                 <div className="space-y-3">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                        Welcome to Our 
+                        Welcome to Our
                         {
-                        currentMonth === 3 || 
-                        currentMonth === 4 || 
-                        currentMonth === 5 ? ' Spring ' : 
-                        currentMonth === 6 || 
-                        currentMonth === 7 || 
-                        currentMonth === 8 ? ' Summer ' : 
-                        currentMonth === 9 || 
-                        currentMonth === 10 || 
-                        currentMonth === 11 ? ' Autumn ' : 
-                        currentMonth === 12 || 
-                        currentMonth === 1 || 
-                        currentMonth === 2 ? ' Winter ' : ' '
-                        } 
+                            currentMonth === 3 ||
+                                currentMonth === 4 ||
+                                currentMonth === 5 ? ' Spring ' :
+                                currentMonth === 6 ||
+                                    currentMonth === 7 ||
+                                    currentMonth === 8 ? ' Summer ' :
+                                    currentMonth === 9 ||
+                                        currentMonth === 10 ||
+                                        currentMonth === 11 ? ' Autumn ' :
+                                        currentMonth === 12 ||
+                                            currentMonth === 1 ||
+                                            currentMonth === 2 ? ' Winter ' : ' '
+                        }
                         Collection
                     </h1>
                     <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                         Discover our latest selection of cozy and stylish {
-                        currentMonth === 3 || 
-                        currentMonth === 4 || 
-                        currentMonth === 5 ? ' spring' : 
-                        currentMonth === 6 || 
-                        currentMonth === 7 || 
-                        currentMonth === 8 ? ' summer' : 
-                        currentMonth === 9 || 
-                        currentMonth === 10 || 
-                        currentMonth === 11 ? ' autumn' : 
-                        currentMonth === 12 || 
-                        currentMonth === 1 || 
-                        currentMonth === 2 ? ' winter' : ' '
+                            currentMonth === 3 ||
+                                currentMonth === 4 ||
+                                currentMonth === 5 ? ' spring' :
+                                currentMonth === 6 ||
+                                    currentMonth === 7 ||
+                                    currentMonth === 8 ? ' summer' :
+                                    currentMonth === 9 ||
+                                        currentMonth === 10 ||
+                                        currentMonth === 11 ? ' autumn' :
+                                        currentMonth === 12 ||
+                                            currentMonth === 1 ||
+                                            currentMonth === 2 ? ' winter' : ' '
                         }-inspired Perfumes.
                     </p>
                 </div>
