@@ -101,7 +101,7 @@ export default function Footer() {
                 </div>
 
 
-                <div className="flex space-x-4 text-sm my-3 lg:my-auto">
+                <div className="flex items-center text-center justify-center space-x-4 text-xs my-3 lg:my-auto">
                     <Link className="text-gray-400 hover:text-white" to="#">
                         Privacy Policy
                     </Link>
