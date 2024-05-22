@@ -15,7 +15,7 @@ export default function TopSelling() {
             {/* Header section */}
             <div className="sm:container text-center header py-12 mt-6" >
                 <h2 className="text-2xl font-bold">Our Most Popular Fragrances</h2>
-                <p className="text-gray-500 dark:text-gray-400">
+                <p className="text-gray-500">
                     Here's what our customers can't get enough of
                 </p>
             </div>
