@@ -1,5 +1,5 @@
 export default function Brands() {
     return (
-        <div>Brands</div>
+        <div className="bg-[#202020] w-full">Brands</div>
     )
 }
