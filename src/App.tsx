@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Error, Home } from "./pages";
+import { Error } from "./pages";
 import { Navbar, Footer } from "./components";
 
+import Products from './pages/Products' 
 export default function App() {
   return (
     <BrowserRouter>
-    <div>
-      <Navbar />
-      <div className="pb-10"></div>
-    </div>
+      <div>
+        <Navbar />
+        <div className="pb-10"></div>
+      </div>
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<Products />} />
         <Route path='*' element={<Error />} />
       </Routes>
       <div>
