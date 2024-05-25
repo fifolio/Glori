@@ -12,7 +12,7 @@ import {
 interface Images {
     id: string;
     urls: {
-        full: string;
+        regular: string;
     };
 }
 
@@ -29,7 +29,7 @@ export default function Hero() {
 
     useEffect(() => {
         const url = "https://api.unsplash.com/photos/random";
-        const query = "perfume-bottle";
+        const query = "perfume";
         axios.get(url, {
             params: {
                 query,
@@ -94,7 +94,7 @@ export default function Hero() {
                                     alt="Cozy Blanket"
                                     className="rounded-lg object-cover w-full aspect-[3/1]"
                                     height="400"
-                                    src={img.urls.full}
+                                    src={img.urls.regular}
                                     width="1200"
                                 />
                             </CarouselItem>
