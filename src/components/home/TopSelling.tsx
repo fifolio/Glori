@@ -29,9 +29,9 @@ export default function TopSelling() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
@@ -59,9 +59,9 @@ export default function TopSelling() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
@@ -89,9 +89,9 @@ export default function TopSelling() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
