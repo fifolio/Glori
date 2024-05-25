@@ -43,16 +43,25 @@ import { IoBagCheckOutline } from "react-icons/io5";
 
 
 export default function Navbar() {
+
+    // Scroll top when click on Link
+    function scrollTopFunc() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
     return (
         <div className="md:container container-fluid fixed min-w-full bg-white z-50">
             <nav>
                 <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-3">
-                    
+
                     {/* Logo + Main section */}
 
                     {/* Logo */}
                     <div className="flex items-center">
-                        <Link to="/" className="mr-3 w-8">
+                        <Link onClick={scrollTopFunc}  to="/" className="mr-3 w-8">
                             <img src="/images/logo.png" className="w-full" alt="Glori" />
                         </Link>
 
@@ -68,7 +77,7 @@ export default function Navbar() {
                                                 <li className="row-span-3 ">
                                                     <img src="/images/dicover-img.jpg" className='w-full h-full mb-0 pb-0 rounded-md' />
                                                     <NavigationMenuLink asChild>
-                                                        <Link
+                                                        <Link onClick={scrollTopFunc} 
                                                             className="flex select-none mt-[-180px] flex-col justify-end p-6 no-underline outline-none focus:shadow-md"
                                                             to="/discover"
                                                         >
@@ -81,19 +90,19 @@ export default function Navbar() {
                                                         </Link>
                                                     </NavigationMenuLink>
                                                 </li>
-                                                <Link to="/explore">
+                                                <Link onClick={scrollTopFunc}  to="/explore">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Explore Brands</span>
                                                         <p className="text-sm text-muted-foreground">Dive into the world of renowned perfume brands we showcase</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/collections">
+                                                <Link onClick={scrollTopFunc}  to="/collections">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Browse Collections</span>
                                                         <p className="text-sm text-muted-foreground">Explore curated collections tailored to your preferences</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/deals">
+                                                <Link onClick={scrollTopFunc}  to="/deals">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Find Deals</span>
                                                         <p className="text-sm text-muted-foreground">Unlock special offers and exclusive discounts on premium perfumes</p>
@@ -108,37 +117,37 @@ export default function Navbar() {
                                         <NavigationMenuTrigger className='bg-transparent'>Explore Collections</NavigationMenuTrigger>
                                         <NavigationMenuContent>
                                             <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                                <Link to="/products/luxury">
+                                                <Link onClick={scrollTopFunc}  to="/products/luxury">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Luxury Classics</span>
                                                         <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/products/fresh">
+                                                <Link onClick={scrollTopFunc}  to="/products/fresh">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Fresh & Clean</span>
                                                         <p className="text-sm text-muted-foreground">Revitalizing scents for a refreshing aura</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/products/warm">
+                                                <Link onClick={scrollTopFunc}  to="/products/warm">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Warm & Spicy</span>
                                                         <p className="text-sm text-muted-foreground">Captivating fragrances with a hint of spice</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/products/unisex">
+                                                <Link onClick={scrollTopFunc}  to="/products/unisex">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Unisex Delights</span>
                                                         <p className="text-sm text-muted-foreground">Versatile and alluring fragrances suitable for everyone</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/products/florals">
+                                                <Link onClick={scrollTopFunc}  to="/products/florals">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Sensual Florals</span>
                                                         <p className="text-sm text-muted-foreground">Enchanting and romantic scents that captivate the senses</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/products/limited">
+                                                <Link onClick={scrollTopFunc}  to="/products/limited">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Limited Editions</span>
                                                         <p className="text-sm text-muted-foreground">Exclusive and unique scents for discerning connoisseurs</p>
@@ -153,13 +162,13 @@ export default function Navbar() {
                                         <NavigationMenuTrigger className='bg-transparent'>About</NavigationMenuTrigger>
                                         <NavigationMenuContent>
                                             <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                                <Link to="https://github.com/fifolio/Glori" target="_blank">
+                                                <Link onClick={scrollTopFunc}  to="https://github.com/fifolio/Glori" target="_blank">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Github Repository</span>
                                                         <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
                                                     </li>
                                                 </Link>
-                                                <Link to="/about">
+                                                <Link onClick={scrollTopFunc}  to="/about">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">About</span>
                                                         <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
@@ -210,22 +219,22 @@ export default function Navbar() {
                                             <ScrollArea className="h-[350px] w-[200px] p-2">
                                                 <ul className="grid gap-1 p-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                                     <p className="text-sm font-semibold">Discover</p>
-                                                    <Link to="/discover">
+                                                    <Link onClick={scrollTopFunc}  to="/discover">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Discover Perfumes</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/explore">
+                                                    <Link onClick={scrollTopFunc}  to="/explore">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Explore Brands</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/collections">
+                                                    <Link onClick={scrollTopFunc}  to="/collections">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Browse Collections</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/deals">
+                                                    <Link onClick={scrollTopFunc}  to="/deals">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Find Deals</span>
                                                         </li>
@@ -233,32 +242,32 @@ export default function Navbar() {
 
                                                     <DropdownMenuSeparator />
                                                     <p className="text-sm font-semibold">Collections</p>
-                                                    <Link to="/products/luxury">
+                                                    <Link onClick={scrollTopFunc}  to="/products/luxury">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Luxury Classics</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/products/fresh">
+                                                    <Link onClick={scrollTopFunc}  to="/products/fresh">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Fresh & Clean</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/products/warm">
+                                                    <Link onClick={scrollTopFunc}  to="/products/warm">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Warm & Spicy</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/products/unisex">
+                                                    <Link onClick={scrollTopFunc}  to="/products/unisex">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Unisex Delights</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/products/florals">
+                                                    <Link onClick={scrollTopFunc}  to="/products/florals">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Sensual Florals</span>
                                                         </li>
                                                     </Link>
-                                                    <Link to="/products/limited">
+                                                    <Link onClick={scrollTopFunc}  to="/products/limited">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Limited Editions</span>
                                                         </li>
@@ -266,12 +275,12 @@ export default function Navbar() {
 
                                                     <DropdownMenuSeparator />
                                                     <p className="text-sm font-semibold">More</p>
-                                                    <Link to="https://github.com/fifolio/Glori" target="_blank">
-                                                    <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
-                                                        <span className="text-sm">Github Repository</span>
-                                                    </li>
-                                                </Link>
-                                                    <Link to="/about">
+                                                    <Link onClick={scrollTopFunc}  to="https://github.com/fifolio/Glori" target="_blank">
+                                                        <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
+                                                            <span className="text-sm">Github Repository</span>
+                                                        </li>
+                                                    </Link>
+                                                    <Link onClick={scrollTopFunc}  to="/about">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">About</span>
                                                         </li>
