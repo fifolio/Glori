@@ -18,7 +18,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/1.png" className="w-34" />
+                        <img src="/images/brands/1.png" className="w-34" />
 
                     </div>
 
@@ -29,7 +29,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/2.png" className="w-34" />
+                        <img src="/images/brands/2.png" className="w-34" />
 
                     </div>
 
@@ -40,7 +40,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/3.png" className="w-34" />
+                        <img src="/images/brands/3.png" className="w-34" />
 
                     </div>
 
@@ -51,7 +51,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/4.png" className="w-34" />
+                        <img src="/images/brands/4.png" className="w-34" />
 
                     </div>
 
@@ -62,7 +62,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/7.png" className="w-34" />
+                        <img src="/images/brands/7.png" className="w-34" />
 
                     </div>
 
@@ -73,7 +73,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/6.png" className="w-34" />
+                        <img src="/images/brands/6.png" className="w-34" />
 
                     </div>
 
@@ -84,7 +84,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/5.png" className="w-34" />
+                        <img src="/images/brands/5.png" className="w-34" />
 
                     </div>
 
@@ -95,7 +95,7 @@ export default function Brands() {
                     {/* Brand Details */}
                     <div className="brand my-1">
 
-                        <img src="images/brands/8.png" className="w-34" />
+                        <img src="/images/brands/8.png" className="w-34" />
 
                     </div>
 

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 
 export default function Newsletter() {
     return (
-        <div className="relative sm:mx-auto mx-3 pt-[50px] pb-[100px] rounded-xl my-10 text-white bg-cover bg-center" style={{ backgroundImage: "url('images/newsletter.jpg')" }}>
+        <div className="relative sm:mx-auto mx-3 pt-[50px] pb-[100px] rounded-xl my-10 text-white bg-cover bg-center" style={{ backgroundImage: "url('/images/newsletter.jpg')" }}>
             <div className="absolute inset-0 bg-black bg-opacity-80 sm:bg-opacity-50 rounded-xl"></div> {/* Optional overlay for better text readability */}
 
             {/* Header section */}

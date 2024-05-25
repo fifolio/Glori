@@ -16,7 +16,7 @@ export default function Footer() {
                         <ul>
                             <li className="mb-5 max-w-fit">
                                 <Link to="/">
-                                    <img src="images/logo.png" className="h-10 w-10 bg-white rounded-full p-1" />
+                                    <img src="/images/logo.png" className="h-10 w-10 bg-white rounded-full p-1" />
                                 </Link>
                             </li>
                             <li className="text-gray-400">

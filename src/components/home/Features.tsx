@@ -29,9 +29,9 @@ export default function Features() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
@@ -59,9 +59,9 @@ export default function Features() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
@@ -89,9 +89,9 @@ export default function Features() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>
@@ -119,9 +119,9 @@ export default function Features() {
                     {/* Preview Images */}
                     <Carousel className="hover:cursor-w-resize">
                         <CarouselContent>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
-                            <CarouselItem><img src="https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
+                            <CarouselItem><img src="/https://placehold.co/500" /></CarouselItem>
                         </CarouselContent>
 
                     </Carousel>

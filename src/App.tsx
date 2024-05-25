@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Error } from "./pages";
+import { Home, Products, Error } from "./pages";
 import { Navbar, Footer } from "./components";
 
-import Products from './pages/Products' 
 export default function App() {
   return (
     <BrowserRouter>
@@ -11,7 +10,8 @@ export default function App() {
         <div className="pb-10"></div>
       </div>
       <Routes>
-        <Route index element={<Products />} />
+        <Route index element={<Home />} />
+        <Route path='products/:pageID' element={<Products />} />
         <Route path='*' element={<Error />} />
       </Routes>
       <div>
