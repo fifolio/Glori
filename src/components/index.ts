@@ -12,3 +12,5 @@ export { default as MoreProducts } from './home/MoreProducts'
 
 // Products
 export { default as HeroProducts } from './products/HeroProducts';
+export { default as Perfumes } from './products/Perfumes';
+

@@ -84,7 +84,7 @@ export default function Footer() {
                         <li className="text-gray-200">Discover</li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/discover">Perfumes</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/explore">Brands</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections">Collections</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products">Collections</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/deal">Find Deals</Link></li>
                     </ul>
                     <ul className="mr-3">

@@ -1,4 +1,4 @@
-import { Brands, HeroProducts, Newsletter } from "@/components";
+import { Brands, HeroProducts, Newsletter, Perfumes } from "@/components";
 import { useParams } from 'react-router-dom';
 
 
@@ -10,6 +10,7 @@ export default function Products() {
   return (
     <div className="md:container container-fluid">
       <HeroProducts pageID={`${pageID}`} />
+      <Perfumes category={`${pageID}`} />
       <Brands />
       <Newsletter />
     </div>
