@@ -80,7 +80,7 @@ export default function Products({ category }: Products) {
 
                     {/* Filter by brand */}
                     <Select>
-                        <SelectTrigger className="w-[150px] shadow-sm">
+                        <SelectTrigger className="w-[170px] shadow-sm">
                             <SelectValue placeholder="Filter by brand" />
                         </SelectTrigger>
                         <SelectContent>
@@ -95,7 +95,7 @@ export default function Products({ category }: Products) {
 
                     {/* Filter by sort */}
                     <Select>
-                        <SelectTrigger className="w-[80px] shadow-sm">
+                        <SelectTrigger className="w-[170px] shadow-sm">
                             <SelectValue placeholder="Sort" />
                         </SelectTrigger>
                         <SelectContent>
