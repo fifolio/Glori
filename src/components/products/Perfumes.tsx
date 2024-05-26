@@ -18,6 +18,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 
 
 
@@ -87,6 +88,7 @@ export default function Products({ category }: Products) {
                             <SelectGroup>
                                 <SelectLabel>Filter by Brand</SelectLabel>
                             </SelectGroup>
+                            <Separator />
                             <SelectItem value="BrandName1">Brand Name</SelectItem>
                             <SelectItem value="BrandName2">Brand Name</SelectItem>
                             <SelectItem value="BrandName3">Brand Name</SelectItem>
@@ -101,6 +103,7 @@ export default function Products({ category }: Products) {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Sort by</SelectLabel>
+                                <Separator />
                             </SelectGroup>
                             <SelectItem value="Newest">Newest</SelectItem>
                             <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
@@ -116,10 +119,11 @@ export default function Products({ category }: Products) {
 
                 {[...Array(20)].map((index) => (
                     <div key={index} className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
-                        <Badge className="absolute z-10 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
+                        <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
 
                         {/* Preview Images */}
-                        <Link to={`/product/$${index}`}>
+                        
+                        {/* <Link to={`/product/$${index}`} className="relative z-10"> */}
                             <Carousel className="hover:cursor-w-resize">
                                 <CarouselContent>
                                     <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
@@ -128,12 +132,13 @@ export default function Products({ category }: Products) {
                                 </CarouselContent>
 
                             </Carousel>
-                        </Link>
+                        {/* </Link> */}
+
                         {/* Card Details */}
                         <div className="details my-1">
 
                             {/* Title + Description */}
-                            <Link to="#">
+                            <Link to={`/product/$${index}`}>
                                 <h6 className="font-semibold">chanel no 5 eau de toilette</h6>
                                 <p className="text-sm">Fill Your Space with a Cozy Scent</p>
                             </Link>
@@ -159,36 +164,38 @@ export default function Products({ category }: Products) {
             </div>
 
             {/* Filters Button (For Mobiles) */}
-            <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-10">
-                 {/* Filter by brand */}
-                 <Select>
-                        <SelectTrigger className="w-[170px] shadow-sm">
-                            <SelectValue placeholder="Filter by brand" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Filter by Brand</SelectLabel>
-                            </SelectGroup>
-                            <SelectItem value="BrandName1">Brand Name</SelectItem>
-                            <SelectItem value="BrandName2">Brand Name</SelectItem>
-                            <SelectItem value="BrandName3">Brand Name</SelectItem>
-                        </SelectContent>
-                    </Select>
+            <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30">
+                {/* Filter by brand */}
+                <Select>
+                    <SelectTrigger className="w-[170px] shadow-sm">
+                        <SelectValue placeholder="Filter by brand" />
+                    </SelectTrigger>
+                    <SelectContent className="z-50">
+                        <SelectGroup>
+                            <SelectLabel>Filter by Brand</SelectLabel>
+                            <Separator />
+                        </SelectGroup>
+                        <SelectItem value="BrandName1">Brand Name</SelectItem>
+                        <SelectItem value="BrandName2">Brand Name</SelectItem>
+                        <SelectItem value="BrandName3">Brand Name</SelectItem>
+                    </SelectContent>
+                </Select>
 
-                    {/* Filter by sort */}
-                    <Select>
-                        <SelectTrigger className="w-[170px] shadow-sm">
-                            <SelectValue placeholder="Sort" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Sort by</SelectLabel>
-                            </SelectGroup>
-                            <SelectItem value="Newest">Newest</SelectItem>
-                            <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
-                            <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
-                        </SelectContent>
-                    </Select>
+                {/* Filter by sort */}
+                <Select>
+                    <SelectTrigger className="w-[170px] shadow-sm">
+                        <SelectValue placeholder="Sort" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Sort by</SelectLabel>
+                            <Separator />
+                        </SelectGroup>
+                        <SelectItem value="Newest">Newest</SelectItem>
+                        <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
+                        <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
         </>
     )
