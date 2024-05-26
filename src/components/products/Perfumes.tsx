@@ -76,7 +76,7 @@ export default function Products({ category }: Products) {
                     </p>
                 </div>
 
-                <div className="flex sm:mt-auto my-8 justify-evenly space-x-3 filters">
+                <div className="sm:flex sm:mt-auto my-8 justify-evenly space-x-3 filters hidden">
 
                     {/* Filter by brand */}
                     <Select>
@@ -156,6 +156,39 @@ export default function Products({ category }: Products) {
             {/* Load more button */}
             <div className="flex justify-center my-6">
                 <Button className="w-52 bg-blue-700 hover:bg-blue-900 text-white font-light shadow-md hover:shadow-lg transition-shadow">Load more perfumes</Button>
+            </div>
+
+            {/* Filters Button (For Mobiles) */}
+            <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-10">
+                 {/* Filter by brand */}
+                 <Select>
+                        <SelectTrigger className="w-[170px] shadow-sm">
+                            <SelectValue placeholder="Filter by brand" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Filter by Brand</SelectLabel>
+                            </SelectGroup>
+                            <SelectItem value="BrandName1">Brand Name</SelectItem>
+                            <SelectItem value="BrandName2">Brand Name</SelectItem>
+                            <SelectItem value="BrandName3">Brand Name</SelectItem>
+                        </SelectContent>
+                    </Select>
+
+                    {/* Filter by sort */}
+                    <Select>
+                        <SelectTrigger className="w-[170px] shadow-sm">
+                            <SelectValue placeholder="Sort" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Sort by</SelectLabel>
+                            </SelectGroup>
+                            <SelectItem value="Newest">Newest</SelectItem>
+                            <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
+                            <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
+                        </SelectContent>
+                    </Select>
             </div>
         </>
     )
