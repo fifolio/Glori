@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 // UI
 import {
     Breadcrumb,
@@ -54,7 +56,21 @@ export default function Perfume({ perfumeID }: Perfume) {
     // Get the current page URL for the Share button
     const pageURL = window.location.href;
 
+    // Scroll top when perfumeID updated
+    function scrollTopFunc() {
+        window.scrollTo({
+            top: -10,
+            behavior: 'instant'
+        });
+    }
 
+    useEffect(() => {
+        // Update the page title with the current perfume name
+        document.title = `Glori | ${perfumeName}`;
+
+        // calling scroll top function
+        scrollTopFunc()
+    }, [perfumeID])
 
     return (
 

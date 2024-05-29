@@ -10,8 +10,8 @@ export default function Footer() {
        // Scroll top when click on Link
        function scrollTopFunc() {
         window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+            top: -10,
+            behavior: 'instant'
         });
     }  
 
