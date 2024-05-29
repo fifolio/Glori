@@ -9,14 +9,16 @@ import { Button } from "../ui/button"
 import { Badge } from "../ui/badge";
 
 
-// type Props = {}
-export default function TopSelling() {
+interface TopSelling {
+    brand?: string;
+}
+export default function TopSelling({brand}: TopSelling) {
     return (
         <div className="rounded-xl shadow-sm bg-[#f8f9fb]">
 
             {/* Header section */}
             <div className="sm:container text-center header py-12 mt-6" >
-                <h2 className="text-2xl font-bold">Our Most Popular Fragrances</h2>
+                <h2 className="text-2xl font-bold capitalize">Our Most Popular{brand ? ` ${brand} ` : ' '}Fragrances</h2>
                 <p className="text-gray-500">
                     Here's what our customers can't get enough of
                 </p>
@@ -31,7 +33,7 @@ export default function TopSelling() {
                         <Badge className="absolute z-10 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
 
                         {/* Preview Images */}
-                        <Link to={`/product/$${index}`}>
+                        <Link to={`/perfumes/${index}`}>
                             <Carousel className="hover:cursor-w-resize">
                                 <CarouselContent>
                                     <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>

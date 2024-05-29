@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-interface HeroProducts {
-    pageID: string,
+interface HeroCollections {
+    collectionID: string,
 }
 
-export default function HeroProducts({ pageID }: HeroProducts) {
+export default function HeroCollections({ collectionID }: HeroCollections) {
 
     // Set the page Title and Description
     const [title, setTitle] = useState<string>('');
@@ -12,7 +12,7 @@ export default function HeroProducts({ pageID }: HeroProducts) {
     document.title = `Glori | ${title}`;
 
     useEffect(() => {
-        switch (pageID) {
+        switch (collectionID) {
             case 'luxury':
                 setTitle('Luxury Classics');
                 setDescription("Step into a realm where time stands still, and elegance reigns supreme. Our collection of Luxury Classics embodies the essence of sophistication and refinement, encapsulating the eternal allure of timeless fragrances. From the enchanting whispers of bygone eras to the majestic symphony of opulent notes, immerse yourself in a journey of unparalleled luxury where each scent tells a tale of grandeur and grace.")
@@ -42,7 +42,7 @@ export default function HeroProducts({ pageID }: HeroProducts) {
                 setDescription("")
                 break;
         }
-    }, [pageID]);
+    }, [collectionID]);
 
 
     return (
@@ -59,7 +59,7 @@ export default function HeroProducts({ pageID }: HeroProducts) {
         bg-center 
         shadow-lg"
             style={{
-                backgroundImage: `url(/images/pages/${pageID}.png)`
+                backgroundImage: `url(/images/pages/${collectionID}.png)`
             }}>
             <div className="absolute inset-0 bg-black bg-opacity-80 sm:bg-opacity-50 rounded-xl"></div> {/* Optional overlay for better text readability */}
 

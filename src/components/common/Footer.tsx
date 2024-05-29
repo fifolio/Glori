@@ -84,17 +84,17 @@ export default function Footer() {
                         <li className="text-gray-200">Discover</li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/discover">Perfumes</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/explore">Brands</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products">Collections</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections">Collections</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/deal">Find Deals</Link></li>
                     </ul>
                     <ul className="mr-3">
                         <li className="text-gray-200">Collections</li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/luxury">Luxury Classics</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/warm">Warm & Spicy</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/florals">Sensual Florals</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/fresh">Fresh & Clean</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/unisex">Unisex Delights</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/products/limited">Limited Editions</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/luxury">Luxury Classics</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/warm">Warm & Spicy</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/florals">Sensual Florals</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/fresh">Fresh & Clean</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/unisex">Unisex Delights</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/limited">Limited Editions</Link></li>
                     </ul>
 
 

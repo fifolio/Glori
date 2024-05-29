@@ -32,7 +32,7 @@ export default function Features() {
                         <Badge className="absolute z-10 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
 
                         {/* Preview Images */}
-                        <Link to={`/product/$${index}`}>
+                        <Link to={`/perfumes/${index}`}>
                             <Carousel className="hover:cursor-w-resize">
                                 <CarouselContent>
                                     <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>

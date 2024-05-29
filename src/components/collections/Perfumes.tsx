@@ -22,11 +22,23 @@ import { Separator } from "@/components/ui/separator"
 
 
 
-interface Products {
+type Collections = {
     category: string;
+    quantity?: number;
+    title?: string;
+    subTitle?: string;
+    AllowFiltering?: boolean;
+    NavigateToCollectionsPageBtn?: boolean;
 }
 
-export default function Products({ category }: Products) {
+export default function Collections({
+    category,
+    quantity,
+    // title,
+    // subtitle,
+    AllowFiltering,
+    NavigateToCollectionsPageBtn
+}: Collections) {
 
     // Set the page Sub-Title and Sub-Description
     const [subTitle, setSubTitle] = useState<string>('');
@@ -77,7 +89,8 @@ export default function Products({ category }: Products) {
                     </p>
                 </div>
 
-                <div className="sm:flex sm:mt-auto my-8 justify-evenly space-x-3 filters hidden">
+                {/* Filters */}
+                <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-evenly space-x-3 filters hidden`}>
 
                     {/* Filter by brand */}
                     <Select>
@@ -117,28 +130,28 @@ export default function Products({ category }: Products) {
             {/* Perfumes section */}
             <div className="flex flex-wrap justify-evenly my-6">
 
-                {[...Array(20)].map((index) => (
+                {[...Array(quantity ? quantity : 20)].map((index) => (
                     <div key={index} className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
                         <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
 
                         {/* Preview Images */}
-                        
-                        {/* <Link to={`/product/$${index}`} className="relative z-10"> */}
-                            <Carousel className="hover:cursor-w-resize">
-                                <CarouselContent>
-                                    <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                                    <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                                    <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                                </CarouselContent>
 
-                            </Carousel>
+                        {/* <Link to={`/perfumes/${index}`} className="relative z-10"> */}
+                        <Carousel className="hover:cursor-w-resize">
+                            <CarouselContent>
+                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
+                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
+                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
+                            </CarouselContent>
+
+                        </Carousel>
                         {/* </Link> */}
 
                         {/* Card Details */}
                         <div className="details my-1">
 
                             {/* Title + Description */}
-                            <Link to={`/product/$${index}`}>
+                            <Link to={`/perfumes/${index}`}>
                                 <h6 className="font-semibold">chanel no 5 eau de toilette</h6>
                                 <p className="text-sm">Fill Your Space with a Cozy Scent</p>
                             </Link>
@@ -160,11 +173,16 @@ export default function Products({ category }: Products) {
 
             {/* Load more button */}
             <div className="flex justify-center my-6">
-                <Button className="w-52 bg-blue-700 hover:bg-blue-900 text-white font-light shadow-md hover:shadow-lg transition-shadow">Load more perfumes</Button>
+                <Button className={`${NavigateToCollectionsPageBtn ? 'hidden' : ''} w-52 bg-blue-700 hover:bg-blue-900 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
+                    Show more Perfumes
+                </Button>
+                <Button className={`${NavigateToCollectionsPageBtn ? '' : 'hidden'} w-52 bg-blue-700 hover:bg-blue-900 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
+                    Explore more Perfumes
+                </Button>
             </div>
 
             {/* Filters Button (For Mobiles) */}
-            <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30">
+            <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30`}>
                 {/* Filter by brand */}
                 <Select>
                     <SelectTrigger className="w-[170px] shadow-sm">
