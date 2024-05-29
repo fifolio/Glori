@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { TopSelling, Brands, Newsletter, Perfumes, Perfume } from "@/components";
+import { TopSelling, Brands, Newsletter, Perfumes, Perfume, Reviews } from "@/components";
 
 
 
@@ -15,6 +15,7 @@ export default function PerfumeDetails() {
   return (
     <div className="md:container container-fluid">
       <Perfume perfumeID={`${perfumeID}`} />
+      <Reviews />
       <TopSelling brand={brand} />
       <Perfumes category={`${category}`} quantity={8} AllowFiltering={false} NavigateToCollectionsPageBtn={true} />
       <Brands />
