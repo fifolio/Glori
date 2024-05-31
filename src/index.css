@@ -68,6 +68,27 @@
     }
   }
 
+
+/* Optionally, style the scrollbar for better appearance */
+body::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #444; /* Color of the scrollbar thumb */
+  border-radius: 50px; /* Round corners of the scrollbar thumb */
+  border: 2px solid #f1f1f1; /* Add space around the thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #111; /* Darker color when hovered */
+}
+
+
   @layer base {
     * {
       @apply border-border;

@@ -15,6 +15,9 @@ export { default as HeroCollections } from './collections/HeroCollections';
 export { default as Perfumes } from './collections/Perfumes';
 
 // Perfume
-export { default as Perfume } from './perfume/Perfume'
-export { default as Reviews } from './perfume/Reviews'
+export { default as Perfume } from './perfume/Perfume';
+export { default as Reviews } from './perfume/Reviews';
+
+// Auth
+export { default as Auth } from './auth/Auth';
 
