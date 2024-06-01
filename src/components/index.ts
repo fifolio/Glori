@@ -27,3 +27,8 @@ export { default as Privacy } from './policies/Privacy';
 export { default as Cookies } from './policies/Cookies';
 export { default as Terms } from './policies/Terms';
 
+// About
+export { default as About } from './about/About'
+
+// Contact
+export {default as Contact} from './contact/ContactForm'

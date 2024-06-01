@@ -70,14 +70,14 @@ export default function Footer() {
                     <ul className="mr-5">
                         <li className="text-gray-200 mb-1">Pay via</li>
 
-                        <li className="text-gray-400 hover:text-white mb-2">
-                            <img className="h-6 w-auto" src="https://static-00.iconduck.com/assets.00/visa-icon-2048x1313-o6hi8q5l.png" />
+                        <li className="text-gray-400 hover:text-white mb-1">
+                            <img className="h-9 w-auto" src="https://www.iconarchive.com/download/i76280/designbolts/credit-card-payment/Visa.ico" />
+                        </li>
+                        <li className="text-gray-400 hover:text-white mb-3">
+                            <img className="h-6 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/1200px-MasterCard_Logo.svg.png" />
                         </li>
                         <li className="text-gray-400 hover:text-white mb-2">
-                            <img className="h-6 w-auto" src="https://static-00.iconduck.com/assets.00/mastercard-icon-2048x1225-3kb6axel.png" />
-                        </li>
-                        <li className="text-gray-400 hover:text-white mb-2">
-                            <img className="h-6 w-auto" src="https://static-00.iconduck.com/assets.00/paypal-icon-2048x1286-ha8kzb8k.png" />
+                            <img className="h-4 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/PayPal_logo.svg/1200px-PayPal_logo.svg.png" />
                         </li>
                     </ul>
                     <ul className="mr-3">
