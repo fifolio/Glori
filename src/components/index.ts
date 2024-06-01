@@ -21,3 +21,9 @@ export { default as Reviews } from './perfume/Reviews';
 // Auth
 export { default as Auth } from './auth/Auth';
 
+// Policies
+export { default as Header } from './policies/Header';
+export { default as Privacy } from './policies/Privacy';
+export { default as Cookies } from './policies/Cookies';
+export { default as Terms } from './policies/Terms';
+

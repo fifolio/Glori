@@ -7,13 +7,13 @@ import { FaGithub } from "react-icons/fa";
 
 export default function Footer() {
 
-       // Scroll top when click on Link
-       function scrollTopFunc() {
+    // Scroll top when click on Link
+    function scrollTopFunc() {
         window.scrollTo({
             top: -10,
             behavior: 'instant'
         });
-    }  
+    }
 
     return (
         <footer className="container py-6 bg-black text-white rounded-t-xl">
@@ -24,7 +24,7 @@ export default function Footer() {
                     <div className="info lg:text-start w-full text-sm">
                         <ul>
                             <li className="mb-5 max-w-fit">
-                                <Link onClick={scrollTopFunc}  to="/">
+                                <Link onClick={scrollTopFunc} to="/">
                                     <img src="/images/logo.png" className="h-10 w-10 bg-white rounded-full p-1" />
                                 </Link>
                             </li>
@@ -32,7 +32,7 @@ export default function Footer() {
                                 Address
                             </li>
                             <li>
-                                Level 32, 5 Sample St, Sydney NSW 6080
+                                123 Perfume Lane, Fragrance City, SC 12345
                             </li>
 
                             <br />
@@ -41,7 +41,7 @@ export default function Footer() {
                                 Contact
                             </li>
                             <li>
-                                <Link onClick={scrollTopFunc}  to="mail:firasdabbabi@gmail.com">
+                                <Link onClick={scrollTopFunc} to="mail:firasdabbabi@gmail.com">
                                     contact@glori.com
                                 </Link>
                             </li>
@@ -53,10 +53,10 @@ export default function Footer() {
 
                             <li className="text-gray-400 lg:text-start text-center">
                                 <div className="flex space-x-4 text-sm my-3 lg:my-auto">
-                                    <Link onClick={scrollTopFunc}  className="text-gray-400 hover:text-white" target="_blank" to="https://www.linkedin.com/in/fifolio/">
+                                    <Link onClick={scrollTopFunc} className="text-gray-400 hover:text-white" target="_blank" to="https://www.linkedin.com/in/fifolio/">
                                         <FaLinkedin className="h-7 w-7" />
                                     </Link>
-                                    <Link onClick={scrollTopFunc}  className="text-gray-400 hover:text-white" target="_blank" to="https://github.com/fifolio/Glori">
+                                    <Link onClick={scrollTopFunc} className="text-gray-400 hover:text-white" target="_blank" to="https://github.com/fifolio/Glori">
                                         <FaGithub className="h-7 w-7" />
                                     </Link>
                                 </div>
@@ -82,19 +82,19 @@ export default function Footer() {
                     </ul>
                     <ul className="mr-3">
                         <li className="text-gray-200">Discover</li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/discover">Perfumes</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/explore">Brands</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections">Collections</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/deal">Find Deals</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/discover">Perfumes</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/explore">Brands</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections">Collections</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/deal">Find Deals</Link></li>
                     </ul>
                     <ul className="mr-3">
                         <li className="text-gray-200">Collections</li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/luxury">Luxury Classics</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/warm">Warm & Spicy</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/florals">Sensual Florals</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/fresh">Fresh & Clean</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/unisex">Unisex Delights</Link></li>
-                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc}  to="/collections/limited">Limited Editions</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/luxury">Luxury Classics</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/warm">Warm & Spicy</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/florals">Sensual Florals</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/fresh">Fresh & Clean</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/unisex">Unisex Delights</Link></li>
+                        <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/limited">Limited Editions</Link></li>
                     </ul>
 
 
@@ -111,13 +111,13 @@ export default function Footer() {
 
 
                 <div className="flex items-center text-center justify-center space-x-4 text-xs my-3 lg:my-auto">
-                    <Link onClick={scrollTopFunc}  className="text-gray-400 hover:text-white" to="/privacy">
+                    <Link onClick={scrollTopFunc} className="text-gray-400 hover:text-white" to="/policies#Privacy">
                         Privacy Policy
                     </Link>
-                    <Link onClick={scrollTopFunc}  className="text-gray-400 hover:text-white" to="/terms">
+                    <Link onClick={scrollTopFunc} className="text-gray-400 hover:text-white" to="/policies#Privacy">
                         Terms of Service
                     </Link>
-                    <Link onClick={scrollTopFunc}  className="text-gray-400 hover:text-white" to="/cookies">
+                    <Link onClick={scrollTopFunc} className="text-gray-400 hover:text-white" to="/policies#Privacy">
                         Cookies Settings
                     </Link>
                 </div>
