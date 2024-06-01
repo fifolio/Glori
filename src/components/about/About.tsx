@@ -15,7 +15,7 @@ export default function About() {
         <div className="flex flex-col min-h-[100dvh]">
 
             {/* Header */}
-            <header className="relative bg-[#F5F5F5] mt-10 py-20 md:py-32 lg:py-40 rounded-lg overflow-hidden">
+            <header className="relative bg-[#F5F5F5] mt-10 py-20 md:py-32 lg:py-40 sm:rounded-lg overflow-hidden">
                 <video autoPlay loop muted className="absolute top-0 left-0 w-full h-full object-cover z-0">
                     <source src="https://videos.pexels.com/video-files/4154241/4154241-hd_1366_720_50fps.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
