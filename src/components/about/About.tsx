@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 
 export default function About() {
 
+    // Update the page title
+    document.title = `Glori | About`;
+
     // Scroll top when click on Link
     function scrollTopFunc() {
         window.scrollTo({

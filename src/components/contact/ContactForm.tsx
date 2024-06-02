@@ -14,6 +14,10 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithubSquare } from "react-icons/fa";
 
 export default function ContactForm() {
+
+    // Update the page title
+    document.title = `Glori | Contact Us`;
+
     return (
         <div className="w-full max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
             <div className="grid gap-12 md:gap-16">

@@ -1,4 +1,8 @@
 export default function Header() {
+
+    // Update the page title
+    document.title = `Glori | Policies`;
+
     return (
         <header className="mt-10 mb-8 md:mb-12">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">Policies</h1>
