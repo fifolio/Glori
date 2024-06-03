@@ -14,7 +14,6 @@ import {
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableFooter,
     TableHead,
@@ -108,12 +107,14 @@ export default function Cart() {
 
                 {/* Items details */}
                 <Table>
-                    <TableCaption>A list of your recent data.</TableCaption>
                     <TableHeader>
                         <TableRow>
                             <TableHead className="mr-0">Actions</TableHead>
                             <TableHead>Image</TableHead>
-                            <TableHead>Product Name</TableHead>
+                            <TableHead>
+                                <span className='hidden md:block'>Product Name</span>
+                                <span className='block md:hidden'>Name</span>
+                                </TableHead>
                             <TableHead>Quantity</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead className="text-right">Total</TableHead>
@@ -217,7 +218,7 @@ export default function Cart() {
                         </Button>
                     </Link>
                     <Button size="lg" className='bg-blue-700 hover:bg-blue-800 border-0 rounded-md'>
-                        Proceed to Checkout
+                        Checkout Now
                     </Button>
                 </div>
 
@@ -227,17 +228,18 @@ export default function Cart() {
                     <Accordion type="single" collapsible>
                         <AccordionItem value="question1">
                             <AccordionTrigger className="text-md font-semibold">
-                                How do I update the quantity of an item in my cart?
+                                How do I update the quantity of an item?
                             </AccordionTrigger>
                             <AccordionContent>
                                 <p className="text-gray-500 dark:text-gray-400">
-                                    To update the quantity of an item in your cart, simply click the "+" or "-" buttons next to the item.
-                                    The total price will be updated automatically.
+                                    To update the quantity of an item in your cart, simply click at 
+                                    <Button className='px-3 mx-1' variant="outline"><IoIosMore size="15" className='text-black' /></Button> 
+                                    from the "Action" column, then choose "Adjust Quantity". A popup will appear where you can click on the "+" or "-" buttons to add or reduce items. The total price will be updated automatically.
                                 </p>
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="question2">
-                            <AccordionTrigger className="text-md font-semibold">What is your return policy?</AccordionTrigger>
+                            <AccordionTrigger className="text-md font-semibold">What is Glori's return policy?</AccordionTrigger>
                             <AccordionContent>
                                 <p className="text-gray-500 dark:text-gray-400">
                                     We offer a 30-day return policy on all of our products. If you're not satisfied with your purchase, you
@@ -249,8 +251,8 @@ export default function Cart() {
                             <AccordionTrigger className="text-md font-semibold">How do I proceed to the checkout?</AccordionTrigger>
                             <AccordionContent>
                                 <p className="text-gray-500 dark:text-gray-400">
-                                    To proceed to the checkout, click the "Proceed to Checkout" button above.
-                                    A window will display for the checkout where you can enter your payment and shipping information.
+                                    To proceed to the checkout, click the "Checkout Now" button above.
+                                    A popup will appear for the checkout where you can enter your payment and shipping information.
                                 </p>
                             </AccordionContent>
                         </AccordionItem>
