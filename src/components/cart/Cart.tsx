@@ -106,7 +106,7 @@ export default function Cart() {
                 <h3 className="text-xl font-bold mb-4">Products in Your Cart</h3>
 
                 {/* Items details */}
-                <Table>
+                <Table className="mb-10">
                     <TableHeader>
                         <TableRow>
                             <TableHead className="mr-0">Actions</TableHead>
@@ -211,7 +211,7 @@ export default function Cart() {
                 </div>
 
                 {/* Continue Shopping + Proceed to Checkout */}
-                <div className="mb-24 flex justify-end space-x-4">
+                <div className="mb-24 flex sm:justify-end justify-center space-x-4">
                     <Link to="/" onClick={scrollTopFunc}>
                         <Button variant="outline" size="lg">
                             Continue Shopping
