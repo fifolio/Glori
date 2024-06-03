@@ -15,6 +15,10 @@ import { TbCubeSend } from "react-icons/tb";
 
 
 export default function Sell() {
+
+    // Update the page title
+    document.title = `Glori | Sell New Perfume`;
+
     return (
         <div>
             {/* Header */}
@@ -252,19 +256,19 @@ export default function Sell() {
                                 <div className="grid gap-2">
                                     <Label htmlFor="photos">Product Photos</Label>
                                     <div className="grid grid-cols-3 gap-4">
-                                        <div className="flex items-center justify-center border border-gray-200 rounded-lg h-32">
+                                        <div className="flex items-center justify-center border border-gray-300 rounded-lg h-32">
                                             <input type="file" id="photo1" className="hidden" />
                                             <label htmlFor="photo1" className="cursor-pointer">
                                                 <MdAddPhotoAlternate className="w-24 h-24 text-gray-500" />
                                             </label>
                                         </div>
-                                        <div className="flex items-center justify-center border border-gray-200 rounded-lg h-32">
+                                        <div className="flex items-center justify-center border border-gray-300 rounded-lg h-32">
                                             <input type="file" id="photo2" className="hidden" />
                                             <label htmlFor="photo2" className="cursor-pointer">
                                                 <MdAddPhotoAlternate className="w-24 h-24 text-gray-500" />
                                             </label>
                                         </div>
-                                        <div className="flex items-center justify-center border border-gray-200 rounded-lg h-32">
+                                        <div className="flex items-center justify-center border border-gray-300 rounded-lg h-32">
                                             <input type="file" id="photo3" className="hidden" />
                                             <label htmlFor="photo3" className="cursor-pointer">
                                                 <MdAddPhotoAlternate className="w-24 h-24 text-gray-500" />
