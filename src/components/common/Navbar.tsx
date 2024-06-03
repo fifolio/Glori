@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // Components
 import Auth from '@/components/auth/Auth'
@@ -94,13 +94,6 @@ export default function Navbar() {
             top: -10,
             behavior: 'instant'
         });
-    }
-
-    // Handle CartView button
-    const navigate = useNavigate();
-    function CartView() {
-        navigate('/cart')
-        scrollTopFunc()
     }
 
     return (
@@ -413,7 +406,7 @@ export default function Navbar() {
                                                 <p className="font-medium">$23</p>
                                             </div>
                                             <div className="flex w-full">
-                                                <Button onClick={CartView} variant="default" className='w-full'>View Cart</Button>
+                                                <Link to="/cart" onClick={scrollTopFunc} className='w-full text-center bg-gray-950 hover:bg-gray-900 shadow-md rounded-md text-white py-2 text-sm'>View Cart</Link>
                                             </div>
                                         </div>
                                     ) : (
