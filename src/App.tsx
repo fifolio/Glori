@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, PerfumeDetails, Collections, Search, Error, Policies, AboutDetails, Contact, CartDetails } from "./pages";
+import { Home, PerfumeDetails, Collections, Search, Error, Policies, AboutDetails, Contact, CartDetails, SellDetails } from "./pages";
 import { Navbar, Footer } from "./components";
 
 export default function App() {
@@ -21,6 +21,8 @@ export default function App() {
         <Route path='about' element={<AboutDetails />} />
         <Route path='contact' element={<Contact />} />
         <Route path='cart' element={<CartDetails />} />
+        <Route path='sell' element={<SellDetails />} />
+        
         {/* <Route path='reset' element={<Reset />} /> */}
         <Route path='*' element={<Error />} />
       </Routes>
