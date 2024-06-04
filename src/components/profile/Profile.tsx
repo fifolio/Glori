@@ -81,7 +81,7 @@ export default function Seller() {
             </div>
 
             {/* Bio + Contact Us */}
-            <div className="flex flex-col md:flex-row space-y-6 mb-8 md:mb-12 text-md">
+            <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 mb-8 md:mb-12 text-md">
                 <div>
                     <h2 className="text-lg font-bold mb-4">About {seller.name}</h2>
                     <p className="text-gray-500 leading-relaxed md:w-5/6">{seller.bio}</p>
@@ -90,6 +90,7 @@ export default function Seller() {
                 <div>
                     <h2 className="text-lg font-bold mb-4">Contact {seller.name}</h2>
 
+                    {/* Phone + Emali + Website */}
                     <div className="flex flex-col space-y-1 text-md">
                         <div className="flex items-center gap-2">
                             <MdAlternateEmail className="w-5 h-5 text-gray-500" />
@@ -114,12 +115,31 @@ export default function Seller() {
                             </a>
                         </div>
                     </div>
+
+                    {/* Media Icons */}
+                    <div className="flex justify-start w-full rounded-lg mt-3">
+                        <Link to="#" className="mr-3">
+                            <img src="/images/icons/insta.png" height="25" width="25" />
+                        </Link>
+                        <Link to="#" className="mr-3">
+                            <img src="/images/icons/snap.png" height="25" width="25" />
+                        </Link>
+                        <Link to="#" className="mr-3">
+                            <img src="/images/icons/x.png" height="25" width="25" />
+                        </Link>
+                        <Link to="#" className="mr-3">
+                            <img src="/images/icons/ytube.png" height="25" width="25" />
+                        </Link>
+                        <Link to="#" className="mr-3">
+                            <img src="/images/icons/face.png" height="25" width="25" />
+                        </Link>
+                    </div>
                 </div>
             </div>
 
             {/* Products */}
             <Perfumes AllowFiltering={true} />
-
         </div>
+
     )
 }
