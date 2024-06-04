@@ -11,7 +11,10 @@ import { MdOutlinePhone } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
 
 
-export default function Seller() {
+export default function Store() {
+
+    // Update the page title
+    document.title = `Glori | Brandname`;
 
     // Fake seller
     const seller = {
@@ -67,7 +70,7 @@ export default function Seller() {
 
                 {/* Edit Profile + Sell New Perfume*/}
                 <div className="flex flex-col md:flex-row justify-center md:space-x-3 space-y-3 md:space-y-0 md:mt-0 w-full md:w-fit">
-                    <Link to="/edit" className="w-fit mx-auto md:mx-0">
+                    <Link to="/settings" className="w-fit mx-auto md:mx-0">
                         <Button variant="outline" className="text-sm w-fit">
                             Edit Profile
                         </Button>
@@ -120,9 +123,6 @@ export default function Seller() {
                     <div className="flex justify-start w-full rounded-lg mt-3">
                         <Link to="#" className="mr-3">
                             <img src="/images/icons/insta.png" height="25" width="25" />
-                        </Link>
-                        <Link to="#" className="mr-3">
-                            <img src="/images/icons/snap.png" height="25" width="25" />
                         </Link>
                         <Link to="#" className="mr-3">
                             <img src="/images/icons/x.png" height="25" width="25" />

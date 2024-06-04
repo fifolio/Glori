@@ -1,7 +1,7 @@
 export { default as Home } from './Home';
-export { default as ProfileDetails } from './ProfileDetails';
+export { default as StoreDetails } from './StoreDetails';
 export { default as SellDetails } from './SellDetails';
-export { default as Settings } from './Settings';
+export { default as SettingsDetails } from './SettingsDetails';
 export { default as CartDetails } from './CartDetails';
 export { default as Collections } from './Collections';
 export { default as PerfumeDetails } from './PerfumeDetails';

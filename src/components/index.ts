@@ -36,5 +36,8 @@ export { default as Contact } from './contact/ContactForm';
 // Cart
 export { default as Cart } from './cart/Cart';
 
-// Profile
-export { default as Profile } from './profile/Profile.tsx';
+// Store
+export { default as Store } from './store/Store.tsx';
+
+// Settings
+export { default as Settings } from './settings/Settings.tsx';

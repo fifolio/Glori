@@ -53,7 +53,7 @@ export default function Navbar() {
 
 
     // Check if user logged-in
-    const [isUserLoggedIn] = useState<boolean>(false)
+    const [isUserLoggedIn] = useState<boolean>(true)
 
     // Fake Products items for cart
     const cartItems = [{
@@ -442,19 +442,29 @@ export default function Navbar() {
                                     <div className="userLoggedin">
                                         <DropdownMenuLabel>Activities</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            <LuPackagePlus className="mr-2" /> Sell Product
-                                        </DropdownMenuItem>
+
+                                        <Link to="/sell" onClick={scrollTopFunc}>
+                                            <DropdownMenuItem className="cursor-pointer">
+                                                <LuPackagePlus className="mr-2" /> Sell Product
+                                            </DropdownMenuItem>
+                                        </Link>
+
                                         <DropdownMenuSeparator />
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
-                                            <DropdownMenuItem>
-                                                <CgProfile className="mr-2" /> Profile
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem>
-                                                <SlSettings className="mr-2" /> Settings
-                                            </DropdownMenuItem>
+
+                                            <Link to="/store/id" onClick={scrollTopFunc}>
+                                                <DropdownMenuItem className="cursor-pointer">
+                                                    <CgProfile className="mr-2" /> My Store
+                                                </DropdownMenuItem>
+                                            </Link>
+
+                                            <Link to="/settings" onClick={scrollTopFunc}>
+                                                <DropdownMenuItem className="cursor-pointer">
+                                                    <SlSettings className="mr-2" /> Settings
+                                                </DropdownMenuItem>
+                                            </Link>
                                         </DropdownMenuGroup>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
