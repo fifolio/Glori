@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useEffect } from "react"
 
 // UI
@@ -75,6 +76,7 @@ export default function Perfume({ perfumeID }: Perfume) {
     return (
 
         <div className="bg-[#f8f9fb] rounded-xl pb-6">
+
             {/* Perfume details: breadcrumb, name, owner, price */}
             <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
                 <Breadcrumb className="w-full xl:w-1/2">
@@ -99,7 +101,11 @@ export default function Perfume({ perfumeID }: Perfume) {
                 <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
                     <div className="sm:flex items-center sm:space-x-3">
                         <div className="text-2xl font-bold">{perfumeName}</div>
-                        <div className="text-gray-500">by {perfumeOwner}</div>
+                        <div className="text-gray-500">by 
+                        <Link to="/seller/id" className="ml-1">
+                        {perfumeOwner}
+                        </Link>
+                        </div>
                     </div>
                     <div className="sm:text-4xl text-2xl font-bold sm:block hidden">
                         ${perfumePrice}
