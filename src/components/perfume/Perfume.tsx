@@ -101,10 +101,10 @@ export default function Perfume({ perfumeID }: Perfume) {
                 <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
                     <div className="sm:flex items-center sm:space-x-3">
                         <div className="text-2xl font-bold">{perfumeName}</div>
-                        <div className="text-gray-500">by 
-                        <Link to="/seller/id" className="ml-1">
-                        {perfumeOwner}
-                        </Link>
+                        <div className="text-gray-900 pt-1 ">by
+                            <Link to="/seller/id" className="ml-1 font-bold">
+                                {perfumeOwner}
+                            </Link>
                         </div>
                     </div>
                     <div className="sm:text-4xl text-2xl font-bold sm:block hidden">

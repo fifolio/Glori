@@ -1,6 +1,15 @@
+import { Link } from "react-router-dom"
+import Perfumes from "@/components/common/Perfumes"
+
 // UI
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import Perfumes from "@/components/common/Perfumes"
+import { Button } from "@/components/ui/button"
+
+// ICONS
+import { MdAlternateEmail } from "react-icons/md";
+import { MdOutlinePhone } from "react-icons/md";
+import { TbWorldWww } from "react-icons/tb";
+
 
 export default function Seller() {
 
@@ -49,9 +58,25 @@ export default function Seller() {
                     <img src={seller.profilePic} />
                     <AvatarFallback>{seller.name}</AvatarFallback>
                 </Avatar>
-                <div className="text-center md:text-left">
-                    <h1 className="text-2xl md:text-3xl font-bold">{seller.name}</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Perfume Store</p>
+                <div className="flex flex-col md:flex-row items-start justify-between md:w-full text-center md:text-left">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-bold">{seller.name}</h1>
+                        <p className="text-gray-500 dark:text-gray-400">Perfume Store</p>
+                    </div>
+                </div>
+
+                {/* Edit Profile + Sell New Perfume*/}
+                <div className="flex flex-col md:flex-row justify-center md:space-x-3 space-y-3 md:space-y-0 md:mt-0 w-full md:w-fit">
+                    <Link to="/edit" className="w-fit mx-auto md:mx-0">
+                        <Button variant="outline" className="text-sm w-fit">
+                            Edit Profile
+                        </Button>
+                    </Link>
+                    <Link to="/sell" className="w-fit mx-auto md:mx-0">
+                        <Button variant="default" className="text-sm w-fit">
+                            Sell New Perfume
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
@@ -64,26 +89,26 @@ export default function Seller() {
 
                 <div>
                     <h2 className="text-lg font-bold mb-4">Contact {seller.name}</h2>
+
                     <div className="flex flex-col space-y-1 text-md">
-                        <div className="flex items-center">
-                            {/* <InboxIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" /> */}
+                        <div className="flex items-center gap-2">
+                            <MdAlternateEmail className="w-5 h-5 text-gray-500" />
                             <a href="#" className="text-gray-500 hover:underline">
                                 {seller.email}
                             </a>
                         </div>
                         <div className="flex items-center gap-2">
-                            {/* <PhoneIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" /> */}
+                            <MdOutlinePhone className="w-5 h-5 text-gray-500" />
                             <a href="#" className="text-gray-500 hover:underline">
                                 {seller.phone}
                             </a>
                         </div>
                         <div className="flex items-center gap-2">
-                            {/* <GlobeIcon className="w-5 h-5 text-gray-500  /> */}
+                            <TbWorldWww className="w-5 h-5 text-gray-500" />
                             <a
                                 href="#"
-                                className="text-gray-500 dark:text-gray-400 hover:underline"
+                                className="text-gray-500 hover:underline"
                                 target="_blank"
-                                rel="noopener noreferrer"
                             >
                                 {seller.website}
                             </a>
