@@ -341,7 +341,6 @@ export default function Navbar() {
                                         <PopoverTrigger asChild>
                                             <Button variant="outline" className="text-slate-500 border-0 shadow-none pr-5 bg-transparent">
                                                 <CiSearch size="20px" className="mr-2" />
-                                                Find
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-80">
