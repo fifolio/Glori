@@ -340,7 +340,7 @@ export default function Navbar() {
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button variant="outline" className="text-slate-500 border-0 shadow-none pr-5 bg-transparent">
-                                                <CiSearch size="20px" className="mr-2" />
+                                                <CiSearch size="20px" />
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-80">
