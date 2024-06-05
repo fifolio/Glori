@@ -145,7 +145,7 @@ export default function Collections({
                                 <div className="w-full">
 
                                     {isSessionValid ? (
-                                        <div className='flex items-center justify-between'>
+                                        <div className='flex items-center justify-end'>
                                             {/* Share Product */}
                                             <Dialog>
                                                 <DialogTrigger asChild>
@@ -187,8 +187,7 @@ export default function Collections({
                                             {/* Modify Product List */}
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
-                                                    <Button variant="outline" className="w-fit flex justify-between space-x-3">
-
+                                                    <Button variant="outline" className="w-fit flex justify-between ml-3">
                                                         Modify Product
                                                     </Button>
                                                 </DropdownMenuTrigger>

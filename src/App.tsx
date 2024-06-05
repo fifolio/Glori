@@ -14,20 +14,18 @@ export default function App() {
       </div>
       <Routes>
         <Route index element={<Home />} />
-        <Route path='collections/:collectionID' element={<Collections />} />
-        <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
+        <Route path='collections/:collectionID' element={<Collections />} /> {/* ====>> Set the sub-route */}
+        <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} /> {/* ====>> Set the sub-route */}
         <Route path='policies' element={<Policies />} />
         <Route path='about' element={<AboutDetails />} />
         <Route path='contact' element={<Contact />} />
         <Route path='cart' element={<CartDetails />} />
         <Route path='sell' element={<SellDetails />} />
         <Route path='*' element={<Error />} />
-        <Route path="store/:id" element={<StoreDetails />} />
+        <Route path="store/:id" element={<StoreDetails />} /> {/* ====>> Set the sub-route */}
         <Route path='settings' element={<SettingsDetails />} />
-        <Route path='edit/:id' element={<EditDetails />} />
+        <Route path='edit/:id' element={<EditDetails />} /> {/* ====>> Set the sub-route */}
 
-        {/* Routes NOT ready ... */}
-        {/* <Route path='perfumes' element={<Search />} /> */}
         {/* <Route path='reset' element={<Reset />} /> */}``
       </Routes>
       <div>
