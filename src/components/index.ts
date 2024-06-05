@@ -41,3 +41,6 @@ export { default as Store } from './store/Store.tsx';
 
 // Settings
 export { default as Settings } from './settings/Settings.tsx';
+
+// Edit 
+export { default as EditDetails } from './edit/Edit.tsx';

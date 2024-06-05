@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, PerfumeDetails, Collections, StoreDetails, Error, Policies, AboutDetails, Contact, CartDetails, SellDetails, SettingsDetails } from "./pages";
+import { Home, PerfumeDetails, Collections, StoreDetails, Error, Policies, AboutDetails, Contact, CartDetails, SellDetails, SettingsDetails, EditDetails } from "./pages";
 import { Navbar, Footer } from "./components";
 
 export default function App() {
@@ -24,6 +24,7 @@ export default function App() {
         <Route path='*' element={<Error />} />
         <Route path="store/:id" element={<StoreDetails />} />
         <Route path='settings' element={<SettingsDetails />} />
+        <Route path='edit/:id' element={<EditDetails />} />
 
         {/* Routes NOT ready ... */}
         {/* <Route path='perfumes' element={<Search />} /> */}

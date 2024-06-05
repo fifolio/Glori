@@ -102,7 +102,7 @@ export default function Perfume({ perfumeID }: Perfume) {
                     <div className="sm:flex items-center sm:space-x-3">
                         <div className="text-2xl font-bold">{perfumeName}</div>
                         <div className="text-gray-900 pt-1 ">by
-                            <Link to="/seller/id" className="ml-1 font-bold">
+                            <Link to="/store/id" className="ml-1 font-bold">
                                 {perfumeOwner}
                             </Link>
                         </div>

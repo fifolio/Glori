@@ -3,6 +3,7 @@ export { default as StoreDetails } from './StoreDetails';
 export { default as SellDetails } from './SellDetails';
 export { default as SettingsDetails } from './SettingsDetails';
 export { default as CartDetails } from './CartDetails';
+export { default as EditDetails } from './EditDetails';
 export { default as Collections } from './Collections';
 export { default as PerfumeDetails } from './PerfumeDetails';
 export { default as Search } from './Search'

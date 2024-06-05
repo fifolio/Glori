@@ -52,6 +52,8 @@ export default function Store() {
         ],
     }
 
+    
+
     return (
         <div className="max-w-6xl mx-auto lg:w-[900px] px-4 md:px-6 py-16 md:py-16">
 
