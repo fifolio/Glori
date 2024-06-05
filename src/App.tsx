@@ -1,6 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, PerfumeDetails, Collections, StoreDetails, Error, Policies, AboutDetails, Contact, CartDetails, SellDetails, SettingsDetails, EditDetails } from "./pages";
-import { Navbar, Footer } from "./components";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  Home,
+  PerfumeDetails,
+  Collections,
+  StoreDetails,
+  Error,
+  Policies,
+  AboutDetails,
+  Contact,
+  CartDetails,
+  SellDetails,
+  SettingsDetails,
+  EditDetails,
+  BrowseDetails
+} from "./pages";
+import { Navbar, Footer } from "./components"; 
 
 export default function App() {
 
@@ -13,20 +27,31 @@ export default function App() {
         <div className="pb-10"></div>
       </div>
       <Routes>
+
+        {/* Basic Routes */}
         <Route index element={<Home />} />
-        <Route path='collections/:collectionID' element={<Collections />} /> {/* ====>> Set the sub-route */}
-        <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} /> {/* ====>> Set the sub-route */}
+        <Route path='*' element={<Error />} />
         <Route path='policies' element={<Policies />} />
         <Route path='about' element={<AboutDetails />} />
         <Route path='contact' element={<Contact />} />
         <Route path='cart' element={<CartDetails />} />
         <Route path='sell' element={<SellDetails />} />
-        <Route path='*' element={<Error />} />
-        <Route path="store/:id" element={<StoreDetails />} /> {/* ====>> Set the sub-route */}
         <Route path='settings' element={<SettingsDetails />} />
-        <Route path='edit/:id' element={<EditDetails />} /> {/* ====>> Set the sub-route */}
+        <Route path='collections' element={<BrowseDetails />} />
+        {/* <Route path='reset' element={<Reset />} /> */}
 
-        {/* <Route path='reset' element={<Reset />} /> */}``
+        {/* Custom Routes */}
+        <Route path='collections/:collectionID' element={<Collections />} /> 
+        <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
+        <Route path="store/:id" element={<StoreDetails />} />
+        <Route path='edit/:id' element={<EditDetails />} />
+
+        {/* Redirect Routes */}
+        <Route path="perfumes" element={<Navigate to="/" />} />
+        <Route path="store" element={<Navigate to="/" />} />
+        <Route path="edit" element={<Navigate to="/" />} />
+
+
       </Routes>
       <div>
         <Footer />

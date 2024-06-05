@@ -77,6 +77,9 @@ export default function Cart() {
         },
     ]
 
+    // Update the page title
+    document.title = `Glori | My Cart`;
+
     // Scroll top when click on Link
     function scrollTopFunc() {
         window.scrollTo({

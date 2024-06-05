@@ -5,6 +5,7 @@ export { default as SettingsDetails } from './SettingsDetails';
 export { default as CartDetails } from './CartDetails';
 export { default as EditDetails } from './EditDetails';
 export { default as Collections } from './Collections';
+export { default as BrowseDetails } from './BrowseDetails'
 export { default as PerfumeDetails } from './PerfumeDetails';
 export { default as Search } from './Search'
 export { default as Error } from './Error';

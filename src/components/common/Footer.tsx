@@ -65,7 +65,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex text-sm lg:justify-end justify-center lg:mt-[-50px] mt-5 w-full nav-links">
+                <div className="flex text-sm lg:justify-end justify-evenly lg:mt-[-50px] mt-5 w-full nav-links">
 
                     <ul className="mr-5">
                         <li className="text-gray-200 mb-1">Pay via</li>
@@ -80,13 +80,13 @@ export default function Footer() {
                             <img className="h-4 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/PayPal_logo.svg/1200px-PayPal_logo.svg.png" />
                         </li>
                     </ul>
-                    <ul className="mr-3">
+                    {/* <ul className="mr-3">
                         <li className="text-gray-200">Discover</li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/discover">Perfumes</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/explore">Brands</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections">Collections</Link></li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/deal">Find Deals</Link></li>
-                    </ul>
+                    </ul> */}
                     <ul className="mr-3">
                         <li className="text-gray-200">Collections</li>
                         <li className="text-gray-400 hover:text-white"><Link onClick={scrollTopFunc} to="/collections/luxury">Luxury Classics</Link></li>

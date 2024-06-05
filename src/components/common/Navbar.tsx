@@ -26,7 +26,7 @@ import {
     NavigationMenuContent,
     // NavigationMenuIndicator,
     NavigationMenuItem,
-    NavigationMenuLink,
+    // NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
     // NavigationMenuViewport,
@@ -112,9 +112,10 @@ export default function Navbar() {
                         <div className='hidden lg:block'>
                             <NavigationMenu>
                                 <NavigationMenuList>
+                                    
                                     {/* Discover section */}
-                                    <NavigationMenuItem>
-                                        <NavigationMenuTrigger className='bg-transparent'>Discover</NavigationMenuTrigger>
+                                    {/* <NavigationMenuItem>
+                                        <NavigationMenuTrigger className='bg-transparent'>Menu</NavigationMenuTrigger>
                                         <NavigationMenuContent>
                                             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                                 <li className="row-span-3 ">
@@ -153,12 +154,13 @@ export default function Navbar() {
                                                 </Link>
                                             </ul>
                                         </NavigationMenuContent>
-                                    </NavigationMenuItem>
+                                    </NavigationMenuItem> */}
 
                                     {/* Explore section */}
                                     <NavigationMenuItem>
                                         <NavigationMenuTrigger className='bg-transparent'>Explore Collections</NavigationMenuTrigger>
                                         <NavigationMenuContent>
+                                       
                                             <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                                 <Link onClick={scrollTopFunc} to="/collections/luxury">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
@@ -261,7 +263,7 @@ export default function Navbar() {
                                         <NavigationMenuContent>
                                             <ScrollArea className="h-[350px] w-[200px] p-2">
                                                 <ul className="grid gap-1 p-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                                                    <p className="text-sm font-semibold">Discover</p>
+                                                    {/* <p className="text-sm font-semibold">Discover</p>
                                                     <Link onClick={scrollTopFunc} to="/discover">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Discover Perfumes</span>
@@ -281,9 +283,10 @@ export default function Navbar() {
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
                                                             <span className="text-sm">Find Deals</span>
                                                         </li>
-                                                    </Link>
-
-                                                    <DropdownMenuSeparator />
+                                                    </Link> 
+                                                    
+                                                    <DropdownMenuSeparator /> */}
+                                                    
                                                     <p className="text-sm font-semibold">Collections</p>
                                                     <Link onClick={scrollTopFunc} to="/collections/luxury">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>

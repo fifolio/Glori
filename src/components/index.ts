@@ -44,3 +44,7 @@ export { default as Settings } from './settings/Settings.tsx';
 
 // Edit 
 export { default as EditDetails } from './edit/Edit.tsx';
+
+// Browse
+export { default as Browse } from './browse/Browse.tsx';
+
