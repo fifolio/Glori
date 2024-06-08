@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // Components
@@ -24,12 +23,9 @@ import {
 import {
     NavigationMenu,
     NavigationMenuContent,
-    // NavigationMenuIndicator,
     NavigationMenuItem,
-    // NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    // NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -47,13 +43,18 @@ import { CgLogOut } from "react-icons/cg";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 
+// STATES
+import useUserState from '@/lib/states/userStates';
+
+
 
 
 export default function Navbar() {
 
 
     // Check if user logged-in
-    const [isUserLoggedIn] = useState<boolean>(true)
+    const { isLoggedin } = useUserState()
+
 
     // Fake Products items for cart
     const cartItems = [{
@@ -112,7 +113,7 @@ export default function Navbar() {
                         <div className='hidden lg:block'>
                             <NavigationMenu>
                                 <NavigationMenuList>
-                                    
+
                                     {/* Discover section */}
                                     {/* <NavigationMenuItem>
                                         <NavigationMenuTrigger className='bg-transparent'>Menu</NavigationMenuTrigger>
@@ -160,7 +161,7 @@ export default function Navbar() {
                                     <NavigationMenuItem>
                                         <NavigationMenuTrigger className='bg-transparent'>Explore Collections</NavigationMenuTrigger>
                                         <NavigationMenuContent>
-                                       
+
                                             <ul className="grid gap-2 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                                 <Link onClick={scrollTopFunc} to="/collections/luxury">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
@@ -286,7 +287,7 @@ export default function Navbar() {
                                                     </Link> 
                                                     
                                                     <DropdownMenuSeparator /> */}
-                                                    
+
                                                     <p className="text-sm font-semibold">Collections</p>
                                                     <Link onClick={scrollTopFunc} to="/collections/luxury">
                                                         <li className='hover:bg-gray-100 hover:font-semibold py-2 px-3 rounded-md'>
@@ -365,7 +366,6 @@ export default function Navbar() {
                         </div>
                     </div>
 
-
                     {/* User section */}
                     <div className="flex items-center space-x-3">
 
@@ -422,61 +422,62 @@ export default function Navbar() {
 
                         </DropdownMenu>
 
-                        {/* Join Now */}
-                        <div className={isUserLoggedIn ? 'hidden' : ''}>
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button className="font-semibold">Join Now</Button>
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-[400px]">
-                                    <Auth />
-                                </DialogContent>
-                            </Dialog>
-                        </div>
+                        {/* Join Now -or- User Panel*/}
+                        {isLoggedin ? (
+                            <div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline">User Name</Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-50">
+                                        <div className="userLoggedin">
+                                            <DropdownMenuLabel>Activities</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
 
-                        {/* User Panel */}
-                        <div className={isUserLoggedIn ? '' : 'hidden'}>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="outline">User Name</Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-50">
-                                    <div className="userLoggedin">
-                                        <DropdownMenuLabel>Activities</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
+                                            <Link to="/sell" onClick={scrollTopFunc}>
+                                                <DropdownMenuItem className="cursor-pointer">
+                                                    <LuPackagePlus className="mr-2" /> Sell Product
+                                                </DropdownMenuItem>
+                                            </Link>
 
-                                        <Link to="/sell" onClick={scrollTopFunc}>
-                                            <DropdownMenuItem className="cursor-pointer">
-                                                <LuPackagePlus className="mr-2" /> Sell Product
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+
+                                                <Link to="/store/id" onClick={scrollTopFunc}>
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <CgProfile className="mr-2" /> My Store
+                                                    </DropdownMenuItem>
+                                                </Link>
+
+                                                <Link to="/settings" onClick={scrollTopFunc}>
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <SlSettings className="mr-2" /> Settings
+                                                    </DropdownMenuItem>
+                                                </Link>
+                                            </DropdownMenuGroup>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem>
+                                                <CgLogOut className="mr-2" /> Log out
                                             </DropdownMenuItem>
-                                        </Link>
-
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuGroup>
-
-                                            <Link to="/store/id" onClick={scrollTopFunc}>
-                                                <DropdownMenuItem className="cursor-pointer">
-                                                    <CgProfile className="mr-2" /> My Store
-                                                </DropdownMenuItem>
-                                            </Link>
-
-                                            <Link to="/settings" onClick={scrollTopFunc}>
-                                                <DropdownMenuItem className="cursor-pointer">
-                                                    <SlSettings className="mr-2" /> Settings
-                                                </DropdownMenuItem>
-                                            </Link>
-                                        </DropdownMenuGroup>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            <CgLogOut className="mr-2" /> Log out
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                    </div>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
+                                            <DropdownMenuSeparator />
+                                        </div>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        ) : (
+                            <div>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button className="font-semibold">Join Now</Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[400px]">
+                                        <Auth />
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+                        )}
 
 
                     </div>

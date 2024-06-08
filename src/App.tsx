@@ -14,7 +14,8 @@ import {
   EditDetails,
   BrowseDetails
 } from "./pages";
-import { Navbar, Footer } from "./components"; 
+import { Navbar, Footer } from "./components";
+import { Toaster } from 'sonner'
 
 export default function App() {
 
@@ -22,6 +23,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <Toaster richColors  />
+      
       <div>
         <Navbar />
         <div className="pb-10"></div>
@@ -41,7 +44,7 @@ export default function App() {
         {/* <Route path='reset' element={<Reset />} /> */}
 
         {/* Custom Routes */}
-        <Route path='collections/:collectionID' element={<Collections />} /> 
+        <Route path='collections/:collectionID' element={<Collections />} />
         <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
         <Route path="store/:id" element={<StoreDetails />} />
         <Route path='edit/:id' element={<EditDetails />} />
