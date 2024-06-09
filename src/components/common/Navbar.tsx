@@ -137,7 +137,7 @@ export default function Navbar() {
     // Get the Logged-in user data everytime component mount
     useEffect(() => {
         getLoggedinUser()
-    }, [])
+    }, [isLoggedin])
 
 
     return (
