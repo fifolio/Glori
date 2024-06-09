@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
 type UserState = {
-    isLoggedin: boolean,
+    isLoggedin: boolean | undefined,
     setIsLoggedin: (state: boolean) => void
 }
 
 const useUserState = create<UserState>((set) => ({
-    isLoggedin: false,
+    isLoggedin: undefined,
     setIsLoggedin: (state) => set({ isLoggedin: state })
 }))
 
