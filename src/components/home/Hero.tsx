@@ -7,6 +7,9 @@ import {
     CarouselContent,
     CarouselItem,
 } from "@/components/ui/carousel"
+import { Skeleton } from "@/components/ui/skeleton"
+
+
 
 // Define the interface for the image data
 interface Images {
@@ -44,7 +47,7 @@ export default function Hero() {
     }, []);
 
 
-    
+
     return (
         <section className="py-12 md:py-24 lg:py-12">
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
@@ -88,7 +91,7 @@ export default function Hero() {
 
                 <Carousel className="w-full hover:cursor-w-resize">
                     <CarouselContent>
-                        {images.map((img) => (
+                        {images ? images.map((img) => (
                             <CarouselItem key={img.id}>
                                 <img
                                     alt="Cozy Blanket"
@@ -98,7 +101,10 @@ export default function Hero() {
                                     width="1200"
                                 />
                             </CarouselItem>
-                        ))}
+                        )) : (
+                            <Skeleton className="h-[400px] w-full rounded-xl" />
+                        )}
+
                     </CarouselContent>
                 </Carousel>
             </div>

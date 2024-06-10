@@ -42,7 +42,6 @@ export default function App() {
     }
 }
 
-
   // Check on the session everything App got mounted
   useEffect(() => {
     sessionCheck()
