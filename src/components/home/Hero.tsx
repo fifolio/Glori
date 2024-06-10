@@ -23,8 +23,9 @@ export default function Hero() {
 
 
     // Store photos from API
-    const [images, setImages] = useState<Images[]>([]);
-
+    const [images, setImages] = useState<Images[]>([]),
+        // Turn Skeleton on/off while loading Hero Carousel
+        [skeleton, setSkeleton] = useState<boolean>(true);
 
     // Store the current month number for the Hero title
     const currentMonth: number = new Date().getMonth();
@@ -41,6 +42,7 @@ export default function Hero() {
                 orientation: 'landscape',
             },
         }).then((res) => {
+            setSkeleton(false)
             setImages(res.data as Images[])
         })
 
@@ -91,7 +93,10 @@ export default function Hero() {
 
                 <Carousel className="w-full hover:cursor-w-resize">
                     <CarouselContent>
-                        {images ? images.map((img) => (
+
+                        <Skeleton className={`h-[400px] w-full rounded-xl ${skeleton ? '' : 'hidden'}`} />
+
+                        {images.map((img) => (
                             <CarouselItem key={img.id}>
                                 <img
                                     alt="Cozy Blanket"
@@ -101,9 +106,7 @@ export default function Hero() {
                                     width="1200"
                                 />
                             </CarouselItem>
-                        )) : (
-                            <Skeleton className="h-[400px] w-full rounded-xl" />
-                        )}
+                        ))}
 
                     </CarouselContent>
                 </Carousel>
