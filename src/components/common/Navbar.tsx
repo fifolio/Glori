@@ -471,8 +471,8 @@ export default function Navbar() {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline">
-                                            <span className={`${logoutSpinner ? 'hidden' : ''}`}>
-                                                {userMetaData.name}
+                                            <span className={`${logoutSpinner ? 'hidden' : ''} capitalize`}>
+                                                {userMetaData.name && 'my account'} 
                                             </span>
 
                                             {/* Get the Loading spinner when logout */}
