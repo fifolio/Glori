@@ -113,11 +113,16 @@ export default function Signup() {
         setShowSignupAlert(false)
     }
 
-
+    // Disable the "Enter" key from submitting a form or doing anything in a form or component
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    }
 
     return (
         <>
-            <form onSubmit={handleSubmit(handleDataSubmit)}>
+            <form onSubmit={handleSubmit(handleDataSubmit)} onKeyDown={handleKeyDown}>
                 <div className="mt-6">
 
                     {/* Alerts */}
@@ -214,7 +219,7 @@ export default function Signup() {
 
                             {/* Handle confirmPassword message Error */}
                             {errors.confirmPassword ? (<p className="text-red-500 text-sm">Passwords do not match. Please re-enter matching passwords.</p>) : null}
-                            
+
                             <div className="w-full">
                                 <p className="text-gray-500 text-sm min-w-fit">
                                     Please enter your 8 characters or more password.

@@ -71,9 +71,18 @@ export default function Login() {
         }
     }
 
+
+    // Disable the "Enter" key from submitting a form or doing anything in a form or component
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    }
+
+
     return (
         <>
-            <div className="mt-6">
+            <div className="mt-6" onKeyDown={handleKeyDown}>
 
                 {/* Email */}
                 <div>
