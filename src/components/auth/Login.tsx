@@ -7,7 +7,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import Loading from "../ui/loading";
+import { LoadingGoogleAccess } from "../ui/loading";
 import { toast } from "sonner";
+
 
 
 // ICONS
@@ -18,6 +20,9 @@ import useSignupData from "@/lib/states/signupData";
 import errorsStore from "@/lib/errors/errorsStore";
 import checkOnAuthErrors from "@/lib/errors/checkOnAuthErrors";
 import useUserState from "@/lib/states/userStates";
+
+// AUTH
+import { googleAuth } from "@/backend/services/auth/googleAuth";
 
 
 
@@ -37,9 +42,11 @@ export default function Login() {
         { setIsLoggedin } = useUserState()
 
     const
-
         // Show Loading Spinner while Submit
-        [loading, setLoading] = useState<boolean>(false);
+        [loading, setLoading] = useState<boolean>(false),
+        // Loading Spinner While Google Auth
+        [loadingGoogleAuth, setLoadingGoogleAuth] = useState<boolean>(false);
+
 
 
     // Handle data submit
@@ -79,6 +86,12 @@ export default function Login() {
         }
     }
 
+    // Handle the Authrization with Google Btn
+    async function handleAuthWithGoogle() {
+        setLoadingGoogleAuth(true)
+        const res = await googleAuth()
+        console.log(res)
+    }
 
     return (
         <>
@@ -143,8 +156,13 @@ export default function Login() {
                 <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            <Button variant="outline" className={`mx-auto w-full`}>
-                <FcGoogle className="mr-2" size="20" /> Continue with Google
+            <Button variant="outline" className={`mx-auto w-full hover:bg-white`} onClick={handleAuthWithGoogle}>
+                {loadingGoogleAuth ?
+                    (<LoadingGoogleAccess />) :
+                    (<span className="flex">
+                        <FcGoogle className="mr-2" size="20" /> Continue with Google
+                    </span>)}
+
             </Button>
         </>
     )

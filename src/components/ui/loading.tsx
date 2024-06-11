@@ -17,3 +17,10 @@ export function LoadingScreen(){
         </div>
     )
 }
+
+export function LoadingGoogleAccess(){
+    return (
+            <img src="/images/LoadingGoogleAuth.gif" className="w-7" />
+    )
+}
+
