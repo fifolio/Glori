@@ -72,9 +72,9 @@ export default function Store() {
 
                 {/* Edit Profile + Sell New Perfume*/}
                 <div className="flex flex-col md:flex-row justify-center md:space-x-3 space-y-3 md:space-y-0 md:mt-0 w-full md:w-fit">
-                    <Link to="/settings" className="w-fit mx-auto md:mx-0">
+                    <Link to="/update" className="w-fit mx-auto md:mx-0">
                         <Button variant="outline" className="text-sm w-fit">
-                            Edit Profile
+                            Update board
                         </Button>
                     </Link>
                     <Link to="/sell" className="w-fit mx-auto md:mx-0">

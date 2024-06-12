@@ -13,7 +13,9 @@ import {
   SellDetails,
   SettingsDetails,
   EditDetails,
-  BrowseDetails
+  BrowseDetails,
+  UpdateDetails,
+  CreateDetails
 } from "./pages";
 import { Toaster } from 'sonner'
 import { Navbar, Footer } from "./components";
@@ -71,6 +73,7 @@ export default function App() {
             <Route path='contact' element={<Contact />} />
             <Route path='cart' element={<CartDetails />} />
             <Route path='sell' element={<SellDetails />} />
+            <Route path='update' element={<UpdateDetails />} />
             <Route path='settings' element={<SettingsDetails />} />
             <Route path='collections' element={<BrowseDetails />} />
             <Route path='reset' element={isLoggedin ? <Navigate to="/" /> : <ResetDetails />} />
@@ -78,6 +81,7 @@ export default function App() {
             {/* Custom Routes */}
             <Route path='collections/:collectionID' element={<Collections />} />
             <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
+            <Route path="store/create" element={<CreateDetails />} />
             <Route path="store/:id" element={<StoreDetails />} />
             <Route path='edit/:id' element={<EditDetails />} />
 

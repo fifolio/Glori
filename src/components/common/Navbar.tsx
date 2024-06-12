@@ -1,4 +1,4 @@
-import { Models} from 'appwrite';
+import { Models } from 'appwrite';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 
@@ -40,11 +40,15 @@ import Loading from '../ui/loading';
 // ICONS
 import { CiSearch } from "react-icons/ci";
 import { LuPackagePlus } from "react-icons/lu";
-import { CgProfile } from "react-icons/cg";
 import { SlSettings } from "react-icons/sl";
 import { CgLogOut } from "react-icons/cg";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { FaStoreAlt } from "react-icons/fa";
+import { RiGalleryView2 } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
+import { FcCallback } from "react-icons/fc";
+import { FcAbout } from "react-icons/fc";
 
 // STATES
 import useUserState from '@/lib/states/userStates';
@@ -469,10 +473,12 @@ export default function Navbar() {
                         {isLoggedin ? (
                             <div>
                                 <DropdownMenu>
+
+                                    {/* My Account */}
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline">
                                             <span className={`${logoutSpinner ? 'hidden' : ''} capitalize`}>
-                                                {userMetaData.name && 'my account'} 
+                                                {userMetaData.name && 'my account'}
                                             </span>
 
                                             {/* Get the Loading spinner when logout */}
@@ -482,8 +488,11 @@ export default function Navbar() {
                                         </Button>
 
                                     </DropdownMenuTrigger>
+
                                     <DropdownMenuContent className="w-50">
+
                                         <div className="userLoggedin">
+
                                             <DropdownMenuLabel>Activities</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
 
@@ -493,17 +502,44 @@ export default function Navbar() {
                                                 </DropdownMenuItem>
                                             </Link>
 
+                                            <Link to="/cart" >
+                                                <DropdownMenuItem className="cursor-pointer">
+                                                    <RiShoppingCartLine className="mr-2" /> Go to Cart
+                                                </DropdownMenuItem>
+                                            </Link>
+
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuLabel>My Store</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+
+                                                <div className="">
+                                                    <Link to="/store/create" onClick={scrollTopFunc}>
+                                                        <DropdownMenuItem className="cursor-pointer">
+                                                            <FaStoreAlt className="mr-2" /> Create Store
+                                                        </DropdownMenuItem>
+                                                    </Link>
+                                                </div>
+
+                                                <div className="">
+                                                    <Link to="/store/id" onClick={scrollTopFunc}>
+                                                        <DropdownMenuItem className="cursor-pointer">
+                                                            <RiGalleryView2 className="mr-2" /> View Store
+                                                        </DropdownMenuItem>
+                                                    </Link>
+
+                                                    <Link to="/update" onClick={scrollTopFunc}>
+                                                        <DropdownMenuItem className="cursor-pointer">
+                                                            <FiEdit className="mr-2" /> Update board
+                                                        </DropdownMenuItem>
+                                                    </Link>
+                                                </div>
+                                            </DropdownMenuGroup>
+
                                             <DropdownMenuSeparator />
                                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
-
-                                                <Link to="/store/id" onClick={scrollTopFunc}>
-                                                    <DropdownMenuItem className="cursor-pointer">
-                                                        <CgProfile className="mr-2" /> My Store
-                                                    </DropdownMenuItem>
-                                                </Link>
-
                                                 <Link to="/settings" onClick={scrollTopFunc}>
                                                     <DropdownMenuItem className="cursor-pointer">
                                                         <SlSettings className="mr-2" /> Settings
@@ -514,6 +550,24 @@ export default function Navbar() {
                                             <DropdownMenuItem className='text-red-500 cursor-pointer' onClick={handleLogout}>
                                                 <CgLogOut className="mr-2" /> Log out
                                             </DropdownMenuItem>
+
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuLabel>Need Help?</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+
+                                                <Link to="/contact" onClick={scrollTopFunc}>
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <FcCallback  className="mr-2" /> Contact Us
+                                                    </DropdownMenuItem>
+                                                </Link>
+
+                                                <Link to="/about" onClick={scrollTopFunc}>
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <FcAbout  className="mr-2" /> About
+                                                    </DropdownMenuItem>
+                                                </Link>
+                                            </DropdownMenuGroup>
                                         </div>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
