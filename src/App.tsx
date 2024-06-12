@@ -28,7 +28,7 @@ export default function App() {
   const [activeLoadingScreen, setActiveLoadingScreen] = useState<boolean>(true);
 
   // Get the userState that tracks wether of User is Logged in or Not
-  const { setIsLoggedin } = useUserState();
+  const {isLoggedin, setIsLoggedin } = useUserState();
 
   // Set a func. to check if there's an active session by calling the checkSession() and check it's returns
   async function sessionCheck() {
@@ -73,7 +73,7 @@ export default function App() {
             <Route path='sell' element={<SellDetails />} />
             <Route path='settings' element={<SettingsDetails />} />
             <Route path='collections' element={<BrowseDetails />} />
-            <Route path='reset' element={<ResetDetails />} />
+            <Route path='reset' element={isLoggedin ? <Navigate to="/" /> : <ResetDetails />} />
 
             {/* Custom Routes */}
             <Route path='collections/:collectionID' element={<Collections />} />
