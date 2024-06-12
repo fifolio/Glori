@@ -94,7 +94,7 @@ export default function Hero() {
                 <Carousel className="w-full hover:cursor-w-resize">
                     <CarouselContent>
 
-                        <Skeleton className={`h-[400px] w-full rounded-xl ${skeleton ? '' : 'hidden'}`} />
+                        <Skeleton className={`md:h-[400px] h-[155px] w-full rounded-xl ${skeleton ? '' : 'hidden'}`} />
 
                         {images.map((img) => (
                             <CarouselItem key={img.id}>

@@ -222,7 +222,7 @@ export default function Signup() {
 
                             <div className="w-full">
                                 <p className="text-gray-500 text-sm min-w-fit">
-                                    Please enter your 8 characters or more password.
+                                Please enter your <span className="text-orange-600">8 characters</span> or more password.
                                 </p>
                             </div>
                         </div>
@@ -231,7 +231,7 @@ export default function Signup() {
                         <div className="flex items-center mt-6 space-x-3">
 
                             {/* Go to Login */}
-                            <Button variant="outline" disabled={loading} className="border-gray-400"
+                            <Button disabled={loading} className="bg-blue-600 hover:bg-blue-800 shadow-md transition"
                                 onClick={backToLogin}>
                                 Go to Login
                             </Button>

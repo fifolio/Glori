@@ -12,7 +12,7 @@ export default function Loading({ w }: Loading) {
 
 export function LoadingScreen(){
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <div className="w-full h-screen flex justify-center items-center">
             <img src="/images/loading.gif" className="w-10" />
         </div>
     )

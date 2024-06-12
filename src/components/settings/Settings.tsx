@@ -92,7 +92,7 @@ export default function Settings() {
                                 </div>
                             </div>
                         </div>
-                        <Button type="submit" className="justify-self-end bg-blue-700 hover:bg-blue-800">
+                        <Button type="submit" className="justify-self-end bg-blue-600 hover:bg-blue-800 transition">
                             Save Changes
                         </Button>
                     </form>

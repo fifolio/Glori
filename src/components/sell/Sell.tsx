@@ -277,7 +277,7 @@ export default function Sell() {
                                     </div>
                                 </div>
                             </div>
-                            <Button type="submit" className="w-full mt-6 bg-blue-700 hover:bg-blue-800 ">
+                            <Button type="submit" className="w-full mt-6 bg-blue-600 hover:bg-blue-800 transition">
                                 Sell Chanel No.5 Now <TbCubeSend size="24" className="ml-3"/>
                             </Button>
                         </form>

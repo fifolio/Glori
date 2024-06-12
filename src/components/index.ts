@@ -48,3 +48,8 @@ export { default as EditDetails } from './edit/Edit.tsx';
 // Browse
 export { default as Browse } from './browse/Browse.tsx';
 
+// Reset 
+export { default as Reset } from './reset/Reset.tsx';
+export { default as CompleteReset } from './reset/CompleteReset.tsx';
+
+

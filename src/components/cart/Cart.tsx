@@ -220,7 +220,7 @@ export default function Cart() {
                             Continue Shopping
                         </Button>
                     </Link>
-                    <Button size="lg" className='bg-blue-700 hover:bg-blue-800 border-0 rounded-md'>
+                    <Button size="lg" className='bg-blue-600 hover:bg-blue-800 transition border-0 rounded-md'>
                         Checkout Now
                     </Button>
                 </div>

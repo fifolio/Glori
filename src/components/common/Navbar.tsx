@@ -141,8 +141,8 @@ export default function Navbar() {
 
 
     return (
-        <div className="md:container container-fluid fixed min-w-full bg-white z-50">
-            <nav>
+        <div className="md:container container-fluid fixed min-w-full backdrop-blur-sm bg-white/90 z-50 ">
+            <nav className="">
                 <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-3">
 
                     {/* Logo + Main section */}

@@ -233,7 +233,7 @@ export default function Edit() {
                                         Cancel
                                     </Button>
                                 </Link>
-                                <Button type="submit" className="w-full bg-blue-700 hover:bg-blue-800 ">
+                                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-800 transition">
                                     Save Updates
                                 </Button>
                             </div>

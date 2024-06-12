@@ -20,6 +20,7 @@ import { Navbar, Footer } from "./components";
 import { checkSession } from "./backend/services/auth/checkSession";
 import useUserState from "./lib/states/userStates";
 import { LoadingScreen } from "@/components/ui/loading";
+import ResetDetails from "./pages/ResetDetails";
 
 export default function App() {
 
@@ -32,20 +33,21 @@ export default function App() {
   // Set a func. to check if there's an active session by calling the checkSession() and check it's returns
   async function sessionCheck() {
     try {
-        const response = await checkSession();
-        setIsLoggedin(response);
+      const response = await checkSession();
+      setIsLoggedin(response);
     } catch (error) {
-        console.error('Error checking session:', error);
-        setIsLoggedin(false);
+      console.error('Error checking session:', error);
+      setIsLoggedin(false);
     } finally {
-        setActiveLoadingScreen(false);
+      setActiveLoadingScreen(false);
     }
-}
+  }
 
   // Check on the session everything App got mounted
   useEffect(() => {
     sessionCheck()
   }, []);
+
 
   return (
     <>
@@ -71,7 +73,7 @@ export default function App() {
             <Route path='sell' element={<SellDetails />} />
             <Route path='settings' element={<SettingsDetails />} />
             <Route path='collections' element={<BrowseDetails />} />
-            {/* <Route path='reset' element={<Reset />} /> */}
+            <Route path='reset' element={<ResetDetails />} />
 
             {/* Custom Routes */}
             <Route path='collections/:collectionID' element={<Collections />} />
