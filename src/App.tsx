@@ -30,9 +30,9 @@ export default function App() {
   const [activeLoadingScreen, setActiveLoadingScreen] = useState<boolean>(true);
 
   // Get the userState that tracks wether of User is Logged in or Not
-  const {isLoggedin, setIsLoggedin } = useUserState();
+  const { isLoggedin, setIsLoggedin } = useUserState();
 
-  // Set a func. to check if there's an active session by calling the checkSession() and check it's returns
+  // Check if there's an active session by calling the checkSession() and check it's returns
   async function sessionCheck() {
     try {
       const response = await checkSession();
@@ -70,20 +70,22 @@ export default function App() {
             <Route path='*' element={<Error />} />
             <Route path='policies' element={<Policies />} />
             <Route path='about' element={<AboutDetails />} />
-            <Route path='contact' element={<Contact />} />
             <Route path='cart' element={<CartDetails />} />
-            <Route path='sell' element={<SellDetails />} />
-            <Route path='update' element={<UpdateDetails />} />
-            <Route path='settings' element={<SettingsDetails />} />
             <Route path='collections' element={<BrowseDetails />} />
-            <Route path='reset' element={isLoggedin ? <Navigate to="/" /> : <ResetDetails />} />
+            <Route path='reset' element={<ResetDetails />} />
+            <Route path='contact' element={<Contact />} />
+
+            {/* If Not Logged-in */}
+            <Route path='update' element={isLoggedin ? <UpdateDetails /> : <Navigate to="/" />} />
+            <Route path='settings' element={isLoggedin ? <SettingsDetails /> : <Navigate to="/" />} />
+            <Route path='sell' element={isLoggedin ? <SellDetails /> : <Navigate to="/" />} />
+            <Route path="store/create" element={isLoggedin ? <CreateDetails /> : <Navigate to="/" />} />
+            <Route path='edit/:id' element={isLoggedin ? <EditDetails /> : <Navigate to="/" />} />
 
             {/* Custom Routes */}
             <Route path='collections/:collectionID' element={<Collections />} />
             <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
-            <Route path="store/create" element={<CreateDetails />} />
             <Route path="store/:id" element={<StoreDetails />} />
-            <Route path='edit/:id' element={<EditDetails />} />
 
             {/* Redirect Routes */}
             <Route path="perfumes" element={<Navigate to="/" />} />

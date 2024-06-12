@@ -54,7 +54,7 @@ export default function Login() {
         setLoading(true)
 
         try {
-            const results = await login({ email: email, password: password });
+            const results = await login({ email: email.toLowerCase(), password: password });
 
             // Check on Errors store if there's a match to the Error occurred, 
             // if there's any, error type must be send to checkOnAuthError and return with its error description

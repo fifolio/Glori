@@ -84,7 +84,7 @@ export default function Signup() {
         setLoading(true)
 
         try {
-            const results = await signup({ email: data.email, password: data.password, username: data.username });
+            const results = await signup({ email: data.email.toLowerCase(), password: data.password, username: data.username });
 
             // Check on Errors store if there's a match to the Error occurred, 
             // if there's any, error type must be send to checkOnAuthError and return with its error description
