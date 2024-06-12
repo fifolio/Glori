@@ -72,7 +72,6 @@ export default function Navbar() {
         name: ''
     });
 
-    // console.log('meta data: ', userMetaData)
 
     // Check if user logged-in
     const { isLoggedin, setIsLoggedin } = useUserState()

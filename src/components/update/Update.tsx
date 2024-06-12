@@ -17,7 +17,7 @@ export default function Update() {
             <div className="grid gap-4 lg:grid-cols-2 md:gap-12">
                 <div className="grid gap-6">
 
-                    {/* Profile Editing */}
+                    {/* store Editing */}
                     <div className="grid gap-2">
                         <h1 className="text-3xl font-bold">Update Store Settings</h1>
                         <p className="text-gray-500 dark:text-gray-400">
@@ -37,10 +37,10 @@ export default function Update() {
                                     </div>
                                 </div>
                                 <div className="grid gap-2 mb-3">
-                                    <Label htmlFor="profile-picture">Brand Picture</Label>
+                                    <Label htmlFor="store-logo">Brand Logo</Label>
                                     <div className="flex items-center justify-center border border-gray-200 rounded-lg h-32 dark:border-gray-800">
-                                        <input type="file" id="profile-picture" className="hidden" />
-                                        <label htmlFor="profile-picture" className="cursor-pointer">
+                                        <input type="file" id="store-logo" className="hidden" />
+                                        <label htmlFor="store-logo" className="cursor-pointer">
                                             <MdAddPhotoAlternate className="w-20 h-20 text-gray-500" />
                                         </label>
                                     </div>
@@ -113,9 +113,9 @@ export default function Update() {
                                 </p>
                             </div>
                             <div className="grid gap-2">
-                                <h4 className="text-md font-bold">Why should I upload a brand picture?</h4>
+                                <h4 className="text-md font-bold">Why should I upload a brand Logo?</h4>
                                 <p className="text-gray-500 text-[15px]">
-                                    A brand picture adds a professional touch to your profile, making it more relatable and trustworthy. It helps buyers feel more connected to your brand and can improve your credibility on the platform.
+                                    A brand Logo adds a professional touch to your store, making it more relatable and trustworthy. It helps buyers feel more connected to your brand and can improve your credibility on the platform.
                                 </p>
                             </div>
                             <div className="grid gap-2">
@@ -133,19 +133,19 @@ export default function Update() {
                             <div className="grid gap-2">
                                 <h4 className="text-md font-bold">Why is updating my store phone number necessary?</h4>
                                 <p className="text-gray-500 text-[15px]">
-                                    Updating your phone number ensures that you can be reached quickly for urgent communications regarding your listings and sales. It enhances the overall responsiveness and reliability of your profile.
+                                    Updating your phone number ensures that you can be reached quickly for urgent communications regarding your listings and sales. It enhances the overall responsiveness and reliability of your store.
                                 </p>
                             </div>
                             <div className="grid gap-2">
                                 <h4 className="text-md font-bold">Why should I add my store website URL?</h4>
                                 <p className="text-gray-500 text-[15px]">
-                                    Adding your website URL gives buyers a chance to learn more about you and your other offerings. It can drive additional traffic to your site and provide more credibility to your profile.
+                                    Adding your website URL gives buyers a chance to learn more about you and your other offerings. It can drive additional traffic to your site and provide more credibility to your store.
                                 </p>
                             </div>
                             <div className="grid gap-2">
                                 <h4 className="text-md font-bold">Why is it beneficial to update my social media links?</h4>
                                 <p className="text-gray-500 text-[15px]">
-                                    Linking your store social media profiles helps build a stronger connection with your buyers. It allows them to follow your updates, engage with your content, and become part of your community, potentially increasing your sales and brand loyalty.
+                                    Linking your store social media stores helps build a stronger connection with your buyers. It allows them to follow your updates, engage with your content, and become part of your community, potentially increasing your sales and brand loyalty.
                                 </p>
                             </div>
                         </div>

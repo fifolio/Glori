@@ -156,6 +156,30 @@ export default function Settings() {
                 </div>
             </div>
 
+            <Separator className="mt-16 w-52 mx-auto" />
+
+            {/* Store Settings */}
+            <div className="space-y-8">
+                <h1 className="text-3xl font-bold mt-10">Store Settings</h1>
+
+                {/* Delete Your Store */}
+                <div>
+                    <div className="flex flex-col sm:flex-row items-center justify-between mb-10">
+                        <div className="w-full">
+                            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-50">Delete Your Store</h3>
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                            Deleting your store will remove all its data permanently.
+                            </p>
+                        </div>
+                        <div className="sm:mt-0 mt-3 w-full sm:w-fit">
+                            <Button className="w-full sm:w-fit" variant="destructive">Delete Your Store</Button>
+                        </div>
+                    </div>
+                </div>
+
+                 
+            </div>
+
         </div>
     )
 }
