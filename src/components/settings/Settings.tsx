@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "../ui/separator";
+import { Link } from "react-router-dom";
 
 export default function Settings() {
 
@@ -49,7 +50,9 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
+                            <Link to="/reset">
                             <Button className="w-full sm:w-fit">Reset Password</Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

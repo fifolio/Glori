@@ -36,6 +36,16 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import Loading from '../ui/loading';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 // ICONS
 import { CiSearch } from "react-icons/ci";
@@ -65,12 +75,10 @@ import { getUserMetaData } from '@/backend/services/user/getUser';
 export default function Navbar() {
 
     // Turn on/off the Loading Spinner while Logging-out
-    const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false)
-
-    // Store the logged-in user meta data
-    const [userMetaData, setUserMetaData] = useState<Models.Preferences>({
-        name: ''
-    });
+ const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
+        // Store the logged-in user meta data
+        [userMetaData, setUserMetaData] = useState<Models.Preferences>({}),
+        [isVerified, setIsVerified] = useState<boolean>(true);
 
 
     // Check if user logged-in
@@ -145,6 +153,35 @@ export default function Navbar() {
 
     return (
         <div className="md:container container-fluid fixed min-w-full backdrop-blur-sm bg-white/90 z-50 ">
+
+            {/* Verify Alert */}
+            {isLoggedin === true && !userMetaData.emailVerification ? (
+                <AlertDialog open={isVerified}>
+                    <AlertDialogContent>
+                        <AlertDialogHeader className='w-full'>
+                            <AlertDialogTitle className='mx-auto'>Verify Your Account</AlertDialogTitle>
+                            <AlertDialogDescription className='text-center'>
+                                <div>
+                                    <img src="/images/verify.png" alt="verification.png" className="w-[300px] mx-auto my-4" />
+                                </div>
+                                <p>
+                                    Your account is not verified yet. Please verify your account in the <span className='text-black'>settings</span> to access all features.
+                                </p>
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className='flex flex-row items-end space-x-3'>
+                            <AlertDialogCancel onClick={() => setIsVerified(false)}>Remember me later</AlertDialogCancel>
+                            <Link to="/settings" className="w-full">
+                                <AlertDialogAction className="min-w-full" onClick={() => setIsVerified(false)}>Verify Now</AlertDialogAction>
+                            </Link>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            ) : (
+                null
+            )
+            }
+
             <nav className="">
                 <div className="max-w-screen-xl flex flex-row justify-between mx-auto px-4 py-3">
 
@@ -557,13 +594,13 @@ export default function Navbar() {
 
                                                 <Link to="/contact" onClick={scrollTopFunc}>
                                                     <DropdownMenuItem className="cursor-pointer">
-                                                        <FcCallback  className="mr-2" /> Contact Us
+                                                        <FcCallback className="mr-2" /> Contact Us
                                                     </DropdownMenuItem>
                                                 </Link>
 
                                                 <Link to="/about" onClick={scrollTopFunc}>
                                                     <DropdownMenuItem className="cursor-pointer">
-                                                        <FcAbout  className="mr-2" /> About
+                                                        <FcAbout className="mr-2" /> About
                                                     </DropdownMenuItem>
                                                 </Link>
                                             </DropdownMenuGroup>
@@ -588,6 +625,6 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
-        </div>
+        </div >
     )
 }

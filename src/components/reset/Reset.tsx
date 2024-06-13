@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -20,9 +20,12 @@ import {
 } from "@/components/ui/alert-dialog"
 import { toast } from 'sonner'
 
-
 // AUTH
 import resetPassword from '@/backend/services/auth/resetPassword'
+import { getUserMetaData } from '@/backend/services/user/getUser'
+
+// STATES
+import useUserState from '@/lib/states/userStates'
 
 type FormDataTypes = {
     "email": string
@@ -30,10 +33,11 @@ type FormDataTypes = {
 
 export default function Reset() {
 
-
-
     // Update the page title
     document.title = `Glori | Password Reset`;
+
+     // Check if user logged-in
+     const { isLoggedin } = useUserState()
 
     // Loading State while handling the submit
     const [loading, setLoading] = useState<boolean>(false),
@@ -41,7 +45,19 @@ export default function Reset() {
         [isOpen, setIsOpen] = useState<boolean>(false);
 
     // Store input email value
-    const [email, setEmail] = useState<string>('');
+    const [email, setEmail] = useState<string>(''),
+        // Store the user email to display above the input
+        [userEmail, setUserEmail] = useState<string>('');
+
+    // Get the logged in user data Then get the email and pass it as a value to display above input
+    async function getLoggedinUser() {
+        const userMetaData = await getUserMetaData()
+        userMetaData ? setUserEmail(userMetaData.email) : null
+    }
+    useEffect(() => {
+        getLoggedinUser()
+    }, [isLoggedin])
+
 
     // form validation
     const schema = yup.object().shape({
@@ -70,7 +86,6 @@ export default function Reset() {
             toast.error("Oops!, We couldn't find an account associated with that email address.")
             setLoading(false)
         }
-
     }
 
     return (
@@ -83,11 +98,19 @@ export default function Reset() {
             </div>
             <form onSubmit={handleSubmit(handleResetPasswordSubmit)} className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="email@example.com" required onChange={handleEmailChange} />
+                    <div className='flex flex-row w-full justify-between'>
+                        <Label htmlFor="email">Email</Label>
+                        <Label className={`cursor-text ${isLoggedin ? '' : 'hidden'}`}>
+                            {isLoggedin ? userEmail : (<Loading w={15} />)}
+                        </Label>
+                    </div>
+                    <Input id="email" type="email" placeholder="email@example.com" required onChange={handleEmailChange} className="text-black" />
                     {/* Handle email message Error */}
-                    {errors.email?.message}
+                    <p className="text-sm text-red-500">
+                        {errors.email?.message}
+                    </p>
                 </div>
+
                 <Button type="submit" className="w-full">
                     {loading ? (<Loading w={24} />) : 'Send Password Reset Link'}
                 </Button>
