@@ -11,6 +11,7 @@ export default function Settings() {
     // Update the page title
     document.title = `Glori | Settings`;
 
+
     const disabledBtn: boolean = false;
 
     return (
@@ -30,12 +31,14 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
+                            <Link to="/verify">
                             <Button className="w-full sm:w-fit" variant={disabledBtn ? 'outline' : 'default'} disabled={disabledBtn ? true : false}>{disabledBtn ? (
                                 <span className="flex items-center space-x-2">
                                     <div className="h-2 w-2 rounded-full bg-green-500" />
                                     <span className="text-sm font-medium text-black">Verified</span>
                                 </span>
-                            ) : 'Verify Account'}</Button>
+                            ) : 'Start Verification'}</Button>
+                            </Link>
                         </div>
                     </div>
                 </div>

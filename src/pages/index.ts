@@ -1,4 +1,5 @@
 export { default as Home } from './Home';
+export { default as VerifyDetails } from './VerifyDetails';
 export { default as StoreDetails } from './StoreDetails';
 export { default as CreateDetails } from './CreateDetails';
 export { default as SellDetails } from './SellDetails';

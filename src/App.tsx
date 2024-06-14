@@ -15,7 +15,8 @@ import {
   EditDetails,
   BrowseDetails,
   UpdateDetails,
-  CreateDetails
+  CreateDetails,
+  VerifyDetails,
 } from "./pages";
 import { Toaster } from 'sonner'
 import { Navbar, Footer } from "./components";
@@ -74,6 +75,7 @@ export default function App() {
             <Route path='collections' element={<BrowseDetails />} />
             <Route path='reset' element={<ResetDetails />} />
             <Route path='contact' element={<Contact />} />
+            <Route path='verify' element={<VerifyDetails />} />
 
             {/* If Not Logged-in */}
             <Route path='update' element={isLoggedin ? <UpdateDetails /> : <Navigate to="/" />} />

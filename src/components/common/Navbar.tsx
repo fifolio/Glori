@@ -171,7 +171,7 @@ export default function Navbar() {
                         </AlertDialogHeader>
                         <AlertDialogFooter className='flex flex-row items-end space-x-3'>
                             <AlertDialogCancel onClick={() => setIsVerified(false)}>Remember me later</AlertDialogCancel>
-                            <Link to="/settings" className="w-full">
+                            <Link to="/verify" className="w-full">
                                 <AlertDialogAction className="min-w-full" onClick={() => setIsVerified(false)}>Verify Now</AlertDialogAction>
                             </Link>
                         </AlertDialogFooter>

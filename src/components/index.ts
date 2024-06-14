@@ -55,5 +55,11 @@ export { default as CompleteReset } from './reset/CompleteReset.tsx';
 // Update
 export { default as Update } from './update/Update.tsx';
 
+// Verify
+export { default as Verify } from './verify/Verify.tsx';
+export { default as CompleteVerify } from './verify/CompleteVerify.tsx';
+
+
+
 
 
