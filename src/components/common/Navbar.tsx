@@ -62,6 +62,7 @@ import { FcAbout } from "react-icons/fc";
 
 // STATES
 import useUserState from '@/lib/states/userStates';
+import useVerificationAlertState from '@/lib/states/verificationAlert';
 
 // AUTH
 import { logout } from '@/backend/services/auth/logout';
@@ -75,10 +76,11 @@ import { getUserMetaData } from '@/backend/services/user/getUser';
 export default function Navbar() {
 
     // Turn on/off the Loading Spinner while Logging-out
- const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
+    const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
         // Store the logged-in user meta data
         [userMetaData, setUserMetaData] = useState<Models.Preferences>({}),
-        [isVerified, setIsVerified] = useState<boolean>(true);
+        [isVerified, setIsVerified] = useState<boolean>(true),
+        { isOpen, setIsOpen } = useVerificationAlertState();
 
 
     // Check if user logged-in
@@ -141,8 +143,17 @@ export default function Navbar() {
 
     // Get the logged in user data
     async function getLoggedinUser() {
-        const userMetaData = await getUserMetaData()
-        userMetaData ? setUserMetaData(userMetaData) : console.log('meta data not ready')
+        const userMetaData = await getUserMetaData();
+        if (userMetaData) {
+            setUserMetaData(userMetaData);
+            if(userMetaData.emailVerification === false){
+                setIsOpen(true);
+            } else {
+                setIsOpen(false);
+            }
+        } else {
+            console.log('meta data not ready');
+        }
     }
 
     // Get the Logged-in user data everytime component mount
@@ -155,8 +166,8 @@ export default function Navbar() {
         <div className="md:container container-fluid fixed min-w-full backdrop-blur-sm bg-white/90 z-50 ">
 
             {/* Verify Alert */}
-            {isLoggedin === true && !userMetaData.emailVerification ? (
-                <AlertDialog open={isVerified}>
+            {isLoggedin === true && userMetaData.emailVerification === false ? (
+                <AlertDialog open={isVerified && isOpen ? true : false}>
                     <AlertDialogContent>
                         <AlertDialogHeader className='w-full'>
                             <AlertDialogTitle className='mx-auto'>Verify Your Account</AlertDialogTitle>

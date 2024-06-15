@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { checkSession } from "./backend/services/auth/checkSession";
+
+// LIB
+import useUserState from "./lib/states/userStates";
+import useUserVerificationState from "./lib/states/userVerificationState";
+
+// UI
+import { Navbar, Footer } from "./components";
+import { LoadingScreen } from "@/components/ui/loading";
+import { Toaster } from 'sonner'
+
+// PAGES
 import {
   Home,
   PerfumeDetails,
@@ -18,12 +30,9 @@ import {
   CreateDetails,
   VerifyDetails,
 } from "./pages";
-import { Toaster } from 'sonner'
-import { Navbar, Footer } from "./components";
-import { checkSession } from "./backend/services/auth/checkSession";
-import useUserState from "./lib/states/userStates";
-import { LoadingScreen } from "@/components/ui/loading";
 import ResetDetails from "./pages/ResetDetails";
+
+
 
 export default function App() {
 
@@ -32,6 +41,9 @@ export default function App() {
 
   // Get the userState that tracks wether of User is Logged in or Not
   const { isLoggedin, setIsLoggedin } = useUserState();
+
+  // Update the Verification State
+  const { isVerified } = useUserVerificationState();
 
   // Check if there's an active session by calling the checkSession() and check it's returns
   async function sessionCheck() {
@@ -50,6 +62,7 @@ export default function App() {
   useEffect(() => {
     sessionCheck()
   }, []);
+
 
 
   return (
@@ -75,9 +88,11 @@ export default function App() {
             <Route path='collections' element={<BrowseDetails />} />
             <Route path='reset' element={<ResetDetails />} />
             <Route path='contact' element={<Contact />} />
-            <Route path='verify' element={<VerifyDetails />} />
 
-            {/* If Not Logged-in */}
+            {/* Verification Check */}
+            <Route path='verify' element={ isVerified ? <VerifyDetails /> : <Navigate to="/" />} />
+
+            {/* If NOT Logged-in */}
             <Route path='update' element={isLoggedin ? <UpdateDetails /> : <Navigate to="/" />} />
             <Route path='settings' element={isLoggedin ? <SettingsDetails /> : <Navigate to="/" />} />
             <Route path='sell' element={isLoggedin ? <SellDetails /> : <Navigate to="/" />} />

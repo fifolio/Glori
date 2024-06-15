@@ -1,18 +1,38 @@
-// import { useState } from "react"
+import { useEffect, useState } from "react";
+import { getUserMetaData } from "@/backend/services/user/getUser";
+import useUserVerificationState from "@/lib/states/userVerificationState";
 
 // UI
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "../ui/separator";
 import { Link } from "react-router-dom";
+import Loading from "../ui/loading";
 
 export default function Settings() {
 
     // Update the page title
     document.title = `Glori | Settings`;
 
+    const [loading, setLoading] = useState<boolean>(true);
+    // Update the Verification State
+    const {isVerified, setIsVerified } = useUserVerificationState();
 
-    const disabledBtn: boolean = false;
+
+    // check user Verification state
+    async function checkVerification() {
+        const res = await getUserMetaData()
+        res && setIsVerified(res.emailVerification)
+        res && setIsVerified(res.emailVerification)
+        setLoading(false)
+    }
+
+
+    useEffect(() => {
+        checkVerification();
+    }, [])
+
+
 
     return (
         <div className="w-full max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -20,6 +40,8 @@ export default function Settings() {
             {/* Basic Account Settings */}
             <div className="space-y-8">
                 <h1 className="text-3xl font-bold mb-10 mt-5">Account Settings</h1>
+
+                <Separator className="mt-16 w-52 mx-auto" />
 
                 {/* Verify Your Account */}
                 <div>
@@ -31,17 +53,21 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Link to="/verify">
-                            <Button className="w-full sm:w-fit" variant={disabledBtn ? 'outline' : 'default'} disabled={disabledBtn ? true : false}>{disabledBtn ? (
-                                <span className="flex items-center space-x-2">
-                                    <div className="h-2 w-2 rounded-full bg-green-500" />
-                                    <span className="text-sm font-medium text-black">Verified</span>
-                                </span>
-                            ) : 'Start Verification'}</Button>
+                            <Link to={isVerified ? '#' : '/verify'} className={`${isVerified ? 'cursor-text' : ''}`}>
+                                <Button className="w-full sm:w-fit" variant={isVerified ? 'outline' : 'default'} disabled={isVerified ? true : false}>{isVerified ? (
+                                    <span className="flex items-center space-x-2">
+                                        <div className="h-2 w-2 rounded-full bg-green-500" />
+                                        <span className="text-sm font-medium text-black">Verified</span>
+                                    </span>
+                                ) :
+                                    loading ? <Loading w={24} /> : 'Start Verification'
+                                }</Button>
                             </Link>
                         </div>
                     </div>
                 </div>
+
+                <Separator className="mt-16 w-52 mx-auto" />
 
                 {/* Reset Password */}
                 <div>
@@ -54,7 +80,7 @@ export default function Settings() {
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
                             <Link to="/reset">
-                            <Button className="w-full sm:w-fit">Reset Password</Button>
+                                <Button className="w-full sm:w-fit">Reset Password</Button>
                             </Link>
                         </div>
                     </div>
@@ -123,6 +149,25 @@ export default function Settings() {
                 </div>
             </div>
 
+            <Separator className="mt-16 w-52 mx-auto" />
+
+            {/* Delete Your Store */}
+            <div className="space-y-8 mt-10">
+                <div>
+                    <div className="flex flex-col sm:flex-row items-center justify-between mb-10">
+                        <div className="w-full">
+                            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-50">Delete Your Account</h3>
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                Deleting your account will remove all its data permanently.
+                            </p>
+                        </div>
+                        <div className="sm:mt-0 mt-3 w-full sm:w-fit">
+                            <Button className="w-full sm:w-fit" variant="destructive">Delete Your Account</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <Separator className="my-16 w-52 mx-auto" />
 
             {/* Basic Account Settings */}
@@ -174,7 +219,7 @@ export default function Settings() {
                         <div className="w-full">
                             <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-50">Delete Your Store</h3>
                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                            Deleting your store will remove all its data permanently.
+                                Deleting your store will remove all its data permanently.
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
@@ -183,8 +228,10 @@ export default function Settings() {
                     </div>
                 </div>
 
-                 
+
             </div>
+
+
 
         </div>
     )

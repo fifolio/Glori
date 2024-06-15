@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-// UI
-import { CompleteVerify, Verify } from "@/components";
-// import { LoadingScreen } from '@/components/ui/loading';
-
 // STATES
 import useUserState from '@/lib/states/userStates';
+
+// UI
+import { CompleteVerify, Verify } from "@/components";
+import { LoadingScreen } from '@/components/ui/loading';
+
+
 
 export default function VerifyDetails() {
 
     // Check if the user is Logged-in
     const { isLoggedin } = useUserState();
 
-    // Set Loading spinner
-    // const [loading, setLoading] = useState<boolean>(true)
+    // Store the UserId & the Secret key to be pushed to CompleteVerify.tsx
+    const [userId, setUserId] = useState<string | undefined>(undefined);
+    const [secret, setSecret] = useState<string | undefined>(undefined);
 
-    // Store the UserId & the Secret key to be pushed to CompleteReset.tsx
-    const [userId, setUserId] = useState<string | null>(null);
-    const [secret, setSecret] = useState<string | null>(null);
+    // Display the loading screen while fetching
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -28,10 +30,11 @@ export default function VerifyDetails() {
         if (userIdParam && secretParam) {
             setUserId(userIdParam);
             setSecret(secretParam);
-            // setLoading(false)
+            setLoading(false);
         } else {
-            // setLoading(false)
-            null
+            setUserId(undefined);
+            setSecret(undefined);
+            setLoading(false);
         }
     }, []);
 
@@ -40,17 +43,29 @@ export default function VerifyDetails() {
         return (
             <Navigate to="/" />
         )
-    } else if (isLoggedin && userId && secret) {
+    } else if (isLoggedin && userId) {
         return (
             <div className="md:container container-fluid">
-                <CompleteVerify userId={userId} secret={secret} />
+                <CompleteVerify  userId={userId} secret={secret}/>
             </div>
         )
-    } else {
+    } else if (userId == undefined) {
         return (
-            <div className="md:container container-fluid">
+            <div className={`md:container container-fluid`}>
+            {loading && <LoadingScreen />}
                 <Verify />
             </div>
         )
     }
 }
+
+// else {
+//     { loading && (<LoadingScreen />) }
+//     if (userId === null) {
+//         setLoading(false)
+//         return (
+//             <div className={`md:container container-fluid`}>
+//                 <Verify />
+//             </div>
+//         )
+//     } 

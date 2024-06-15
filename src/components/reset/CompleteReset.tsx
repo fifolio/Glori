@@ -143,7 +143,7 @@ export default function CompleteReset({ userId, secret }: { userId: string, secr
                         <AlertDialogTitle className='mx-auto'>Password Updated Successfully! </AlertDialogTitle>
                         <AlertDialogDescription className='text-center'>
                             <div>
-                                <img src="/images/passwordUpdated.gif" alt="Password got Updated" />
+                                <img src="/images/success.gif" alt="Password got Updated" />
                             </div>
                             <p>
                                 You've successfully changed your password. You can now log in using your new password.
