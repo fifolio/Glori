@@ -40,7 +40,7 @@ export default function CompleteVerify({ userId, secret }: CompleteVerifyProps )
     } else {
         return (
             <div className="flex flex-col items-center justify-center h-screen">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full space-y-9 mt-[-60px]">
+                <div className="bg-white p-8 rounded-lg md:shadow-lg max-w-md w-full space-y-9 mt-[-60px]">
                     <div className="text-center">
                         <img src="/images/success.gif" alt="Successfully Verified" className="w-[250px] mx-auto" />
                         <h1 className="text-2xl font-bold mt-4">Account Verified</h1>
