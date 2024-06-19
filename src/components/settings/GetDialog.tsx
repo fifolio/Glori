@@ -60,7 +60,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         [newUsername, setNewUsername] = useState<string>(''),
         [newPhoneNumber, setNewPhoneNumber] = useState<string>(''),
         // Show the results after update
-        [resutls, setResults] = useState<boolean>(false);
+        [results, setResults] = useState<boolean>(false);
 
 
 
@@ -129,8 +129,8 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                 <AlertDialogDescription className='text-center'>
                                     <div className="space-y-4 mt-3">
 
-                                        {/* Show Update Resutls */}
-                                        <div className={`${resutls ? '' : 'hidden'}`}>
+                                        {/* Show Update results */}
+                                        <div className={`${results ? '' : 'hidden'}`}>
                                             <div className="bg-white rounded-lg max-w-md w-full mt-[-60px]">
                                                 <div className="text-center mt-7">
                                                     <img src="/images/success.gif" alt="Successfully Updated" className="w-[250px] mx-auto" />
@@ -148,7 +148,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                         </div>
 
 
-                                        <Table className={`${resutls ? 'hidden' : ''}`}>
+                                        <Table className={`${results ? 'hidden' : ''}`}>
                                             <TableHeader>
                                                 <TableRow>
                                                     <TableHead className="w-[40px]">Step</TableHead>
@@ -201,7 +201,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                             </TableBody>
                                         </Table>
 
-                                        <div className={resutls ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
+                                        <div className={results ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
                                             <Input id="email" type="email" placeholder={newEmail} required className="text-black sm:mb-0 mb-3" onChange={(e) => setNewEmail(e.target.value)} />
                                             <Input id="password" type="password" placeholder="••••••••••" required className="text-black" onChange={(e) => setPassword(e.target.value)} />
                                         </div>
@@ -211,7 +211,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                     </div>
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
-                            <AlertDialogFooter className={resutls ? 'hidden' : 'flex flex-row sm:items-center items-end justify-end space-x-3 mt-3'}>
+                            <AlertDialogFooter className={results ? 'hidden' : 'flex flex-row sm:items-center items-end justify-end space-x-3 mt-3'}>
                                 <AlertDialogCancel onClick={handleCandleBtn}>Cancel</AlertDialogCancel>
                                 <AlertDialogAction type="submit" disabled={loading}>{loading ? (<Loading w={24} />) : 'Update Email'}</AlertDialogAction>
                             </AlertDialogFooter>
@@ -229,24 +229,24 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                 <AlertDialogDescription className='text-center'>
                                     <div className="space-y-4 mt-3">
 
-                                        {/* Show Update Resutls */}
-                                        <div className={`${resutls ? '' : 'hidden'}`}>
+                                        {/* Show Update results */}
+                                        <div className={`${results ? '' : 'hidden'}`}>
                                             <div className="bg-white rounded-lg max-w-md w-full mt-[-60px]">
                                                 <div className="text-center mt-7">
                                                     <img src="/images/success.gif" alt="Successfully Updated" className="w-[250px] mx-auto" />
                                                     <h1 className="text-2xl font-bold mt-4">Username Successfully Updated</h1>
                                                     <p className="text-gray-500 mt-4">
-                                                    Your username has been successfully updated. This new username will be displayed in your future comments and activities.
+                                                        Your username has been successfully updated. This new username will be displayed in your future comments and activities.
                                                     </p>
                                                 </div>
                                                 <div className="mt-9">
-                                                        <Button onClick={handleCandleBtn}>Done</Button>
+                                                    <Button onClick={handleCandleBtn}>Done</Button>
                                                 </div>
                                             </div>
                                         </div>
 
 
-                                        <Table className={`${resutls ? 'hidden' : ''}`}>
+                                        <Table className={`${results ? 'hidden' : ''}`}>
                                             <TableHeader>
                                                 <TableRow>
                                                     <TableHead className="w-[40px]">Step</TableHead>
@@ -263,7 +263,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                                     <TableCell className="text-start">
                                                         <div>
                                                             <p className="text-sm text-gray-500 font-light">
-                                                                Please enter your new email address. Make sure to provide a valid email address to continue receiving important notifications and updates.
+                                                                Please enter your new username. Your username must be between 3 to 20 characters and should reflect your real name.
                                                             </p>
                                                         </div>
                                                     </TableCell>
@@ -277,21 +277,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                                     <TableCell className="text-start">
                                                         <div>
                                                             <p className="text-sm text-gray-500 font-light">
-                                                                To begin the process of updating your email address, please enter your current password. This step is crucial to ensure the security of your account and to verify your identity.
-                                                            </p>
-                                                        </div>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell className="text-start">
-                                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-900 text-xs font-medium text-white dark:bg-gray-50">
-                                                            3
-                                                        </span>
-                                                    </TableCell>
-                                                    <TableCell className="text-start">
-                                                        <div>
-                                                            <p className="text-sm text-gray-500 font-light">
-                                                                Your email address has been successfully updated. You will now receive all future notifications at your new email address. In addition, you'll need to verify the new email by completing the <span className="text-black font-semibold">verification process</span>.
+                                                                To begin updating your username, click on "Update Username".
                                                             </p>
                                                         </div>
                                                     </TableCell>
@@ -299,13 +285,14 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                             </TableBody>
                                         </Table>
 
-                                        <div className={resutls ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
+
+                                        <div className={results ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
                                             <Input type="text" placeholder={newUsername} minLength={3} maxLength={20} required className="text-black sm:mb-0 mb-3" onChange={(e) => setNewUsername(e.target.value)} />
                                         </div>
                                     </div>
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
-                            <AlertDialogFooter className={resutls ? 'hidden' : 'flex flex-row sm:items-center items-end justify-end space-x-3 mt-3'}>
+                            <AlertDialogFooter className={results ? 'hidden' : 'flex flex-row sm:items-center items-end justify-end space-x-3 mt-3'}>
                                 <AlertDialogCancel onClick={handleCandleBtn}>Cancel</AlertDialogCancel>
                                 <AlertDialogAction type="submit" disabled={loading}>{loading ? (<Loading w={24} />) : 'Update Username'}</AlertDialogAction>
                             </AlertDialogFooter>
