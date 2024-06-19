@@ -219,7 +219,6 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                     </AlertDialogContent>
                 </AlertDialog>
             )
-            break;
         case 'UpdateUsername':
             return (
                 <AlertDialog open={isOpen}>
@@ -314,7 +313,6 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                     </AlertDialogContent>
                 </AlertDialog>
             )
-            break;
         default:
             break;
     }
