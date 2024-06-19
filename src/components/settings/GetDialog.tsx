@@ -60,7 +60,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         [newUsername, setNewUsername] = useState<string>(''),
         [newPhoneNumber, setNewPhoneNumber] = useState<string>(''),
         // Show the results after update
-        [resutls, setResults] = useState<boolean>(true);
+        [resutls, setResults] = useState<boolean>(false);
 
 
 
