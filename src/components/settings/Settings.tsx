@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { getUserMetaData } from "@/backend/services/user/getUser";
 import useUserVerificationState from "@/lib/states/userVerificationState";
+import GetDialog from "./GetDialog";
+
+// STATES
+import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
+
 
 // UI
 import { Button } from "@/components/ui/button"
@@ -16,7 +21,12 @@ export default function Settings() {
 
     const [loading, setLoading] = useState<boolean>(true);
     // Update the Verification State
-    const {isVerified, setIsVerified } = useUserVerificationState();
+    const { isVerified, setIsVerified } = useUserVerificationState(); 
+    // Customize the Dialog content
+    const [contentType, setContentType] = useState<string>(''),
+    {setIsOpen} = useIsSettingsCustomDialogOpen(),
+    [title, setTitle] = useState<string>(''),
+    [desc, setDesc] = useState<string>('');
 
 
     // check user Verification state
@@ -26,13 +36,38 @@ export default function Settings() {
         res && setIsVerified(res.emailVerification)
         setLoading(false)
     }
-
-
     useEffect(() => {
         checkVerification();
     }, [])
 
+    // Handle Update Btns
+    function updateEmail() {
+        setContentType('UpdateEmail')
+        setIsOpen(true)
+    }
+    function updateUsername() {
+        setContentType('UpdateUsername')
+        setIsOpen(true)
+    }
+    function updatePhoneNumber() {
+        setContentType('UpdatePhoneNumber')
+        setTitle("Phone Number")
+        setDesc("Update you f** username now.")
+        setIsOpen(true)
+    }
+    function updateProfilePicture() {
+        setContentType('UpdateProfilePicture')
+        setIsOpen(true)
+    }
 
+
+    // Scroll top when click on Link
+    function scrollTopFunc() {
+        window.scrollTo({
+            top: -10,
+            behavior: 'instant'
+        });
+    }
 
     return (
         <div className="w-full max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -53,8 +88,8 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Link to={isVerified ? '#' : '/verify'} className={`${isVerified ? 'cursor-text' : ''}`}>
-                                <Button className="w-full sm:w-fit" variant={isVerified ? 'outline' : 'default'} disabled={isVerified ? true : false}>{isVerified ? (
+                            <Link to={isVerified ? '#' : '/verify'} className={`${isVerified ? 'cursor-text' : ''}`} onClick={scrollTopFunc}>
+                                <Button className="w-full sm:w-fit" variant={isVerified ? 'outline' : 'default'} disabled={isVerified}>{isVerified ? (
                                     <span className="flex items-center space-x-2">
                                         <div className="h-2 w-2 rounded-full bg-green-500" />
                                         <span className="text-sm font-medium text-black">Verified</span>
@@ -79,7 +114,7 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Link to="/reset">
+                            <Link to="/reset" onClick={scrollTopFunc}>
                                 <Button className="w-full sm:w-fit">Reset Password</Button>
                             </Link>
                         </div>
@@ -96,7 +131,7 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit">Update Email</Button>
+                            <Button className="w-full sm:w-fit" onClick={updateEmail}>Update Email</Button>
                         </div>
                     </div>
                 </div>
@@ -111,7 +146,7 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit">Update Username</Button>
+                            <Button className="w-full sm:w-fit" onClick={updateUsername}>Update Username</Button>
                         </div>
                     </div>
                 </div>
@@ -127,7 +162,7 @@ export default function Settings() {
                         </div>
 
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit">Update Phone Number</Button>
+                            <Button className="w-full sm:w-fit"  onClick={updatePhoneNumber}>Update Phone Number</Button>
                         </div>
                     </div>
                 </div>
@@ -143,11 +178,14 @@ export default function Settings() {
                         </div>
 
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit">Update Profile Picture</Button>
+                            <Button className="w-full sm:w-fit" onClick={updateProfilePicture}>Update Profile Picture</Button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Dynamic Dialog */}
+                <GetDialog contentFor={contentType} />
 
             <Separator className="mt-16 w-52 mx-auto" />
 
@@ -170,7 +208,7 @@ export default function Settings() {
 
             <Separator className="my-16 w-52 mx-auto" />
 
-            {/* Basic Account Settings */}
+            {/* Shopping Details Settings */}
             <div className="space-y-8 bg-gray-100 rounded-lg p-3 mb-14">
                 <h1 className="text-2xl font-bold mb-10 mt-5">Shopping Details</h1>
 
