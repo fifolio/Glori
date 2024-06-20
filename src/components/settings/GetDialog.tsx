@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "../ui/input";
 import Loading from "../ui/loading";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 
 type GetDialogTypes = {
