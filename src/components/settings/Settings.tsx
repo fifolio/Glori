@@ -24,9 +24,7 @@ export default function Settings() {
     const { isVerified, setIsVerified } = useUserVerificationState(); 
     // Customize the Dialog content
     const [contentType, setContentType] = useState<string>(''),
-    {setIsOpen} = useIsSettingsCustomDialogOpen(),
-    [title, setTitle] = useState<string>(''),
-    [desc, setDesc] = useState<string>('');
+    {setIsOpen} = useIsSettingsCustomDialogOpen();
 
 
     // check user Verification state
@@ -49,17 +47,20 @@ export default function Settings() {
         setContentType('UpdateUsername')
         setIsOpen(true)
     }
-    function updatePhoneNumber() {
-        setContentType('UpdatePhoneNumber')
-        setTitle("Phone Number")
-        setDesc("Update you f** username now.")
-        setIsOpen(true)
-    }
+    // function updatePhoneNumber() {
+    //     setContentType('UpdatePhoneNumber')
+    //     setIsOpen(true)
+    // }
+
     function updateProfilePicture() {
         setContentType('UpdateProfilePicture')
         setIsOpen(true)
     }
 
+    function deleteAccount(){
+        setContentType('DeleteAccount')
+        setIsOpen(true)
+    }
 
     // Scroll top when click on Link
     function scrollTopFunc() {
@@ -152,7 +153,7 @@ export default function Settings() {
                 </div>
 
                 {/* Update Phone Number */}
-                <div>
+                {/* <div>
                     <div className="flex flex-col sm:flex-row items-center justify-between">
                         <div className="w-full">
                             <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-50">Update Phone Number</h3>
@@ -165,7 +166,7 @@ export default function Settings() {
                             <Button className="w-full sm:w-fit"  onClick={updatePhoneNumber}>Update Phone Number</Button>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Profile Picture */}
                 <div>
@@ -200,7 +201,7 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit" variant="destructive">Delete Your Account</Button>
+                            <Button className="w-full sm:w-fit" variant="destructive" onClick={deleteAccount}>Delete Your Account</Button>
                         </div>
                     </div>
                 </div>
