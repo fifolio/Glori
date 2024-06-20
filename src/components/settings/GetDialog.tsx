@@ -301,7 +301,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
 
 
                                         <div className={results ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
-                                            <Input type="text" placeholder={newUsername} minLength={3} maxLength={20} required className="text-black sm:mb-0 mb-3" onChange={(e) => setNewUsername(e.target.value)} />
+                                            <Input type="text" placeholder={newUsername} min={3} minLength={3} maxLength={20} max={20} required className="text-black sm:mb-0 mb-3" onChange={(e) => setNewUsername(e.target.value)} />
                                         </div>
                                     </div>
                                 </AlertDialogDescription>
