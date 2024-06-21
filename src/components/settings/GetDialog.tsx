@@ -96,17 +96,17 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
             })
     }
 
-    // handle Update Username form submit
-    async function handleDeleteAccount(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        setLoading(true)
-        await deleteAccount(`${userData?.$id}`)
-            .then((res) => {
-                console.log(res)
-                window.location.reload()
-            })
+    // handle Update Delete User Account form submit
+    // async function handleDeleteAccount(e: React.FormEvent<HTMLFormElement>) {
+    //     e.preventDefault();
+    //     setLoading(true)
+    //     await deleteAccount(`${userData?.$id}`)
+    //         .then((res) => {
+    //             console.log(res)
+    //             // window.location.reload()
+    //         })
 
-    }
+    // }
 
     // Handle CandleBtn
     function handleCandleBtn() {
@@ -277,7 +277,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                                     <TableCell className="text-start">
                                                         <div>
                                                             <p className="text-sm text-gray-500 font-light">
-                                                                Please enter your new username. Your username must be between 3 to 20 characters and should reflect your real name.
+                                                                Please enter your new username. Your username must be <p className="text-black font-semibold">between 3 to 20 characters</p> and should reflect your real name.
                                                             </p>
                                                         </div>
                                                     </TableCell>
@@ -315,41 +315,41 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                 </AlertDialog>
             )
 
-        case 'DeleteAccount':
-            return (
-                <AlertDialog open={isOpen}>
-                    <AlertDialogContent>
-                        <form onSubmit={(e) => handleDeleteAccount(e)}>
-                            <AlertDialogHeader className='w-full'>
-                                <AlertDialogTitle className='mx-auto'>Deleting Your Account</AlertDialogTitle>
-                                <AlertDialogDescription className='text-start'>
-                                    <div className="space-y-4 mt-3">
+        // case 'DeleteAccount':
+        //     return (
+        //         <AlertDialog open={isOpen}>
+        //             <AlertDialogContent>
+        //                 <form onSubmit={(e) => handleDeleteAccount(e)}>
+        //                     <AlertDialogHeader className='w-full'>
+        //                         <AlertDialogTitle className='mx-auto'>Deleting Your Account</AlertDialogTitle>
+        //                         <AlertDialogDescription className='text-start'>
+        //                             <div className="space-y-4 mt-3">
 
-                                        <h2 className="text-black">Are you sure you want to delete your account?</h2>
-                                        <ul>
-                                            <li className="text-red-600">Deleting your account is a permanent action and cannot be undone.</li>
-                                            <br />
-                                            <li>This will erase all your personal information, including your store settings, product listings, order history, and saved preferences.</li>
-                                            <br />
-                                            <li>Your store and all associated data will be irretrievably lost.</li>
-                                            <br />
-                                            <li>Any ongoing transactions or subscriptions tied to your account will be terminated.</li>
-                                            <br />
-                                            <li>You will no longer have access to your account or its contents.</li>
-                                        </ul>
-                                        <p className="bg-yellow-100 p-2 rounded-lg">If you're unsure or need assistance, please <Link to="/contact" className="text-black">contact our support team</Link> before proceeding with account deletion.</p>
+        //                                 <h2 className="text-black">Are you sure you want to delete your account?</h2>
+        //                                 <ul>
+        //                                     <li className="text-red-600">Deleting your account is a permanent action and cannot be undone.</li>
+        //                                     <br />
+        //                                     <li>This will erase all your personal information, including your store settings, product listings, order history, and saved preferences.</li>
+        //                                     <br />
+        //                                     <li>Your store and all associated data will be irretrievably lost.</li>
+        //                                     <br />
+        //                                     <li>Any ongoing transactions or subscriptions tied to your account will be terminated.</li>
+        //                                     <br />
+        //                                     <li>You will no longer have access to your account or its contents.</li>
+        //                                 </ul>
+        //                                 <p className="bg-yellow-100 p-2 rounded-lg">If you're unsure or need assistance, please <Link to="/contact" className="text-black">contact our support team</Link> before proceeding with account deletion.</p>
 
-                                    </div>
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter className={results ? 'hidden' : 'w-full space-x-3 mt-3'}>
-                                <Button variant="destructive" type="submit" disabled={loading}>{loading ? (<Loading w={24} />) : 'Delete Now'}</Button>
-                                <Button className="w-full" onClick={handleCandleBtn}>Cancel</Button>
-                            </AlertDialogFooter>
-                        </form>
-                    </AlertDialogContent>
-                </AlertDialog>
-            )
+        //                             </div>
+        //                         </AlertDialogDescription>
+        //                     </AlertDialogHeader>
+        //                     <AlertDialogFooter className={results ? 'hidden' : 'w-full sm:space-x-3 mt-3'}>
+        //                         <Button className="mt-5 sm:mt-0" variant="destructive" type="submit" disabled={loading}>{loading ? (<Loading w={24} />) : 'Delete Now'}</Button>
+        //                         <Button type="button" className="w-full" onClick={handleCandleBtn}>Cancel</Button>
+        //                     </AlertDialogFooter>
+        //                 </form>
+        //             </AlertDialogContent>
+        //         </AlertDialog>
+        //     )
         default:
             break;
     }

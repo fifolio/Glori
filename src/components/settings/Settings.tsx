@@ -188,10 +188,10 @@ export default function Settings() {
             {/* Dynamic Dialog */}
                 <GetDialog contentFor={contentType} />
 
-            <Separator className="mt-16 w-52 mx-auto" />
+            <Separator className="my-16 w-52 mx-auto" />
 
-            {/* Delete Your Store */}
-            <div className="space-y-8 mt-10">
+            {/* Delete Your Account */}
+            {/* <div className="space-y-8 mt-10">
                 <div>
                     <div className="flex flex-col sm:flex-row items-center justify-between mb-10">
                         <div className="w-full">
@@ -205,9 +205,8 @@ export default function Settings() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <Separator className="my-16 w-52 mx-auto" />
+            </div> */}
+            {/* <Separator className="my-16 w-52 mx-auto" /> */}
 
             {/* Shopping Details Settings */}
             <div className="space-y-8 bg-gray-100 rounded-lg p-3 mb-14">
