@@ -57,10 +57,10 @@ export default function Settings() {
         setIsOpen(true)
     }
 
-    function deleteAccount(){
-        setContentType('DeleteAccount')
-        setIsOpen(true)
-    }
+    // function deleteAccount(){
+    //     setContentType('DeleteAccount')
+    //     setIsOpen(true)
+    // }
 
     // Scroll top when click on Link
     function scrollTopFunc() {
