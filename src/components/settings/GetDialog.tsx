@@ -5,7 +5,7 @@ import { getUserMetaData } from "@/backend/services/user/getUser";
 // Services
 import updateEmail from "@/backend/services/user/updateEmail";
 import updateUsername from "@/backend/services/user/updateUsername";
-import deleteAccount from "@/backend/services/user/deleteAccount";
+// import deleteAccount from "@/backend/services/user/deleteAccount";
 
 
 // STATES
