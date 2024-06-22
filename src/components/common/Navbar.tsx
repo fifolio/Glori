@@ -63,6 +63,7 @@ import { FcAbout } from "react-icons/fc";
 // STATES
 import useUserState from '@/lib/states/userStates';
 import useVerificationAlertState from '@/lib/states/verificationAlert';
+import useUserId from '@/lib/states/userId';
 
 // AUTH
 import { logout } from '@/backend/services/auth/logout';
@@ -74,6 +75,9 @@ import { getUserMetaData } from '@/backend/services/user/getUser';
 
 
 export default function Navbar() {
+
+    // Set Public state for the user ID
+    const { setLoggedinUserId } = useUserId();
 
     // Turn on/off the Loading Spinner while Logging-out
     const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
@@ -146,7 +150,8 @@ export default function Navbar() {
         const userMetaData = await getUserMetaData();
         if (userMetaData) {
             setUserMetaData(userMetaData);
-            if(userMetaData.emailVerification === false){
+            setLoggedinUserId(userMetaData.$id)
+            if (userMetaData.emailVerification === false) {
                 setIsOpen(true);
             } else {
                 setIsOpen(false);

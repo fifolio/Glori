@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { getUserMetaData } from "@/backend/services/user/getUser";
 import useUserVerificationState from "@/lib/states/userVerificationState";
 import GetDialog from "./GetDialog";
+import ShoppingDetails from "./ShoppingDetails";
 
 // STATES
 import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
 
-
 // UI
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Separator } from "../ui/separator";
 import { Link } from "react-router-dom";
 import Loading from "../ui/loading";
@@ -34,9 +33,6 @@ export default function Settings() {
         res && setIsVerified(res.emailVerification)
         setLoading(false)
     }
-    useEffect(() => {
-        checkVerification();
-    }, [])
 
     // Handle Update Btns
     function updateEmail() {
@@ -69,6 +65,11 @@ export default function Settings() {
             behavior: 'instant'
         });
     }
+
+
+    useEffect(() => {
+        checkVerification();
+    }, [])
 
     return (
         <div className="w-full max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -209,41 +210,7 @@ export default function Settings() {
             {/* <Separator className="my-16 w-52 mx-auto" /> */}
 
             {/* Shopping Details Settings */}
-            <div className="space-y-8 bg-gray-100 rounded-lg p-3 mb-14">
-                <h1 className="text-2xl font-bold mb-10 mt-5">Shopping Details</h1>
-
-                <div className="bg-white dark:bg-gray-950 rounded-lg shadow-sm p-6">
-                    <h2 className="text-xl font-bold mb-2">Shipment Information</h2>
-                    <p className="text-gray-500 dark:text-gray-400 mb-4">Update the address for your shipments.</p>
-                    <form className="grid gap-4">
-                        <Input placeholder="Street Address" />
-                        <div className="flex flex-col sm:flex-row justify-between sm:space-x-3 space-y-4 sm:space-y-0">
-                            <div className="w-full space-y-4">
-                                <Input placeholder="City" />
-                                <Input placeholder="State" />
-                            </div>
-                            <div className="w-full space-y-4">
-                                <Input placeholder="Zip Code" />
-                                <Button className="w-full">Update Shipment Address</Button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                {/* Credit Card Information */}
-                <div className="bg-white dark:bg-gray-950 rounded-lg shadow-sm p-6">
-                    <h2 className="text-xl font-bold mb-2">Credit Card Information</h2>
-                    <p className="text-gray-500 dark:text-gray-400 mb-4">Update your credit card details.</p>
-                    <form className="grid gap-4">
-                        <Input placeholder="Card Number" />
-                        <div className="grid grid-cols-2 gap-4">
-                            <Input placeholder="Expiry Date" />
-                            <Input placeholder="CVC" />
-                        </div>
-                        <Button className="w-full">Update Credit Card</Button>
-                    </form>
-                </div>
-            </div>
+            <ShoppingDetails />
 
             <Separator className="mt-16 w-52 mx-auto" />
 
@@ -266,10 +233,7 @@ export default function Settings() {
                     </div>
                 </div>
 
-
             </div>
-
-
 
         </div>
     )
