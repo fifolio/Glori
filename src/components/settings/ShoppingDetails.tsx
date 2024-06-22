@@ -1,7 +1,5 @@
-import { Models } from 'appwrite';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { handleShipmentInformation, handleCreditCardInformation, getShoppingDetails } from '@/backend/services/user/shoppingDetails';
-import { getUserMetaData } from '@/backend/services/user/getUser';
 import useUserId from '@/lib/states/userId';
 
 // UI
@@ -43,13 +41,11 @@ export default function ShoppingDetails() {
 
 
     // Get the Logged-in user meta data
-    const [userData, setUserData] = useState<void | Models.User<Models.Preferences>>(),
-        [userShoppingDetails, setUserShoppingDetails] = useState<void | ShoppingDetails>();
+    const [userShoppingDetails, setUserShoppingDetails] = useState<void | ShoppingDetails>();
 
 
     // Store Shipment Information values
-    const [userId, setUserId] = useState<string>(''),
-        [streetAddress, setStreetAddress] = useState<string>(''),
+    const [streetAddress, setStreetAddress] = useState<string>(''),
         [city, setCity] = useState<string>(''),
         [state, setState] = useState<string>(''),
         [zipCode, setZipCode] = useState<string>('');
@@ -92,24 +88,14 @@ export default function ShoppingDetails() {
 
 
 
+
+    // Get current logged-in user Shopping Data
+    async function getLoggedinUserShoppingData() {
+        const res = await getShoppingDetails(loggedinUserId);
+        setUserShoppingDetails(res);
+    }
     useEffect(() => {
-        // Get current logged-in user Meta Data
-        async function getLoggedinUserMetaData() {
-            await getUserMetaData().then((res) => setUserData(res));
-        }
-        getLoggedinUserMetaData();
-        setUserId(`${userData?.$id}`);
-
-
-        // Get current logged-in user Shopping Data
-        async function getLoggedinUserShoppingData() {
-            const res = await getShoppingDetails(loggedinUserId);
-            setUserShoppingDetails(res);
-
-        }
         getLoggedinUserShoppingData();
-
-
     }, [])
 
     // Update the default inputs value
