@@ -1,7 +1,7 @@
 import { databases } from "@/backend/configs/config";
 
 type shipmentDataTypes = {
-  loggedinUserId: string
+  userID: string,
   streetAddress: string,
   city: string,
   state: string,
@@ -9,7 +9,7 @@ type shipmentDataTypes = {
 }
 
 type creditCardDataTypes = {
-  loggedinUserId: string
+  userID: string,
   cardNumber: string,
   expiryMonth: string,
   expiryYear: string,
@@ -33,13 +33,13 @@ export async function handleShipmentInformation(data: shipmentDataTypes) {
   await databases.getDocument(
     `${import.meta.env.VITE_DATABASES_MAIN}`,
     `${import.meta.env.VITE_COL_USERS}`,
-    data.loggedinUserId,
+    data.userID,
   ).then(async () => {
 
     await databases.updateDocument(
       `${import.meta.env.VITE_DATABASES_MAIN}`,
       `${import.meta.env.VITE_COL_USERS}`,
-      data.loggedinUserId,
+      data.userID,
       documentData
 
     ).then((res) => {
@@ -55,7 +55,7 @@ export async function handleShipmentInformation(data: shipmentDataTypes) {
     await databases.createDocument(
       `${import.meta.env.VITE_DATABASES_MAIN}`,
       `${import.meta.env.VITE_COL_USERS}`,
-      data.loggedinUserId,
+      data.userID,
       documentData
 
     ).then((res) => {
@@ -87,13 +87,13 @@ export async function handleCreditCardInformation(data: creditCardDataTypes) {
   await databases.getDocument(
     `${import.meta.env.VITE_DATABASES_MAIN}`,
     `${import.meta.env.VITE_COL_USERS}`,
-    data.loggedinUserId,
+    data.userID,
   ).then(async () => {
 
     await databases.updateDocument(
       `${import.meta.env.VITE_DATABASES_MAIN}`,
       `${import.meta.env.VITE_COL_USERS}`,
-      data.loggedinUserId,
+      data.userID,
       documentData
 
     ).then((res) => {
@@ -109,7 +109,7 @@ export async function handleCreditCardInformation(data: creditCardDataTypes) {
     await databases.createDocument(
       `${import.meta.env.VITE_DATABASES_MAIN}`,
       `${import.meta.env.VITE_COL_USERS}`,
-      data.loggedinUserId,
+      data.userID,
       documentData
 
     ).then((res) => {
@@ -126,16 +126,18 @@ export async function handleCreditCardInformation(data: creditCardDataTypes) {
 }
 
 // Get the Logged-in user Shopping Details
-export async function getShoppingDetails(userId: string) {
-  const res = await databases.getDocument(
+export async function getShoppingDetails(loggedinUserId: string) {
+ const results = await databases.getDocument(
     `${import.meta.env.VITE_DATABASES_MAIN}`,
     `${import.meta.env.VITE_COL_USERS}`,
-    userId,
+    `${loggedinUserId}`, // documentId
+    [] // queries (optional)
   ).then((res) => {
-    return res.documents[0]
-  }).catch((err) => {
-    return err
+    return res
+  }).catch(() => {
+    return false
   })
 
-  return res
+  return results
+
 }

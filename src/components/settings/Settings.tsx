@@ -18,12 +18,14 @@ export default function Settings() {
     // Update the page title
     document.title = `Glori | Settings`;
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true),
+        [userID, setUserID] = useState<string>('');
+
     // Update the Verification State
-    const { isVerified, setIsVerified } = useUserVerificationState(); 
+    const { isVerified, setIsVerified } = useUserVerificationState();
     // Customize the Dialog content
     const [contentType, setContentType] = useState<string>(''),
-    {setIsOpen} = useIsSettingsCustomDialogOpen();
+        { setIsOpen } = useIsSettingsCustomDialogOpen();
 
 
     // check user Verification state
@@ -31,6 +33,7 @@ export default function Settings() {
         const res = await getUserMetaData()
         res && setIsVerified(res.emailVerification)
         res && setIsVerified(res.emailVerification)
+        res && setUserID(res.$id)
         setLoading(false)
     }
 
@@ -69,6 +72,7 @@ export default function Settings() {
 
     useEffect(() => {
         checkVerification();
+
     }, [])
 
     return (
@@ -187,7 +191,7 @@ export default function Settings() {
             </div>
 
             {/* Dynamic Dialog */}
-                <GetDialog contentFor={contentType} />
+            <GetDialog contentFor={contentType} />
 
             <Separator className="my-16 w-52 mx-auto" />
 
@@ -210,7 +214,7 @@ export default function Settings() {
             {/* <Separator className="my-16 w-52 mx-auto" /> */}
 
             {/* Shopping Details Settings */}
-            <ShoppingDetails />
+            <ShoppingDetails/>
 
             <Separator className="mt-16 w-52 mx-auto" />
 
