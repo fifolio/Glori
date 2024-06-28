@@ -35,6 +35,7 @@ import { Input } from "../ui/input";
 import Loading from "../ui/loading";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 type GetDialogTypes = {
     contentFor: string;
@@ -314,7 +315,37 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                     </AlertDialogContent>
                 </AlertDialog>
             )
-
+        case 'UpdateProfilePicture':
+            return (
+                <AlertDialog open={isOpen}>
+                    <AlertDialogContent className="p-0">
+                        <Card className="w-full border-0 m-0">
+                            <CardHeader>
+                                <CardTitle>Update Profile Picture</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="flex items-center justify-center">
+                                    <img
+                                        src="http://via.placeholder.com/200"
+                                        alt="Profile Picture"
+                                        width={128}
+                                        height={128}
+                                        className="aspect-square rounded-full object-cover"
+                                    />
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                    For best results, upload a high-quality image with a square aspect ratio, such as 1:1. The recommended size is
+                                    500x500 pixels or higher.
+                                </div>
+                                <div className="flex justify-between gap-2">
+                                    <Button className="w-full">Upload New Picture</Button>
+                                    <Button variant="outline" onClick={handleCandleBtn}>Done</Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </AlertDialogContent>
+                </AlertDialog>
+            )
         // case 'DeleteAccount':
         //     return (
         //         <AlertDialog open={isOpen}>

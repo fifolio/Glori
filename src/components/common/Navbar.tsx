@@ -530,7 +530,7 @@ export default function Navbar() {
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline">
                                             <span className={`${logoutSpinner ? 'hidden' : ''} capitalize`}>
-                                                {userMetaData.name && 'my account'}
+                                                {userMetaData.name && userMetaData.name}
                                             </span>
 
                                             {/* Get the Loading spinner when logout */}
