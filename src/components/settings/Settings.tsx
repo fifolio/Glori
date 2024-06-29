@@ -6,6 +6,7 @@ import ShoppingDetails from "./ShoppingDetails";
 
 // STATES
 import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
+import useCheckStoreState from "@/lib/states/userStoreState";
 
 // UI
 import { Button } from "@/components/ui/button"
@@ -18,7 +19,10 @@ export default function Settings() {
     // Update the page title
     document.title = `Glori | Settings`;
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true),
+        // Check on User Store State
+        { isStoreValid } = useCheckStoreState();
+    ;
 
     // Update the Verification State
     const { isVerified, setIsVerified } = useUserVerificationState();
@@ -211,12 +215,12 @@ export default function Settings() {
             {/* <Separator className="my-16 w-52 mx-auto" /> */}
 
             {/* Shopping Details Settings */}
-            <ShoppingDetails/>
+            <ShoppingDetails />
 
             <Separator className="mt-16 w-52 mx-auto" />
 
             {/* Store Settings */}
-            <div className="space-y-8">
+            <div className={`${isStoreValid ? 'space-y-8' : 'hidden'}`}>
                 <h1 className="text-3xl font-bold mt-10">Store Settings</h1>
 
                 {/* Delete Your Store */}

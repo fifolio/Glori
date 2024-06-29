@@ -69,6 +69,7 @@ import { FcAbout } from "react-icons/fc";
 import useUserState from '@/lib/states/userStates';
 import useVerificationAlertState from '@/lib/states/verificationAlert';
 import useUserId from '@/lib/states/userId';
+import useCheckStoreState from '@/lib/states/userStoreState';
 
 
 
@@ -78,8 +79,8 @@ export default function Navbar() {
     const { loggedinUserId, setLoggedinUserId } = useUserId(),
         [userID, setUserID] = useState<string>('');
 
-        // Set isStoreValid State
-        const [isStoreValid, setIsStoreValid] = useState<boolean>(false);
+    // Set isStoreValid State
+    const { isStoreValid, setIsStoreValid } = useCheckStoreState();
 
     useEffect(() => {
         setUserID(loggedinUserId)
@@ -571,7 +572,7 @@ export default function Navbar() {
                                             <DropdownMenuLabel>Activities</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
 
-                                            <Link to="/sell" onClick={scrollTopFunc}>
+                                            <Link to="/sell" onClick={scrollTopFunc} className={isStoreValid ? '' : 'hidden'}>
                                                 <DropdownMenuItem className="cursor-pointer">
                                                     <LuPackagePlus className="mr-2" /> Sell Product
                                                 </DropdownMenuItem>
