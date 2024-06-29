@@ -133,10 +133,12 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
 
                 await handleUpdateAvatar(payload).then(() => {
                     toast.success("Your Profile Picture Updated Successfully!");
+                    setNewAvatar(undefined)
                     setUploading(false)
                 }).catch((error) => {
                     toast.error("Oops! We can not upload your picture at the moment, Please try again later.");
                     console.log(error)
+                    setNewAvatar(undefined)
                     setUploading(false)
                 })
 
@@ -188,7 +190,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
     useEffect(() => {
         getLoggedinUser()
         setUpdateData(!updateData)
-
+        setNewAvatar(undefined)
         // Set Dialogs Placeholders
         setNewEmail(`${userData?.email}`)
         setNewUsername(`${userData?.name}`)
@@ -415,7 +417,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                         setLoading(true)
                                         setPreviewAvatar(newProfilePicture ? URL.createObjectURL(newProfilePicture) : undefined)
                                     }} className="hidden" />
-                                    <Button variant="outline" onClick={handleUpdateProfilePicture} disabled={uploading}>
+                                    <Button variant="outline" onClick={handleUpdateProfilePicture} disabled={uploading || newAvatar === undefined && true}>
                                         {uploading ? (
                                             <>
                                                 <Loading w={20} />
