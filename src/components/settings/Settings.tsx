@@ -18,8 +18,7 @@ export default function Settings() {
     // Update the page title
     document.title = `Glori | Settings`;
 
-    const [loading, setLoading] = useState<boolean>(true),
-        [userID, setUserID] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Update the Verification State
     const { isVerified, setIsVerified } = useUserVerificationState();
@@ -32,8 +31,6 @@ export default function Settings() {
     async function checkVerification() {
         const res = await getUserMetaData()
         res && setIsVerified(res.emailVerification)
-        res && setIsVerified(res.emailVerification)
-        res && setUserID(res.$id)
         setLoading(false)
     }
 
