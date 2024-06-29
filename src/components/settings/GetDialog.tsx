@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
 import { Models } from "appwrite";
-import { getUserMetaData } from "@/backend/services/user/getUser";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // Services
+import { getUserMetaData } from "@/backend/services/user/getUser";
 import updateEmail from "@/backend/services/user/updateEmail";
 import updateUsername from "@/backend/services/user/updateUsername";
-// import deleteAccount from "@/backend/services/user/deleteAccount";
-
+import { getUserProfilePicture, handleUpdateAvatar } from "@/backend/services/user/updateProfilePicture";
 
 // STATES
 import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
 import checkOnUpdateEmailErrors from "@/lib/errors/checkOnUpdateEmailErrors";
+
+// ICONS
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 // UI
 import {
@@ -36,6 +39,8 @@ import Loading from "../ui/loading";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Label } from "../ui/label";
+import { toast } from "sonner";
 
 type GetDialogTypes = {
     contentFor: string;
@@ -43,14 +48,14 @@ type GetDialogTypes = {
 
 export default function GetDialog({ contentFor }: GetDialogTypes) {
 
-
     // Turn on/off dialog
     const { isOpen, setIsOpen } = useIsSettingsCustomDialogOpen(),
         [loading, setLoading] = useState<boolean>(false),
+        [uploading, setUploading] = useState<boolean>(false),
         // Set the Errors messages
         [updateEmailError, setUpdateEmailError] = useState<string>('');
 
-    // User the Close button on the Dialog to update the Value of the inputs Whenever user close the we
+    // Use the Close button on the Dialog to update the Value of the inputs Whenever user close the we
     const [updateData, setUpdateData] = useState<boolean>(false)
 
     // Get the logged-in user meta data
@@ -61,11 +66,22 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         // Meta Data Store
         [newEmail, setNewEmail] = useState<string>(''),
         [newUsername, setNewUsername] = useState<string>(''),
-        // [newPhoneNumber, setNewPhoneNumber] = useState<string>(''),
         // Show the results after update
         [results, setResults] = useState<boolean>(false);
 
 
+    // Get / Update the user profile picture
+    // The default/current user profile picutre
+    const [avatar, setAvatar] = useState<string>(''),
+        // Store the NEW user profile picture
+        [previewAvatar, setPreviewAvatar] = useState<string | undefined>(undefined),
+        // Store the new avatar to upload
+        [newAvatar, setNewAvatar] = useState<File | undefined>(undefined);
+
+    // Turn the loading state off when the new avatar uploaded
+    useEffect(() => {
+        setLoading(false)
+    }, [previewAvatar])
 
 
     // handle Update Email form submit
@@ -97,20 +113,47 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
             })
     }
 
-    // handle Update Delete User Account form submit
-    // async function handleDeleteAccount(e: React.FormEvent<HTMLFormElement>) {
-    //     e.preventDefault();
-    //     setLoading(true)
-    //     await deleteAccount(`${userData?.$id}`)
-    //         .then((res) => {
-    //             console.log(res)
-    //             // window.location.reload()
-    //         })
+    // handle Update Profile Picture submit
+    async function handleUpdateProfilePicture() {
+        setUploading(true)
+        const data = new FormData();
+        data.append("file", newAvatar ? newAvatar : '');
+        data.append("upload_preset", "glorious");
 
-    // }
+        axios.post("https://api.cloudinary.com/v1_1/dprqv5quy/image/upload", data).then(async (res) => {
+
+            // if the picture url ready, send it to the user document in the backend
+            if (res.data.url) {
+
+                // Collect the userID and picture Url to be send
+                let payload = {
+                    userID: `${userData?.$id}`,
+                    newAvatarUrl: `${res.data.url}`
+                }
+
+                await handleUpdateAvatar(payload).then(() => {
+                    toast.success("Your Profile Picture Updated Successfully!");
+                    setUploading(false)
+                }).catch((error) => {
+                    toast.error("Oops! We can not upload your picture at the moment, Please try again later.");
+                    console.log(error)
+                    setUploading(false)
+                })
+
+            } else {
+                console.error("Error on the response url")
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 
     // Handle CandleBtn
     function handleCandleBtn() {
+        // reset the previewAvatar to undefined
+        setPreviewAvatar(undefined);
+
+        setLoading(false)
         setIsOpen(false)
         setTimeout(() => {
             setUpdateData(!updateData)
@@ -118,11 +161,29 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         }, 1000)
     }
 
+    // Get current logged-in user profile picture
+    useEffect(() => {
+        if (userData) {
+            if (userData.$id.length > 5) {
+                async function getUserShoppingDetailsFunc() {
+                    const res = await getUserProfilePicture(userData ? userData.$id : '');
+                    if (res) {
+                        setAvatar(res)
+                        setLoading(false)
+                    }
+                }
+                getUserShoppingDetailsFunc();
+            }
+        }
+    }, [updateData]);
+
+
     // Get the logged in user metadata, then pass the required data as a placeholders in the Meta Data Store
     async function getLoggedinUser() {
         const userMetaData = await getUserMetaData()
         userMetaData ? setUserData(userMetaData) : null;
     }
+
 
     useEffect(() => {
         getLoggedinUser()
@@ -325,62 +386,58 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex items-center justify-center">
-                                    <img
-                                        src="http://via.placeholder.com/200"
-                                        alt="Profile Picture"
-                                        width={128}
-                                        height={128}
-                                        className="aspect-square rounded-full object-cover"
-                                    />
+                                    {loading ? (
+                                        <Loading w={128} />
+                                    ) : (
+                                        <img
+                                            src={previewAvatar ? previewAvatar : avatar}
+                                            alt="Profile Picture"
+                                            width={128}
+                                            height={128}
+                                            className="aspect-square rounded-full object-cover shadow-md border"
+                                        />
+                                    )}
                                 </div>
                                 <div className="text-sm text-muted-foreground">
                                     For best results, upload a high-quality image with a square aspect ratio, such as 1:1. The recommended size is
                                     500x500 pixels or higher.
                                 </div>
-                                <div className="flex justify-between gap-2">
-                                    <Button className="w-full">Upload New Picture</Button>
-                                    <Button variant="outline" onClick={handleCandleBtn}>Done</Button>
+                                <div className="flex sm:flex-row flex-col justify-between gap-2">
+                                    <Button variant="destructive" onClick={handleCandleBtn} disabled={uploading}>Close</Button>
+                                    <Button className="w-full p-0 m-0" disabled={uploading}>
+                                        <Label htmlFor="fileInput" className="flex items-center justify-center py-3  cursor-pointer w-full rounded-md">
+                                            Upload New Picture
+                                        </Label>
+                                    </Button>
+                                    <Input id="fileInput" type="file" accept="image/*" onChange={(e) => {
+                                        const newProfilePicture = e.target.files?.[0];
+                                        setNewAvatar(newProfilePicture)
+                                        setLoading(true)
+                                        setPreviewAvatar(newProfilePicture ? URL.createObjectURL(newProfilePicture) : undefined)
+                                    }} className="hidden" />
+                                    <Button variant="outline" onClick={handleUpdateProfilePicture} disabled={uploading}>
+                                        {uploading ? (
+                                            <>
+                                                <Loading w={20} />
+                                                <span className="mx-2">
+                                                    Please wait..
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <IoCloudUploadOutline size="20" />
+                                                <span className="mx-2">
+                                                    Upload Now
+                                                </span>
+                                            </>
+                                        )}
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>
                     </AlertDialogContent>
                 </AlertDialog>
             )
-        // case 'DeleteAccount':
-        //     return (
-        //         <AlertDialog open={isOpen}>
-        //             <AlertDialogContent>
-        //                 <form onSubmit={(e) => handleDeleteAccount(e)}>
-        //                     <AlertDialogHeader className='w-full'>
-        //                         <AlertDialogTitle className='mx-auto'>Deleting Your Account</AlertDialogTitle>
-        //                         <AlertDialogDescription className='text-start'>
-        //                             <div className="space-y-4 mt-3">
-
-        //                                 <h2 className="text-black">Are you sure you want to delete your account?</h2>
-        //                                 <ul>
-        //                                     <li className="text-red-600">Deleting your account is a permanent action and cannot be undone.</li>
-        //                                     <br />
-        //                                     <li>This will erase all your personal information, including your store settings, product listings, order history, and saved preferences.</li>
-        //                                     <br />
-        //                                     <li>Your store and all associated data will be irretrievably lost.</li>
-        //                                     <br />
-        //                                     <li>Any ongoing transactions or subscriptions tied to your account will be terminated.</li>
-        //                                     <br />
-        //                                     <li>You will no longer have access to your account or its contents.</li>
-        //                                 </ul>
-        //                                 <p className="bg-yellow-100 p-2 rounded-lg">If you're unsure or need assistance, please <Link to="/contact" className="text-black">contact our support team</Link> before proceeding with account deletion.</p>
-
-        //                             </div>
-        //                         </AlertDialogDescription>
-        //                     </AlertDialogHeader>
-        //                     <AlertDialogFooter className={results ? 'hidden' : 'w-full sm:space-x-3 mt-3'}>
-        //                         <Button className="mt-5 sm:mt-0" variant="destructive" type="submit" disabled={loading}>{loading ? (<Loading w={24} />) : 'Delete Now'}</Button>
-        //                         <Button type="button" className="w-full" onClick={handleCandleBtn}>Cancel</Button>
-        //                     </AlertDialogFooter>
-        //                 </form>
-        //             </AlertDialogContent>
-        //         </AlertDialog>
-        //     )
         default:
             break;
     }
