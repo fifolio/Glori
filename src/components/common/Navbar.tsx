@@ -2,6 +2,11 @@ import { Models } from 'appwrite';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 
+// SERVICES
+import { getUserMetaData } from '@/backend/services/user/getUser';
+import { checkOnUserStoreState } from '@/backend/services/store/getStore';
+import { logout } from '@/backend/services/auth/logout';
+
 // Components
 import Auth from '@/components/auth/Auth'
 
@@ -65,19 +70,20 @@ import useUserState from '@/lib/states/userStates';
 import useVerificationAlertState from '@/lib/states/verificationAlert';
 import useUserId from '@/lib/states/userId';
 
-// AUTH
-import { logout } from '@/backend/services/auth/logout';
-
-// FETCH LOGGED-IN USER META DATA
-import { getUserMetaData } from '@/backend/services/user/getUser';
-
-
 
 
 export default function Navbar() {
 
     // Set Public state for the user ID
-    const { setLoggedinUserId } = useUserId();
+    const { loggedinUserId, setLoggedinUserId } = useUserId(),
+        [userID, setUserID] = useState<string>('');
+
+        // Set isStoreValid State
+        const [isStoreValid, setIsStoreValid] = useState<boolean>(false);
+
+    useEffect(() => {
+        setUserID(loggedinUserId)
+    }, [loggedinUserId])
 
     // Turn on/off the Loading Spinner while Logging-out
     const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
@@ -85,7 +91,6 @@ export default function Navbar() {
         [userMetaData, setUserMetaData] = useState<Models.Preferences>({}),
         [isVerified, setIsVerified] = useState<boolean>(true),
         { isOpen, setIsOpen } = useVerificationAlertState();
-
 
     // Check if user logged-in
     const { isLoggedin, setIsLoggedin } = useUserState()
@@ -165,6 +170,24 @@ export default function Navbar() {
     useEffect(() => {
         getLoggedinUser()
     }, [isLoggedin])
+
+
+    // Check if user own a Store
+    useEffect(() => {
+        if (userID) {
+            if (userID.length >= 5) {
+                async function checkStoreState() {
+                    const res = await checkOnUserStoreState(userID);
+                    if (res) {
+                        setIsStoreValid(true)
+                    } else {
+                        setIsStoreValid(false)
+                    }
+                }
+                checkStoreState();
+            }
+        }
+    }, [userID]);
 
 
     return (
@@ -565,7 +588,7 @@ export default function Navbar() {
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
 
-                                                <div className="">
+                                                <div className={isStoreValid ? 'hidden' : ''}>
                                                     <Link to="/store/create" onClick={scrollTopFunc}>
                                                         <DropdownMenuItem className="cursor-pointer">
                                                             <FaStoreAlt className="mr-2" /> Create Store
@@ -573,7 +596,7 @@ export default function Navbar() {
                                                     </Link>
                                                 </div>
 
-                                                <div className="">
+                                                <div className={isStoreValid ? '' : 'hidden'}>
                                                     <Link to="/store/id" onClick={scrollTopFunc}>
                                                         <DropdownMenuItem className="cursor-pointer">
                                                             <RiGalleryView2 className="mr-2" /> View Store
