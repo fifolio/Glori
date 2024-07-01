@@ -47,20 +47,11 @@ export default function Settings() {
         setContentType('UpdateUsername')
         setIsOpen(true)
     }
-    // function updatePhoneNumber() {
-    //     setContentType('UpdatePhoneNumber')
-    //     setIsOpen(true)
-    // }
 
     function updateProfilePicture() {
         setContentType('UpdateProfilePicture')
         setIsOpen(true)
     }
-
-    // function deleteAccount(){
-    //     setContentType('DeleteAccount')
-    //     setIsOpen(true)
-    // }
 
     // Scroll top when click on Link
     function scrollTopFunc() {

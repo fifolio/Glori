@@ -71,9 +71,9 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
 
 
     // Get / Update the user profile picture
-    // The default/current user profile picture
-    const [avatar, setAvatar] = useState<string>(''),
-        // Store the NEW user profile picture
+    // The default/current user Avatar
+    const [avatar, setAvatar] = useState<string>('/public/images/avatar.jpg'),
+        // Store the NEW user avatar to Preview
         [previewAvatar, setPreviewAvatar] = useState<string | undefined>(undefined),
         // Store the new avatar to upload
         [newAvatar, setNewAvatar] = useState<File | undefined>(undefined);

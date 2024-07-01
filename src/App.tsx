@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { checkSession } from "./backend/services/auth/checkSession";
 
-// LIB
-import useUserState from "./lib/states/userStates";
+// SERVICES
+import { checkSession } from "@/backend/services/auth/checkSession";
+
+// STATES
+import useUserState from "@/lib/states/userStates";
+import useCheckStoreState from "@/lib/states/userStoreState";
 
 // UI
-import { Navbar, Footer } from "./components";
+import { Navbar, Footer } from "@/components";
 import { LoadingScreen } from "@/components/ui/loading";
 import { Toaster } from 'sonner'
 
@@ -41,6 +44,9 @@ export default function App() {
   // Get the userState that tracks wether of User is Logged in or Not
   const { isLoggedin, setIsLoggedin } = useUserState();
 
+  // Check isStoreValid State
+  const { isStoreValid } = useCheckStoreState();
+
   // Check if there's an active session by calling the checkSession() and check it's returns
   async function sessionCheck() {
     try {
@@ -54,7 +60,18 @@ export default function App() {
     }
   }
 
-  // Check on the session everything App got mounted
+
+// Return specific route based on specific checks
+  function storeRoute() {
+    if (isLoggedin === true && isStoreValid === true) {
+      return <StoreDetails />
+    } else if (isLoggedin === true && isStoreValid === false) {
+      return <CreateDetails />
+    }
+  }
+
+
+  // Run Checks everytime App got mounted
   useEffect(() => {
     sessionCheck()
   }, []);
@@ -86,11 +103,12 @@ export default function App() {
             <Route path='contact' element={<Contact />} />
 
             {/* If NOT Logged-in */}
-            <Route path='verify' element={ isLoggedin ? <VerifyDetails /> : <Navigate to="/" />} />
+            <Route path='verify' element={isLoggedin ? <VerifyDetails /> : <Navigate to="/" />} />
             <Route path='update' element={isLoggedin ? <UpdateDetails /> : <Navigate to="/" />} />
             <Route path='settings' element={isLoggedin ? <SettingsDetails /> : <Navigate to="/" />} />
             <Route path='sell' element={isLoggedin ? <SellDetails /> : <Navigate to="/" />} />
-            <Route path="store/create" element={isLoggedin ? <CreateDetails /> : <Navigate to="/" />} />
+            <Route path="store/create" element={storeRoute()} />
+
             <Route path='edit/:id' element={isLoggedin ? <EditDetails /> : <Navigate to="/" />} />
 
             {/* Custom Routes */}

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 // SERVICES
 import { getUserMetaData } from '@/backend/services/user/getUser';
-import { checkOnUserStoreState } from '@/backend/services/store/getStore';
+import { getStore } from '@/backend/services/store/getStore';
 import { logout } from '@/backend/services/auth/logout';
 
 // Components
@@ -93,8 +93,14 @@ export default function Navbar() {
         [isVerified, setIsVerified] = useState<boolean>(true),
         { isOpen, setIsOpen } = useVerificationAlertState();
 
+    // Display the loading spinner while checking on User Store validation
+    const [loadingStoreValidation, setLoadingStoreValidation] = useState<boolean>(true)
+
     // Check if user logged-in
-    const { isLoggedin, setIsLoggedin } = useUserState()
+    const { isLoggedin, setIsLoggedin } = useUserState();
+
+    // Pass the Store ID to the Navlink (View Store / Update Board)
+    const [storeID, setStoreID] = useState<string>('')
 
 
     // Fake Products items for cart
@@ -178,11 +184,15 @@ export default function Navbar() {
         if (userID) {
             if (userID.length >= 5) {
                 async function checkStoreState() {
-                    const res = await checkOnUserStoreState(userID);
-                    if (res) {
-                        setIsStoreValid(true)
-                    } else {
+                    const res = await getStore(userID);
+                    if (res.code === 404) {
                         setIsStoreValid(false)
+                        setLoadingStoreValidation(false)
+                    } else {
+                        console.log(res)
+                        setStoreID(res.$id as string)
+                        setIsStoreValid(true)
+                        setLoadingStoreValidation(false)
                     }
                 }
                 checkStoreState();
@@ -572,44 +582,57 @@ export default function Navbar() {
                                             <DropdownMenuLabel>Activities</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
 
-                                            <Link to="/sell" onClick={scrollTopFunc} className={isStoreValid ? '' : 'hidden'}>
-                                                <DropdownMenuItem className="cursor-pointer">
-                                                    <LuPackagePlus className="mr-2" /> Sell Product
-                                                </DropdownMenuItem>
-                                            </Link>
+                                            <span className={loadingStoreValidation ? 'hidden' : ''}>
+                                                <Link to="/sell" onClick={scrollTopFunc} className={isStoreValid ? '' : 'hidden'}>
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <LuPackagePlus className="mr-2" /> Sell Product
+                                                    </DropdownMenuItem>
+                                                </Link>
 
-                                            <Link to="/cart" >
-                                                <DropdownMenuItem className="cursor-pointer">
-                                                    <RiShoppingCartLine className="mr-2" /> Go to Cart
-                                                </DropdownMenuItem>
-                                            </Link>
+                                                <Link to="/cart" >
+                                                    <DropdownMenuItem className="cursor-pointer">
+                                                        <RiShoppingCartLine className="mr-2" /> Go to Cart
+                                                    </DropdownMenuItem>
+                                                </Link>
+                                            </span>
+
+                                            {/* Show Loading Span While Loading Store Validation */}
+                                            <span className={loadingStoreValidation ? 'flex justify-center py-1' : 'hidden'}>
+                                                <Loading w={20} />
+                                            </span>
 
                                             <DropdownMenuSeparator />
                                             <DropdownMenuLabel>My Store</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
+                                                <span className={loadingStoreValidation ? 'hidden' : ''}>
 
-                                                <div className={isStoreValid ? 'hidden' : ''}>
-                                                    <Link to="/store/create" onClick={scrollTopFunc}>
-                                                        <DropdownMenuItem className="cursor-pointer">
-                                                            <FaStoreAlt className="mr-2" /> Create Store
-                                                        </DropdownMenuItem>
-                                                    </Link>
-                                                </div>
+                                                    <div className={isStoreValid ? 'hidden' : ''}>
+                                                        <Link to="/store/create" onClick={scrollTopFunc}>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <FaStoreAlt className="mr-2" /> Create Store
+                                                            </DropdownMenuItem>
+                                                        </Link>
+                                                    </div>
 
-                                                <div className={isStoreValid ? '' : 'hidden'}>
-                                                    <Link to="/store/id" onClick={scrollTopFunc}>
-                                                        <DropdownMenuItem className="cursor-pointer">
-                                                            <RiGalleryView2 className="mr-2" /> View Store
-                                                        </DropdownMenuItem>
-                                                    </Link>
+                                                    <div className={isStoreValid ? '' : 'hidden'}>
+                                                        <Link to={`/store/${storeID}`} onClick={scrollTopFunc}>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <RiGalleryView2 className="mr-2" /> View Store
+                                                            </DropdownMenuItem>
+                                                        </Link>
 
-                                                    <Link to="/update" onClick={scrollTopFunc}>
-                                                        <DropdownMenuItem className="cursor-pointer">
-                                                            <FiEdit className="mr-2" /> Update board
-                                                        </DropdownMenuItem>
-                                                    </Link>
-                                                </div>
+                                                        <Link to="/update" onClick={scrollTopFunc}>
+                                                            <DropdownMenuItem className="cursor-pointer">
+                                                                <FiEdit className="mr-2" /> Update board
+                                                            </DropdownMenuItem>
+                                                        </Link>
+                                                    </div>
+                                                </span>
+                                                {/* Show Loading Span While Loading Store Validation */}
+                                                <span className={loadingStoreValidation ? 'flex justify-center py-1' : 'hidden'}>
+                                                    <Loading w={20} />
+                                                </span>
                                             </DropdownMenuGroup>
 
                                             <DropdownMenuSeparator />
