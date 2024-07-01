@@ -73,44 +73,6 @@ export default function Store() {
     }, [storeURL]);
 
 
-
-    // Fake seller
-    const seller = {
-        name: "Chanel",
-        profilePic: "https://placehold.co/100",
-        bio: "Glori Perfumes is a family-owned business that has been crafting high-quality, artisanal perfumes for over 50 years. We take pride in using only the finest natural ingredients and time-honored techniques to create scents that are both luxurious and captivating.",
-        email: "info@gloriperfumes.com",
-        phone: "+1 (555) 123-4567",
-        website: "www.gloriperfumes.com",
-        products: [
-            {
-                id: 1,
-                name: "Enchanted Rose",
-                image: "/placeholder.svg",
-                price: 49.99,
-            },
-            {
-                id: 2,
-                name: "Citrus Breeze",
-                image: "/placeholder.svg",
-                price: 39.99,
-            },
-            {
-                id: 3,
-                name: "Midnight Jasmine",
-                image: "/placeholder.svg",
-                price: 59.99,
-            },
-            {
-                id: 4,
-                name: "Sandalwood Musk",
-                image: "/placeholder.svg",
-                price: 54.99,
-            },
-        ],
-    }
-
-
     if (loading) {
         return <LoadingScreen />
     } else {
