@@ -189,7 +189,6 @@ export default function Navbar() {
                         setIsStoreValid(false)
                         setLoadingStoreValidation(false)
                     } else {
-                        console.log(res)
                         setStoreID(res.$id as string)
                         setIsStoreValid(true)
                         setLoadingStoreValidation(false)

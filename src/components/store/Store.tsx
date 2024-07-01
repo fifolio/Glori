@@ -7,12 +7,29 @@ import { getStore } from "@/backend/services/store/getStore";
 // UI
 import { Button } from "@/components/ui/button"
 import Perfumes from "@/components/common/Perfumes"
+import { LoadingScreen } from "../ui/loading";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+// STATES
+import useUserId from "@/lib/states/userId";
+import useUserState from "@/lib/states/userStates";
 
 // ICONS
 import { MdAlternateEmail } from "react-icons/md";
 import { MdOutlinePhone } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
-import { LoadingScreen } from "../ui/loading";
+import { IoShareSocial } from "react-icons/io5";
+import { FaRegCopy } from "react-icons/fa";
+import { toast } from "sonner";
 
 
 export default function Store() {
@@ -22,8 +39,14 @@ export default function Store() {
 
     const navigate = useNavigate();
 
-    // Display the loadingScreen while mounting
-    const [loading, setLoading] = useState<boolean>(true)
+    const
+        // Display the loadingScreen while mounting
+        [loadingComponent, setLoadingComponent] = useState<boolean>(true),
+        // Get the loggedin user ID
+        { loggedinUserId } = useUserId(),
+        // Get if user logged state
+        { isLoggedin } = useUserState(),
+        [allowUserToUpdate, setAllowUserToUpdate] = useState<boolean>(false);
 
     // Pass the store details
     const
@@ -36,8 +59,7 @@ export default function Store() {
         [facebook, setFacebook] = useState<string>(''),
         [x, setX] = useState<string>(''),
         [youtube, setYoutube] = useState<string>(''),
-        [instagram, setInstagram] = useState<string>('')
-        ;
+        [instagram, setInstagram] = useState<string>('');
 
     // Update the page title
     document.title = `Glori | ${name} `;
@@ -45,13 +67,20 @@ export default function Store() {
     // Get Store
     useEffect(() => {
         if (storeURL) {
+            // Check if the current loggedin user can Update the Store details based on ID:
+            if (storeURL == loggedinUserId) {
+                setAllowUserToUpdate(true)
+            } else {
+                setAllowUserToUpdate(false)
+            }
+
             async function checkStoreState() {
                 const results = await getStore(`${storeURL}`);
                 if (results) {
                     if (results.code === 404) {
                         navigate('/')
                         document.title = `Glori | House of Fragrances`;
-                        setLoading(false)
+                        setLoadingComponent(false)
                     } else {
                         setName(results.name)
                         setLogo(results.logo)
@@ -64,16 +93,25 @@ export default function Store() {
                         setYoutube(results.youtube)
                         setInstagram(results.instagram)
 
-                        setLoading(false)
+                        setLoadingComponent(false)
                     }
                 }
             }
             checkStoreState();
+
         }
-    }, [storeURL]);
+    }, [storeURL, loggedinUserId, isLoggedin]);
+
+    // Handle Copy Store Link
+    function copyStoreLink() {
+        const linkElement = document.getElementById("storeLink") as HTMLInputElement;
+        const value = linkElement.value;
+        navigator.clipboard.writeText(value)
+        toast.success("Store Link Copied")
+    }
 
 
-    if (loading) {
+    if (loadingComponent) {
         return <LoadingScreen />
     } else {
         return (
@@ -91,18 +129,51 @@ export default function Store() {
                         </div>
                     </div>
 
-                    {/* Edit Profile + Sell New Perfume*/}
-                    <div className="flex flex-col md:flex-row justify-center md:space-x-3 space-y-3 md:space-y-0 md:mt-0 w-full md:w-fit">
-                        <Link to="/update" className="w-fit mx-auto md:mx-0">
+                    {/* Edit Profile + Sell New Perfume + Share*/}
+                    <div className="flex flex-col items-center md:flex-row justify-center md:space-x-3 space-y-3 md:space-y-0 md:mt-0 w-full md:w-fit">
+
+                        <Link to="/update" className={`${allowUserToUpdate && isLoggedin ? '' : 'hidden'} w-fit mx-auto md:mx-0`}>
                             <Button variant="outline" className="text-sm w-fit">
                                 Update board
                             </Button>
                         </Link>
-                        <Link to="/sell" className="w-fit mx-auto md:mx-0">
+                        {/* <Link to="/sell" className="w-fit mx-auto md:mx-0">
                             <Button variant="default" className="text-sm w-fit">
                                 Sell New Perfume
                             </Button>
-                        </Link>
+                        </Link> */}
+
+                        {/* Share Product */}
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button><IoShareSocial size="20" /></Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle>Share {name}</DialogTitle>
+                                    <DialogDescription>
+                                        Share this store with friends now by copying the link below!
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="flex items-center space-x-2">
+                                    <div className="grid flex-1 gap-2">
+                                        <Label htmlFor="link" className="sr-only">
+                                            Link
+                                        </Label>
+                                        <Input
+                                            id="storeLink"
+                                            value={`${window.location.origin}/store/${storeURL}`}
+                                            readOnly
+                                        />
+                                    </div>
+                                    <Button onClick={copyStoreLink} type="submit" size="sm" className="px-3">
+                                        <span className="sr-only">Copy</span>
+                                        <FaRegCopy className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+
                     </div>
                 </div>
 
