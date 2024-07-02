@@ -33,7 +33,7 @@ export default function Sell() {
     document.title = `Glori | Sell New Perfume`;
 
     const
-        navigate = useNavigate(),
+        // navigate = useNavigate(),
         // Get Public state for the user ID
         { loggedinUserId } = useUserId(),
         [userID, setUserID] = useState<string>(''),
