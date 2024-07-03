@@ -303,285 +303,280 @@ export default function Sell() {
             </section>
 
             {/* Form */}
-            <div className="container w-auto md:max-w-[800px] mx-auto px-4 md:px-6 lg:px-8 z-10 pb-12">
-                <div className="grid gap-6 mb-12">
-                    <div className="grid gap-2">
-                        <h1 className="text-3xl font-bold">Add a New Perfume</h1>
-                        <p className="text-gray-500">
-                            Fill out the form below to list a new perfume product on Glori.
-                        </p>
+                <div className="container w-auto md:max-w-[800px] px-4 mx-auto md:px-6 lg:px-8 z-10">
+                    <div className="grid gap-6 mb-12">
+                        <div className="grid gap-2">
+                            <h1 className="text-3xl font-bold">Add a New Perfume</h1>
+                            <p className="text-gray-500">
+                                Fill out the form below to list a new perfume product on Glori.
+                            </p>
+                        </div>
                     </div>
+
+                    <form onSubmit={(e) => handleFormSubmit(e)} className="grid gap-6">
+
+                        {/* title */}
+                        <div className="grid gap-2 md:max-w-full max-w-[92%]">
+                            <Label htmlFor="title">Product Title</Label>
+                            <Input required onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Enter product title" />
+                        </div>
+
+                        {/* Description */}
+                        <div className="grid gap-2 md:max-w-full max-w-[92%]">
+                            <Label htmlFor="description">Description</Label>
+                            <Textarea onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Enter product description" />
+                        </div>
+
+                        {/* Collections */}
+                        <div className="grid gap-2 md:max-w-full max-w-[92%]">
+                            <Label htmlFor="collection">Collection</Label>
+                            <div className="flex flex-row flex-wrap items-center mt-2">
+                                {collections.map((collection) => (
+                                    <Button
+                                        type="button"
+                                        key={collection}
+                                        value={collection}
+                                        variant="outline"
+                                        onClick={() => handleSelectedCollections(collection)}
+                                        className={`${selectedCollections.includes(collection) ? 'bg-blue-500 text-white' : ''} w-fit capitalize  mr-2 md:mb-0 mb-2`}>
+                                        {collection}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[92%]">
+                            <div className="grid gap-2 ">
+                                {/* Occasion */}
+                                <Select onValueChange={(e) => setOccasion(e)}>
+                                    <Label htmlFor="occasion">Occasion</Label>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Select Occasion" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="date-night">Date Night</SelectItem>
+                                        <SelectItem value="office-wear">Office Wear</SelectItem>
+                                        <SelectItem value="evening-out">Evening Out</SelectItem>
+                                        <SelectItem value="party">Party</SelectItem>
+                                        <SelectItem value="summer">Summer</SelectItem>
+                                        <SelectItem value="winter">Winter</SelectItem>
+                                        <SelectItem value="spring">Spring</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {/* Size */}
+                            <div className="grid gap-2">
+                                <Label htmlFor="size">Size</Label>
+                                <Select onValueChange={(e) => setSize(e)}>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Choose bottle size" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="50ml">50ml</SelectItem>
+                                        <SelectItem value="100ml">100ml</SelectItem>
+                                        <SelectItem value="200ml">200ml</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[92%]">
+                            {/* Fragrance Family */}
+                            <div className="grid gap-2">
+                                <Label htmlFor="fragranceFamily">Fragrance Family</Label>
+                                <Select onValueChange={(e) => setFragranceFamily(e)}>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Select Fragrance Family" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="floral">Floral</SelectItem>
+                                        <SelectItem value="citrus">Citrus</SelectItem>
+                                        <SelectItem value="woody">Woody</SelectItem>
+                                        <SelectItem value="spicy">Spicy</SelectItem>
+                                        <SelectItem value="fruity">Fruity</SelectItem>
+                                        <SelectItem value="oriental">Oriental</SelectItem>
+                                        <SelectItem value="aquatic">Aquatic</SelectItem>
+                                        <SelectItem value="green">Green</SelectItem>
+                                        <SelectItem value="gourmand">Gourmand</SelectItem>
+                                        <SelectItem value="chypre">Chypre</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {/* Usage */}
+                            <div className="grid gap-2">
+                                <Select onValueChange={(e) => setUsage(e)}>
+                                    <Label htmlFor="usage">Usage</Label>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Select Usage" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="everyday">Everyday</SelectItem>
+                                        <SelectItem value="formal">Formal</SelectItem>
+                                        <SelectItem value="casual">Casual</SelectItem>
+                                        <SelectItem value="night-out">Night Out</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[92%]">
+                            {/* Longevity */}
+                            <div className="grid gap-2">
+                                <Select onValueChange={(e) => setLongevity(e)}>
+                                    <Label htmlFor="longevity">Longevity</Label>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Select Longevity" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="short">Short</SelectItem>
+                                        <SelectItem value="medium">Medium</SelectItem>
+                                        <SelectItem value="long">Long</SelectItem>
+                                        <SelectItem value="very-long">Very Long</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {/* Sillage */}
+                            <div className="grid gap-2">
+                                <Select onValueChange={(e) => setSillage(e)}>
+                                    <Label htmlFor="sillage">Sillage</Label>
+                                    <SelectTrigger className="w- shadow-sm">
+                                        <SelectValue placeholder="Select Sillage" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="light">Light</SelectItem>
+                                        <SelectItem value="moderate">Moderate</SelectItem>
+                                        <SelectItem value="heavy">Heavy</SelectItem>
+                                        <SelectItem value="enormous">Enormous</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[92%]">
+                            {/* Fragrance Notes */}
+                            <div>
+                                <Label htmlFor="fragranceFamily">Fragrance Notes</Label>
+                                <div className="flex flex-row flex-wrap items-center mt-2">
+                                    {defaultFragranceNotes.map((fragrance) => (
+                                        <Button
+                                            type="button"
+                                            key={fragrance}
+                                            value={fragrance}
+                                            variant="outline"
+                                            onClick={() => handleSelectedFragrance(fragrance)}
+                                            className={`${selectedFragranceNotes.includes(fragrance) ? 'bg-green-500 text-white' : ''} w-fit mb-2 mr-2`}>
+                                            {fragrance.replace(/-/g, ' ')}
+                                        </Button>
+                                    ))}
+                                </div>
+                            </div>
+
+
+                            {/* Ingredients */}
+                            <div>
+                                <Label htmlFor="ingredients">Ingredients</Label>
+                                <div className="flex flex-row flex-wrap items-center mt-2">
+                                    {defaultIngredients.map((ingredient) => (
+                                        <Button
+                                            type="button"
+                                            key={ingredient}
+                                            value={ingredient}
+                                            variant="outline"
+                                            onClick={() => handleSelectedIngredient(ingredient)}
+                                            className={`${selectedIngredients.includes(ingredient) ? 'bg-green-500 text-white' : ''} w-fit mb-2 mr-2`}>
+                                            {ingredient.replace(/-/g, ' ')}
+                                        </Button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid gap-2 md:max-w-full max-w-[92%]">
+                            <Label htmlFor="price">Price</Label>
+                            <Input required onChange={(e) => setPrice(e.target.value)} id="price" type="number" placeholder="Enter price" />
+                        </div>
+
+
+                        {/* Photos */}
+                        <div className="grid gap-6">
+                            <div className="grid gap-2 ">
+                                <Label htmlFor="photos">Product Photos</Label>
+                                <div className="flex md:flex-row flex-col justify-between md:mx-0 mx-auto md:space-y-0 space-y-3 ">
+
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                        <input type="file" id="photo1" className="hidden" onChange={(e) => {
+                                            const preview = URL.createObjectURL(e.target.files?.[0] as File);
+                                            setPhoto1Preview(preview);
+                                            const photoToUpload = e.target.files?.[0];
+                                            setPhoto1ToUpload(photoToUpload)
+                                        }} />
+                                        <label htmlFor="photo1" className="cursor-pointer">
+                                            {photo1Preview ? (
+                                                <>
+                                                    <img src={`${photo1Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
+                                                </>
+                                            ) : (
+                                                <span className="flex items-center h-full w-full">
+                                                    <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
+                                                </span>
+                                            )}
+                                        </label>
+                                    </div>
+
+
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                        <input type="file" id="photo2" className="hidden" onChange={(e) => {
+                                            const preview = URL.createObjectURL(e.target.files?.[0] as File);
+                                            setPhoto2Preview(preview);
+                                            const photoToUpload = e.target.files?.[0];
+                                            setPhoto2ToUpload(photoToUpload)
+                                        }} />
+                                        <label htmlFor="photo2" className="cursor-pointer">
+                                            {photo2Preview ? (
+                                                <>
+                                                    <img src={`${photo2Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
+                                                </>
+                                            ) : (
+                                                <span className="flex items-center h-full w-full">
+                                                    <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
+                                                </span>
+                                            )}
+                                        </label>
+                                    </div>
+
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                        <input type="file" id="photo3" className="hidden" onChange={(e) => {
+                                            const preview = URL.createObjectURL(e.target.files?.[0] as File);
+                                            setPhoto3Preview(preview);
+                                            const photoToUpload = e.target.files?.[0];
+                                            setPhoto3ToUpload(photoToUpload)
+                                        }} />
+                                        <label htmlFor="photo3" className="cursor-pointer">
+                                            {photo3Preview ? (
+                                                <>
+                                                    <img src={`${photo3Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
+                                                </>
+                                            ) : (
+                                                <span className="flex items-center h-full w-full">
+                                                    <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
+                                                </span>
+                                            )}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <Button type="submit" disabled={loadingSubmit} className="w-full mt-6 bg-blue-600 hover:bg-blue-800 transition mb-12">
+                            {loadingSubmit ? <Loading w={24} /> : (<>Sell {title} Now <TbCubeSend size="24" className="ml-2" /></>)}
+                        </Button>
+                    </form>
                 </div>
 
-                <form onSubmit={(e) => handleFormSubmit(e)} className="grid gap-6">
-
-                    {/* title */}
-                    <div className="grid gap-2">
-                        <Label htmlFor="title">Product Title</Label>
-                        <Input required onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Enter product title" />
-                    </div>
-
-                    {/* Description */}
-                    <div className="grid gap-2">
-                        <Label htmlFor="description">Description</Label>
-                        <Textarea onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Enter product description" />
-                    </div>
-
-                    {/* Collections */}
-                    <div className="grid gap-2">
-                        <Label htmlFor="collection">Collection</Label>
-                        <div className="flex flex-row flex-wrap items-center mt-2">
-                            {collections.map((collection) => (
-                                <Button
-                                    type="button"
-                                    key={collection}
-                                    value={collection}
-                                    variant="outline"
-                                    onClick={() => handleSelectedCollections(collection)}
-                                    className={`${selectedCollections.includes(collection) ? 'bg-blue-500 text-white' : ''} w-fit capitalize  mr-2 md:mb-0 mb-2`}>
-                                    {collection}
-                                </Button>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="grid gap-2">
-                            {/* Occasion */}
-                            <Select onValueChange={(e) => setOccasion(e)}>
-                                <Label htmlFor="occasion">Occasion</Label>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Select Occasion" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="date-night">Date Night</SelectItem>
-                                    <SelectItem value="office-wear">Office Wear</SelectItem>
-                                    <SelectItem value="evening-out">Evening Out</SelectItem>
-                                    <SelectItem value="party">Party</SelectItem>
-                                    <SelectItem value="summer">Summer</SelectItem>
-                                    <SelectItem value="winter">Winter</SelectItem>
-                                    <SelectItem value="spring">Spring</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        {/* Size */}
-                        <div className="grid gap-2">
-                            <Label htmlFor="size">Size</Label>
-                            <Select onValueChange={(e) => setSize(e)}>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Choose bottle size" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="50ml">50ml</SelectItem>
-                                    <SelectItem value="100ml">100ml</SelectItem>
-                                    <SelectItem value="200ml">200ml</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {/* Fragrance Family */}
-                        <div className="grid gap-2">
-                            <Label htmlFor="fragranceFamily">Fragrance Family</Label>
-                            <Select onValueChange={(e) => setFragranceFamily(e)}>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Select Fragrance Family" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="floral">Floral</SelectItem>
-                                    <SelectItem value="citrus">Citrus</SelectItem>
-                                    <SelectItem value="woody">Woody</SelectItem>
-                                    <SelectItem value="spicy">Spicy</SelectItem>
-                                    <SelectItem value="fruity">Fruity</SelectItem>
-                                    <SelectItem value="oriental">Oriental</SelectItem>
-                                    <SelectItem value="aquatic">Aquatic</SelectItem>
-                                    <SelectItem value="green">Green</SelectItem>
-                                    <SelectItem value="gourmand">Gourmand</SelectItem>
-                                    <SelectItem value="chypre">Chypre</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        {/* Usage */}
-                        <div className="grid gap-2">
-                            <Select onValueChange={(e) => setUsage(e)}>
-                                <Label htmlFor="usage">Usage</Label>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Select Usage" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="everyday">Everyday</SelectItem>
-                                    <SelectItem value="formal">Formal</SelectItem>
-                                    <SelectItem value="casual">Casual</SelectItem>
-                                    <SelectItem value="night-out">Night Out</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {/* Longevity */}
-                        <div className="grid gap-2">
-                            <Select onValueChange={(e) => setLongevity(e)}>
-                                <Label htmlFor="longevity">Longevity</Label>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Select Longevity" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="short">Short</SelectItem>
-                                    <SelectItem value="medium">Medium</SelectItem>
-                                    <SelectItem value="long">Long</SelectItem>
-                                    <SelectItem value="very-long">Very Long</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        {/* Sillage */}
-                        <div className="grid gap-2">
-                            <Select onValueChange={(e) => setSillage(e)}>
-                                <Label htmlFor="sillage">Sillage</Label>
-                                <SelectTrigger className="w- shadow-sm">
-                                    <SelectValue placeholder="Select Sillage" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="light">Light</SelectItem>
-                                    <SelectItem value="moderate">Moderate</SelectItem>
-                                    <SelectItem value="heavy">Heavy</SelectItem>
-                                    <SelectItem value="enormous">Enormous</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {/* Fragrance Notes */}
-                        <div>
-                            <Label htmlFor="fragranceFamily">Fragrance Notes</Label>
-                            <div className="flex flex-row flex-wrap items-center mt-2">
-                                {defaultFragranceNotes.map((fragrance) => (
-                                    <Button
-                                        type="button"
-                                        key={fragrance}
-                                        value={fragrance}
-                                        variant="outline"
-                                        onClick={() => handleSelectedFragrance(fragrance)}
-                                        className={`${selectedFragranceNotes.includes(fragrance) ? 'bg-green-500 text-white' : ''} w-fit mb-2 mr-2`}>
-                                        {fragrance.replace(/-/g, ' ')}
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
-
-
-                        {/* Ingredients */}
-                        <div>
-                            <Label htmlFor="ingredients">Ingredients</Label>
-                            <div className="flex flex-row flex-wrap items-center mt-2">
-                                {defaultIngredients.map((ingredient) => (
-                                    <Button
-                                        type="button"
-                                        key={ingredient}
-                                        value={ingredient}
-                                        variant="outline"
-                                        onClick={() => handleSelectedIngredient(ingredient)}
-                                        className={`${selectedIngredients.includes(ingredient) ? 'bg-green-500 text-white' : ''} w-fit mb-2 mr-2`}>
-                                        {ingredient.replace(/-/g, ' ')}
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid gap-2">
-                        <Label htmlFor="price">Price</Label>
-                        <Input required onChange={(e) => setPrice(e.target.value)} id="price" type="number" placeholder="Enter price" />
-                    </div>
-
-
-                    {/* Photos */}
-                    <div className="grid gap-6">
-                        <div className="grid gap-2">
-                            <Label htmlFor="photos">Product Photos</Label>
-                            <div className="flex md:flex-row flex-col justify-between md:mx-0 mx-auto md:space-y-0 space-y-3">
-
-                                <div className="border border-gray-300 rounded-lg md:w-[225px] w-[400px] md:h-[225px] h-[400px] hover:shadow-lg transition-shadow">
-                                    <input type="file" id="photo1" className="hidden" onChange={(e) => {
-                                        const preview = URL.createObjectURL(e.target.files?.[0] as File);
-                                        setPhoto1Preview(preview);
-                                        const photoToUpload = e.target.files?.[0];
-                                        setPhoto1ToUpload(photoToUpload)
-                                    }} />
-                                    <label htmlFor="photo1" className="cursor-pointer">
-                                        {photo1Preview ? (
-                                            <>
-                                                <img src={`${photo1Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
-                                            </>
-                                        ) : (
-                                            <span className="flex items-center h-full w-full">
-                                                <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
-                                            </span>
-                                        )}
-                                    </label>
-                                </div>
-
-
-                                <div className="border border-gray-300 rounded-lg md:w-[225px] w-[400px] md:h-[225px] h-[400px] hover:shadow-lg transition-shadow">
-                                    <input type="file" id="photo2" className="hidden" onChange={(e) => {
-                                        const preview = URL.createObjectURL(e.target.files?.[0] as File);
-                                        setPhoto2Preview(preview);
-                                        const photoToUpload = e.target.files?.[0];
-                                        setPhoto2ToUpload(photoToUpload)
-                                    }} />
-                                    <label htmlFor="photo2" className="cursor-pointer">
-                                        {photo2Preview ? (
-                                            <>
-                                                <img src={`${photo2Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
-                                            </>
-                                        ) : (
-                                            <span className="flex items-center h-full w-full">
-                                                <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
-                                            </span>
-                                        )}
-                                    </label>
-                                </div>
-
-                                <div className="border border-gray-300 rounded-lg md:w-[225px] w-[400px] md:h-[225px] h-[400px] hover:shadow-lg transition-shadow">
-                                    <input type="file" id="photo3" className="hidden" onChange={(e) => {
-                                        const preview = URL.createObjectURL(e.target.files?.[0] as File);
-                                        setPhoto3Preview(preview);
-                                        const photoToUpload = e.target.files?.[0];
-                                        setPhoto3ToUpload(photoToUpload)
-                                    }} />
-                                    <label htmlFor="photo3" className="cursor-pointer">
-                                        {photo3Preview ? (
-                                            <>
-                                                <img src={`${photo3Preview}`} className="w-[100%] h-[100%] aspect-square rounded-lg object-cover shadow-lg border border-white" />
-                                            </>
-                                        ) : (
-                                            <span className="flex items-center h-full w-full">
-                                                <MdAddPhotoAlternate className="mx-auto w-[50%] h-[50%] text-gray-500" />
-                                            </span>
-                                        )}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <Button type="submit" disabled={loadingSubmit} className="w-full mt-6 bg-blue-600 hover:bg-blue-800 transition">
-                        {loadingSubmit ? <Loading w={24} /> : (<>Sell {title} Now <TbCubeSend size="24" className="ml-2" /></>)}
-                    </Button>
-                </form>
-            </div>
-
-            {/* <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center relative z-10">
-                <div className="grid md:grid-cols-1 text-wrap">
-                    dsdssssssssssssssssssssssssssssssddd
-                </div >
-            </div > */}
         </div >
     )
 }
