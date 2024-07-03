@@ -1,7 +1,7 @@
 import { ID, databases } from "@/backend/configs/config";
 
 type CreateProductDataTypes = {
-    userID: string;
+    userId: string;
     title: string;
     description: string;
     price: string;
@@ -14,13 +14,14 @@ type CreateProductDataTypes = {
     sillage: string;
     occasion: string;
     photos: string[];
+    collections: string[];
 }
 
 // CREATE
 export async function handleCreateProduct(payload: CreateProductDataTypes) {
 
     let documentData = {
-        userId: payload.userID,
+        userId: payload.userId,
         title: payload.title,
         description: payload.description,
         price: payload.price,
@@ -33,14 +34,15 @@ export async function handleCreateProduct(payload: CreateProductDataTypes) {
         sillage: payload.sillage,
         occasion: payload.occasion,
         photos: payload.photos,
+        collections: payload.collections
+
     };
 
     const res = await databases.createDocument(
         `${import.meta.env.VITE_DATABASES_MAIN}`,
-        `${import.meta.env.VITE_COL_STORES}`,
+        `${import.meta.env.VITE_COL_PRODUCTS}`,
         ID.unique(),
         documentData
-
     ).then((response) => {
         return response
     }).catch((err) => {
