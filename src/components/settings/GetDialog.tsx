@@ -167,7 +167,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         const storeId = userData?.$id as string;
         const userEmail = userData?.email as string;
 
-        if (emailToCheck !== userEmail) {
+        if (emailToCheck.toLowerCase() !== userEmail) {
             toast.error("The email address you entered does not match our records. Please try again.")
             setLoading(false)
         } else {
@@ -504,7 +504,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                         </div>
 
 
-                                        <div className={`${results ? 'hidden' : ''} border border-red-500 bg-red-200 rounded-lg text-black text-left`}>
+                                        <div className={`${results ? 'hidden' : ''} border text-red-900 border-red-500 bg-red-200 rounded-lg text-left`}>
                                             {/* Dialog Message */}
                                             <div className="mt-2 px-7 py-3">
                                                 <p className="text-sm">
@@ -512,7 +512,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                                 </p>
                                             </div>
                                             {/* Security Instructions */}
-                                            <div className="px-7 mb-3 text-red-900">
+                                            <div className="px-7 mb-3">
                                                 <p className="text-sm">
                                                     For security reasons, please enter your email address to confirm the deletion.
                                                 </p>
@@ -526,7 +526,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                     </div>
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
-                            <AlertDialogFooter className={results ? 'hidden' : 'flex flex-row sm:items-center items-end justify-between space-x-3 mt-3'}>
+                            <AlertDialogFooter className={results ? 'hidden' : 'flex flex-row justify-between space-x-3 mt-3'}>
                                 <AlertDialogAction type="button" onClick={() => handleDeleteStoreSubmit()} className="bg-red-600" disabled={loading}>{loading ? (<Loading w={24} />) : 'Delete now'}</AlertDialogAction>
                                 <AlertDialogCancel onClick={handleCandleBtn}>Cancel</AlertDialogCancel>
                             </AlertDialogFooter>
