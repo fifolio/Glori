@@ -53,6 +53,11 @@ export default function Settings() {
         setIsOpen(true)
     }
 
+    function deleteStore() {
+        setContentType('DeleteStore')
+        setIsOpen(true)
+    }
+
     // Scroll top when click on Link
     function scrollTopFunc() {
         window.scrollTo({
@@ -64,7 +69,6 @@ export default function Settings() {
 
     useEffect(() => {
         checkVerification();
-
     }, [])
 
     return (
@@ -224,7 +228,7 @@ export default function Settings() {
                             </p>
                         </div>
                         <div className="sm:mt-0 mt-3 w-full sm:w-fit">
-                            <Button className="w-full sm:w-fit" variant="destructive">Delete Your Store</Button>
+                            <Button className="w-full sm:w-fit" variant="destructive" onClick={deleteStore}>Delete Your Store</Button>
                         </div>
                     </div>
                 </div>

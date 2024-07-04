@@ -178,7 +178,7 @@ export default function Store() {
                 </div>
 
                 {/* Bio + Contact Us */}
-                <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 mb-8 md:mb-12 text-md">
+                <div className="flex flex-col md:flex-row justify-between space-y-6 md:space-y-0 mb-8 md:mb-12 text-md">
                     <div>
                         <h2 className="text-lg font-bold mb-4">About {name}</h2>
                         <p className="text-gray-500 leading-relaxed md:w-5/6">{bio}</p>

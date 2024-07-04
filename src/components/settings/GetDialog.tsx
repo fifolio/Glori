@@ -7,6 +7,8 @@ import { getUserMetaData } from "@/backend/services/user/getUser";
 import updateEmail from "@/backend/services/user/updateEmail";
 import updateUsername from "@/backend/services/user/updateUsername";
 import { getUserProfilePicture, handleUpdateAvatar } from "@/backend/services/user/updateProfilePicture";
+import { handleDeleteStore } from "@/backend/services/store/deleteStore";
+import { getStore } from "@/backend/services/store/getStore";
 
 // STATES
 import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
@@ -78,10 +80,19 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         // Store the new avatar to upload
         [newAvatar, setNewAvatar] = useState<File | undefined>(undefined);
 
+
+    const
+        // Get the email user entered to check to delete store
+        [emailToCheck, setEmailToCheck] = useState<string>(''),
+        // Get the user Store name
+        [storeName, setStoreName] = useState<string>('');
+
     // Turn the loading state off when the new avatar uploaded
     useEffect(() => {
         setLoading(false)
     }, [previewAvatar])
+
+
 
 
     // handle Update Email form submit
@@ -150,6 +161,25 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         })
     }
 
+    // handle Update Username form submit
+    async function handleDeleteStoreSubmit() {
+        setLoading(true)
+        const storeId = userData?.$id as string;
+        const userEmail = userData?.email as string;
+
+        if (emailToCheck !== userEmail) {
+            toast.error("The email address you entered does not match our records. Please try again.")
+            setLoading(false)
+        } else {
+            await handleDeleteStore(`${storeId}`)
+                .then(() => {
+                    setResults(true)
+                    setLoading(false)
+                })
+        }
+
+    }
+
     // Handle CandleBtn
     function handleCandleBtn() {
         // reset the previewAvatar to undefined
@@ -186,6 +216,10 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         userMetaData ? setUserData(userMetaData) : null;
     }
 
+    async function getStoreDetails() {
+        await getStore(userData?.$id as string)
+            .then((res) => setStoreName(res.name));
+    }
 
     useEffect(() => {
         getLoggedinUser()
@@ -194,6 +228,9 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         // Set Dialogs Placeholders
         setNewEmail(`${userData?.email}`)
         setNewUsername(`${userData?.name}`)
+
+        getStoreDetails();
+
     }, [userData?.email])
 
     switch (contentFor) {
@@ -437,6 +474,63 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                 </div>
                             </CardContent>
                         </Card>
+                    </AlertDialogContent>
+                </AlertDialog>
+            )
+        case 'DeleteStore':
+            return (
+                <AlertDialog open={isOpen}>
+                    <AlertDialogContent>
+                        <form>
+                            <AlertDialogHeader className='w-full'>
+                                <AlertDialogTitle className='mx-auto'>Confirm Store Deletion</AlertDialogTitle>
+                                <AlertDialogDescription className='text-center'>
+                                    <div className="space-y-4 mt-3">
+
+                                        {/* Show Update results */}
+                                        <div className={`${results ? '' : 'hidden'}`}>
+                                            <div className="bg-white rounded-lg max-w-md w-full mt-[-60px]">
+                                                <div className="text-center mt-7">
+                                                    <img src="/images/success.gif" alt="Successfully Updated" className="w-[250px] mx-auto" />
+                                                    <h1 className="text-2xl font-bold mt-4">Store Successfully Deleted</h1>
+                                                    <p className="text-gray-500 mt-4">
+                                                        Your store, {storeName}, and all associated products have been successfully deleted.
+                                                    </p>
+                                                </div>
+                                                <div className="mt-9">
+                                                    <Button onClick={() => window.location.reload()}>Done</Button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div className={`${results ? 'hidden' : ''} border border-red-500 bg-red-200 rounded-lg text-black text-left`}>
+                                            {/* Dialog Message */}
+                                            <div className="mt-2 px-7 py-3">
+                                                <p className="text-sm">
+                                                    You are about to delete your store, <strong>{storeName}</strong>, and all the products associated with it. This action cannot be undone.
+                                                </p>
+                                            </div>
+                                            {/* Security Instructions */}
+                                            <div className="px-7 mb-3 text-red-900">
+                                                <p className="text-sm">
+                                                    For security reasons, please enter your email address to confirm the deletion.
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+                                        <div className={results ? 'hidden' : 'flex flex-col sm:flex-row item-start sm:space-x-3'}>
+                                            <Input type="email" placeholder="email@example.com" required className="text-black sm:mb-0 mb-3" onChange={(e) => setEmailToCheck(e.target.value)} />
+                                        </div>
+                                    </div>
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter className={results ? 'hidden' : 'flex flex-row sm:items-center items-end justify-between space-x-3 mt-3'}>
+                                <AlertDialogAction type="button" onClick={() => handleDeleteStoreSubmit()} className="bg-red-600" disabled={loading}>{loading ? (<Loading w={24} />) : 'Delete now'}</AlertDialogAction>
+                                <AlertDialogCancel onClick={handleCandleBtn}>Cancel</AlertDialogCancel>
+                            </AlertDialogFooter>
+                        </form>
                     </AlertDialogContent>
                 </AlertDialog>
             )
