@@ -316,19 +316,19 @@ export default function Sell() {
                     <form onSubmit={(e) => handleFormSubmit(e)} className="grid gap-6">
 
                         {/* title */}
-                        <div className="grid gap-2 md:max-w-full max-w-[96%]">
+                        <div className="grid gap-2 md:max-w-full max-w-[98%]">
                             <Label htmlFor="title">Product Title</Label>
                             <Input required onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Enter product title" />
                         </div>
 
                         {/* Description */}
-                        <div className="grid gap-2 md:max-w-full max-w-[96%]">
+                        <div className="grid gap-2 md:max-w-full max-w-[98%]">
                             <Label htmlFor="description">Description</Label>
                             <Textarea onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Enter product description" />
                         </div>
 
                         {/* Collections */}
-                        <div className="grid gap-2 md:max-w-full max-w-[96%]">
+                        <div className="grid gap-2 md:max-w-full max-w-[98%]">
                             <Label htmlFor="collection">Collection</Label>
                             <div className="flex flex-row flex-wrap items-center mt-2">
                                 {collections.map((collection) => (
@@ -345,7 +345,7 @@ export default function Sell() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[96%]">
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[98%]">
                             <div className="grid gap-2 ">
                                 {/* Occasion */}
                                 <Select onValueChange={(e) => setOccasion(e)}>
@@ -381,7 +381,7 @@ export default function Sell() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[96%]">
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[98%]">
                             {/* Fragrance Family */}
                             <div className="grid gap-2">
                                 <Label htmlFor="fragranceFamily">Fragrance Family</Label>
@@ -421,7 +421,7 @@ export default function Sell() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[96%]">
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[98%]">
                             {/* Longevity */}
                             <div className="grid gap-2">
                                 <Select onValueChange={(e) => setLongevity(e)}>
@@ -455,7 +455,7 @@ export default function Sell() {
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[96%]">
+                        <div className="grid md:grid-cols-2 gap-6 md:max-w-full max-w-[98%]">
                             {/* Fragrance Notes */}
                             <div>
                                 <Label htmlFor="fragranceFamily">Fragrance Notes</Label>
@@ -494,7 +494,7 @@ export default function Sell() {
                             </div>
                         </div>
 
-                        <div className="grid gap-2 md:max-w-full max-w-[96%]">
+                        <div className="grid gap-2 md:max-w-full max-w-[98%]">
                             <Label htmlFor="price">Price</Label>
                             <Input required onChange={(e) => setPrice(e.target.value)} id="price" type="number" placeholder="Enter price" />
                         </div>
@@ -506,7 +506,7 @@ export default function Sell() {
                                 <Label htmlFor="photos">Product Photos</Label>
                                 <div className="flex md:flex-row flex-col justify-between md:mx-0 mx-auto md:space-y-0 space-y-3 ">
 
-                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[300px] md:h-[225px] h-[300px] hover:shadow-lg transition-shadow">
                                         <input type="file" id="photo1" className="hidden" onChange={(e) => {
                                             const preview = URL.createObjectURL(e.target.files?.[0] as File);
                                             setPhoto1Preview(preview);
@@ -527,7 +527,7 @@ export default function Sell() {
                                     </div>
 
 
-                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[300px] md:h-[225px] h-[300px] hover:shadow-lg transition-shadow">
                                         <input type="file" id="photo2" className="hidden" onChange={(e) => {
                                             const preview = URL.createObjectURL(e.target.files?.[0] as File);
                                             setPhoto2Preview(preview);
@@ -547,7 +547,7 @@ export default function Sell() {
                                         </label>
                                     </div>
 
-                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[380px] md:h-[225px] h-[380px] hover:shadow-lg transition-shadow">
+                                    <div className="border border-gray-300 rounded-lg md:w-[225px] w-[300px] md:h-[225px] h-[300px] hover:shadow-lg transition-shadow">
                                         <input type="file" id="photo3" className="hidden" onChange={(e) => {
                                             const preview = URL.createObjectURL(e.target.files?.[0] as File);
                                             setPhoto3Preview(preview);
