@@ -197,7 +197,7 @@ export default function Navbar() {
                 checkStoreState();
             }
         }
-    }, [userID]);
+    }, [isStoreValid, userID]);
 
 
     return (

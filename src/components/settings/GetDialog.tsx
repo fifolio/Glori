@@ -13,6 +13,8 @@ import { getStore } from "@/backend/services/store/getStore";
 // STATES
 import useIsSettingsCustomDialogOpen from "@/lib/states/isSettingsCustomDialogOpen";
 import checkOnUpdateEmailErrors from "@/lib/errors/checkOnUpdateEmailErrors";
+import useCheckStoreState from "@/lib/states/userStoreState";
+
 
 // ICONS
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -49,6 +51,9 @@ type GetDialogTypes = {
 }
 
 export default function GetDialog({ contentFor }: GetDialogTypes) {
+
+    // Set isStoreValid State
+    const { setIsStoreValid } = useCheckStoreState();
 
     // Turn on/off dialog
     const { isOpen, setIsOpen } = useIsSettingsCustomDialogOpen(),
@@ -161,7 +166,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
         })
     }
 
-    // handle Update Username form submit
+    // handle Delete Store form submit
     async function handleDeleteStoreSubmit() {
         setLoading(true)
         const storeId = userData?.$id as string;
@@ -174,6 +179,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
             await handleDeleteStore(`${storeId}`)
                 .then(() => {
                     setResults(true)
+                    setIsStoreValid(false)
                     setLoading(false)
                 })
         }
@@ -498,7 +504,7 @@ export default function GetDialog({ contentFor }: GetDialogTypes) {
                                                     </p>
                                                 </div>
                                                 <div className="mt-9">
-                                                    <Button onClick={() => window.location.reload()}>Done</Button>
+                                                    <Button type="button" onClick={handleCandleBtn}>Done</Button>
                                                 </div>
                                             </div>
                                         </div>
