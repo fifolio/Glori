@@ -5,7 +5,7 @@ type CreateProductDataTypes = {
     title: string;
     description: string;
     price: string;
-    size: string;
+    size: string[];
     fragranceFamily: string;
     ingredients: string[];
     fragranceNotes: string[];
@@ -14,7 +14,7 @@ type CreateProductDataTypes = {
     sillage: string;
     occasion: string;
     photos: string[];
-    collections: string[];
+    collection: string;
 }
 
 // CREATE
@@ -34,7 +34,7 @@ export async function handleCreateProduct(payload: CreateProductDataTypes) {
         sillage: payload.sillage,
         occasion: payload.occasion,
         photos: payload.photos,
-        collections: payload.collections
+        collection: payload.collection
 
     };
 

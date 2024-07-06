@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 export default function Collections() {
 
   // Catch the section name from the URL (To fetch the related data)
-  const { collectionID } = useParams<string>();
+  const { id: collectionID } = useParams<string>();
 
   return (
     <div className="md:container container-fluid">

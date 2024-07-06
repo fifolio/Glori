@@ -112,8 +112,8 @@ export default function App() {
             <Route path='edit/:id' element={isLoggedin ? <EditDetails /> : <Navigate to="/" />} />
 
             {/* Custom Routes */}
-            <Route path='collections/:collectionID' element={<Collections />} />
-            <Route path='perfumes/:perfumeID' element={<PerfumeDetails />} />
+            <Route path='collections/:id' element={<Collections />} />
+            <Route path='perfumes/:id' element={<PerfumeDetails />} />
             <Route path="store/:id" element={<StoreDetails />} />
 
             {/* Redirect Routes */}

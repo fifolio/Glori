@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { useEffect } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 // UI
 import {
@@ -31,31 +31,48 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { toast } from "sonner"
 
 // ICONS
-import { IoShareSocial } from "react-icons/io5";
 // import { FcLike } from "react-icons/fc";
+import { IoShareSocial } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCopy } from "react-icons/fa6";
 
+// SERVICES
+import { getProduct } from "@/backend/services/products/getProduct"
+import { getStore } from "@/backend/services/store/getStore"
+
+// STATES
+import useLoadingPerfume from "@/lib/states/useLoadingPerufme"
+import { LoadingScreen } from "../ui/loading"
 
 
-interface Perfume {
-    perfumeID: string;
-}
+export default function Perfume() {
 
-export default function Perfume({ perfumeID }: Perfume) {
-
-    console.log(perfumeID)
-
-    const perfumeCollection: string = 'Luxury Classics',
-        perfumeName: string = 'Chanel No 5 Eau De Toilette',
-        perfumeOwner: string = 'Chanel',
-        perfumePrice: number = 45.99
+    const
+        { id: perfumeId } = useParams<string>(),
+        navigate = useNavigate(),
+        {loadingPerfume, setLoadingPerfume } = useLoadingPerfume();
 
 
-    // Get the current page URL for the Share button
-    const pageURL = window.location.href;
+    const
+        // Get product details from API and pass the data to the UI
+        [fragranceFamily, setFragranceFamily] = useState<string>(''),
+        [fragranceNotes, setFragranceNotes] = useState<string[]>([]),
+        [ingredients, setIngredients] = useState<string[]>([]),
+        [description, setDescription] = useState<string>(''),
+        [collection, setCollection] = useState<string>(''),
+        [longevity, setLongevity] = useState<string>(''),
+        [storeName, setStoreName] = useState<string>(''),
+        [occasion, setOccasion] = useState<string>(''),
+        [photos, setPhotos] = useState<string[]>([]),
+        [sillage, setSillage] = useState<string>(''),
+        [storeId, setStoreId] = useState<string>(''),
+        [usage, setUsage] = useState<string>(''),
+        [title, setTitle] = useState<string>(''),
+        [price, setPrice] = useState<string>(''),
+        [sizes, setSizes] = useState<string[]>([]);
 
     // Scroll top when perfumeID updated
     function scrollTopFunc() {
@@ -65,244 +82,317 @@ export default function Perfume({ perfumeID }: Perfume) {
         });
     }
 
-    useEffect(() => {
-        // Update the page title with the current perfume name
-        document.title = `Glori | ${perfumeName}`;
+    // Set the Page title
+    document.title = `Glori | ${title}`;
 
+    // Handle Copy Store Link
+    function copyStoreLink() {
+        const linkElement = document.getElementById("perfumeLink") as HTMLInputElement;
+        const value = linkElement.value;
+        navigator.clipboard.writeText(value)
+        toast.success("Perfume Link Copied")
+    }
+
+
+
+    useEffect(() => {
         // calling scroll top function
         scrollTopFunc()
-    }, [perfumeID])
+        if (perfumeId) {
 
-    return (
+            async function getCurrentProduct() {
+                const results = await getProduct(`${perfumeId}`)
 
-        <div className="bg-[#f8f9fb] rounded-xl pb-6">
+                if (results) {
+                    if (results.code === 404) {
+                        navigate('/')
+                        document.title = `Glori | House of Fragrances`;
+                    } else {
 
-            {/* Perfume details: breadcrumb, name, owner, price */}
-            <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
-                <Breadcrumb className="w-full xl:w-1/2">
-                    <BreadcrumbList>
-                        <BreadcrumbItem className="sm:block hidden">
-                            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator className="sm:block hidden" />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/collections" className="sm:block hidden">Collections</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator className="sm:block hidden" />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href={`/collections/${perfumeCollection}`}>{perfumeCollection}</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Perfumes</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
-                <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
-                    <div className="sm:flex items-center sm:space-x-3">
-                        <div className="text-2xl font-bold">{perfumeName}</div>
-                        <div className="text-gray-900 pt-1 ">by
-                            <Link to="/store/id" className="ml-1 font-bold">
-                                {perfumeOwner}
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="sm:text-4xl text-2xl font-bold sm:block hidden">
-                        ${perfumePrice}
-                    </div>
-                </div>
-            </header>
+                        await getStore(results.userId)
+                            .then((store) => {
+                                setStoreId(store.$id)
+                                setStoreName(store.name)
+                            })
 
-            {/* Perfume details: gallery, details */}
-            <div className="lg:flex w-full items-start justify-between px-4">
+                        setFragranceFamily(results.fragranceFamily)
+                        setFragranceNotes(results.fragranceNotes)
+                        setIngredients(results.ingredients)
+                        setDescription(results.description)
+                        setCollection(results.collection)
+                        setLongevity(results.longevity)
+                        setOccasion(results.occasion)
+                        setPhotos(results.photos)
+                        setSillage(results.sillage)
+                        setUsage(results.usage)
+                        setTitle(results.title)
+                        setPrice(results.price)
+                        setSizes(results.size)
+                    }
+                }
+                setTimeout(() => {
+                    setLoadingPerfume(false)
+                }, 1000)
 
-                {/* gallery */}
-                <div className="gallery w-full min-h-[500px]">
-                    <Carousel className="hover:cursor-w-resize mx-auto">
-                        <CarouselContent>
-                            <CarouselItem><img src="https://hips.hearstapps.com/hmg-prod/images/06-ic32-n5-100ans-carre-6-hd-1616167247.png" className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                            <CarouselItem><img src="https://www.sephora.com/productimages/sku/s719260-main-zoom.jpg" className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                            <CarouselItem><img src="https://thebeautygypsy.com/wp-content/uploads/2021/05/chanel-no-5-history-1500x2250-optimized.jpg" className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                        </CarouselContent>
+            }
+            getCurrentProduct();
 
-                    </Carousel>
-                </div>
+        }
+    }, [perfumeId]);
 
-                {/* Details / Payment */}
-                <div className="flex-col w-full lg:px-6 lg:mt-2 mt-4">
-                    <h2 className="text-lg font-bold mb-3">About the Fragrance</h2>
+    if (loadingPerfume === true) {
+        return <LoadingScreen />
+    } else {
+        return (
+            <div className="bg-[#f8f9fb] rounded-xl pb-6">
 
-                    <div className="w-full mb-3 text-[15px]">
-                        <p>
-                            Experience the captivating essence of Acme Luxury Perfume, a sophisticated blend of the finest
-                            ingredients. This exquisite fragrance opens with a vibrant citrus note, followed by a heart of delicate
-                            floral accords and a warm, sensual base.
-                        </p>
+                {/* Perfume details: breadcrumb, name, owner, price */}
+                <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
+                    <Breadcrumb className="w-full xl:w-1/2 capitalize sm:ml-0 ml-[-5px]">
+                        <BreadcrumbList>
+                            <BreadcrumbItem className="sm:block hidden">
+                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="sm:block hidden" />
+                            <BreadcrumbItem>
+                                <BreadcrumbLink href="/collections" className="sm:block hidden">Collections</BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="sm:block hidden" />
+                            <BreadcrumbItem>
+                                <BreadcrumbLink href={`/collections/${collection}`}>{collection}</BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage>Perfumes</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
 
-                        <h2 className="text-lg font-bold my-3">Additional Information</h2>
-                        <div className="w-full mb-3 mt-2">
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Fragrance Notes:</div>
-                                <div>Bergamot, Jasmine, Sandalwood</div>
-                            </div>
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Fragrance Family:</div>
-                                <div>Floral, Woody</div>
-                            </div>
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Ingredients:</div>
-                                <div>Alcohol Denat., Fragrance, Aqua</div>
-                            </div>
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Usage:</div>
-                                <div>Apply to pulse points and enjoy</div>
-                            </div>
-
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Longevity:</div>
-                                <div>6-8 hours</div>
-                            </div>
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Sillage:</div>
-                                <div>Moderate</div>
-                            </div>
-                            <div className="flex-col sm:flex sm:flex-row mb-1 sm:mb-0 items-center sm:space-x-2">
-                                <div className="text-gray-500 dark:text-gray-400">Occasion:</div>
-                                <div>Formal, Evening</div>
+                    <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
+                        <div className="sm:flex items-center sm:space-x-3">
+                            <div className="text-gray-900">
+                                <span className="font-bold text-2xl">
+                                    {title}
+                                </span>
+                                <span className="mx-2">
+                                    By
+                                </span>
+                                <Link to={`/store/${storeId}`} className="font-bold">
+                                    {storeName}
+                                </Link>
                             </div>
                         </div>
+                        <div className="sm:text-4xl text-2xl font-bold sm:block hidden">
+                            ${price}
+                        </div>
+                    </div>
+                </header>
+
+                {/* Perfume details: gallery, details */}
+                <div className="lg:flex w-full items-start justify-between px-4 capitalize">
+
+                    {/* gallery */}
+                    <div className="gallery sm:min-w-[400px] w-full min-h-[400px] ">
+                        <Carousel className="hover:cursor-w-resize mx-auto">
+                            <CarouselContent>
+                                <CarouselItem><img src={`${photos[0]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                                <CarouselItem><img src={`${photos[1]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                                <CarouselItem><img src={`${photos[2]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                            </CarouselContent>
+
+                        </Carousel>
                     </div>
 
-                    <h2 className="text-lg font-bold my-3">Purchase Options</h2>
+                    {/* Details / Payment */}
+                    <div className="flex-col flex-wrap w-full lg:px-6 lg:mt-2 mt-4">
+                        <h2 className="text-lg font-bold mb-3">About the Fragrance</h2>
 
-                    {/* Size */}
-                    <div className="flex-col w-full mb-2 ">
-                        <Label htmlFor="size" className="mb-2">Size</Label>
-                        <RadioGroup className="flex-col sm:flex sm:flex-row items-center sm:space-x-1" defaultValue="50ml" id="size">
-                            <Label
-                                className="bg-white border cursor-pointer rounded-md px-4 py-2 flex items-center space-x-2 
-                                [&:has(:checked)]:bg-green-500"
-                                htmlFor="size-50ml"
-                            >
-                                <RadioGroupItem id="size-50ml" value="50ml" />
-                                <span>50ml</span>
-                            </Label>
-                            <Label
-                                className="bg-white border cursor-pointer rounded-md px-4 py-2 flex items-center space-x-2 
-                                [&:has(:checked)]:bg-green-500"
-                                htmlFor="size-100ml"
-                            >
-                                <RadioGroupItem id="size-100ml" value="100ml" />
-                                <span>100ml (+ $50)</span>
-                            </Label>
-                            <Label
-                                className="bg-white border cursor-pointer rounded-md px-4 py-2 flex items-center space-x-2 
-                                [&:has(:checked)]:bg-green-500"
-                                htmlFor="size-200ml"
-                            >
-                                <RadioGroupItem id="size-200ml" value="200ml" />
-                                <span>200ml (+ $100)</span>
-                            </Label>
-                        </RadioGroup>
-                    </div>
+                        <div className=" max-w-[100%] mb-3 text-[15px]">
+                            <p className="text-md font-light lowercase">
+                                {description}
+                            </p>
 
-                    {/* Quantity */}
-                    <div className="flex-col w-24 mb-10">
-                        <Label htmlFor="quantity">Quantity</Label>
-                        <Select defaultValue="1">
-                            <SelectTrigger className="bg-white">
-                                <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="1">1</SelectItem>
-                                <SelectItem value="2">2</SelectItem>
-                                <SelectItem value="3">3</SelectItem>
-                                <SelectItem value="4">4</SelectItem>
-                                <SelectItem value="5">5</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
+                            <h2 className="text-lg font-bold my-3">Additional Information</h2>
+
+                            <div className="mb-3 mt-2">
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Fragrance Notes:</div>
+                                    {fragranceNotes.map((fragrance, index) => (
+                                        <span key={index} className="mr-1 text-md font-light">
+                                            {index === fragranceNotes.length - 1 ? fragrance.replace('-', ' ') : `${fragrance.replace('-', ' ')}, `}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Ingredients:</div>
+                                    {ingredients.map((ingredient, index) => (
+                                        <span key={index} className="mr-1 text-md font-light">
+                                            {index === ingredients.length - 1 ? ingredient.replace('-', ' ') : `${ingredient.replace('-', ' ')}, `}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Fragrance Family:</div>
+                                    <div className="text-md font-light">
+                                        {fragranceFamily}
+                                    </div>
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Usage:</div>
+                                    <div className="mr-1 text-md font-light">
+                                        {usage.replace('-', ' ')}
+                                    </div>
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Longevity:</div>
+                                    <div className="mr-1 text-md font-light">
+                                        {longevity.replace('-', ' ')}
+                                    </div>
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Sillage:</div>
+                                    <div className="mr-1 text-md font-light">
+                                        {sillage}
+                                    </div>
+                                </div>
+
+                                <div className="w-[100%] flex-col flex-wrap lg:flex lg:flex-row mb-1 sm:mb-0 items-left">
+                                    <div className="font-semibold mr-1">Occasion:</div>
+                                    <div className="mr-1 text-md font-light">
+                                        {occasion}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 className="text-lg font-bold my-3">Purchase Options</h2>
+
+                        <div className="flex flex-row mb-3 w-full">
+
+                            {/* Quantity */}
+                            <div className="w-20 mr-3">
+                                <Label htmlFor="quantity">Quantity</Label>
+                                <Select defaultValue="1">
+                                    <SelectTrigger className="bg-white mt-2 shadow-none">
+                                        <SelectValue placeholder="Select" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="1">1</SelectItem>
+                                        <SelectItem value="2">2</SelectItem>
+                                        <SelectItem value="3">3</SelectItem>
+                                        <SelectItem value="4">4</SelectItem>
+                                        <SelectItem value="5">5</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {/* Size */}
+                            <div className="w-full mr-3">
+                                <Label htmlFor="quantity">Available Size</Label>
+                                <RadioGroup defaultValue="50ml" id="size" className="flex flex-row mt-2">
+                                    {sizes.map((size, index) => (
+                                        <Label
+                                            className="bg-white border cursor-pointer rounded-md px-4 py-2  space-x-2 
+                                    [&:has(:checked)]:bg-green-500 flex items-center w-fit"
+                                            htmlFor="size"
+                                            key={index}
+                                        >
+                                            <RadioGroupItem key={index} id="size" value={size} />
+                                            <span key={index}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+100)' : size}</span>
+                                        </Label>
+                                    ))}
+                                </RadioGroup>
+                            </div>
+                        </div>
 
 
-                    <Separator />
-                    {/* Purchase Options */}
-                    <div className="flex-col sm:flex sm:flex-row mt-5">
+                        <Separator />
 
-                        {/* Share dialog */}
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button variant="outline" className="flex justify-between mr-3 md:p-6 p-5 border w-full sm:w-auto">
+                        {/* Purchase Options */}
+                        <div className="flex-col sm:flex sm:flex-row mt-4">
+
+                            {/* Share dialog */}
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button variant="outline" className="flex justify-between mr-3 md:p-6 p-5 border w-full sm:w-auto">
+                                        <div className="mr-4">
+                                            <IoShareSocial size="20" />
+                                        </div>
+                                        <div>
+                                            Share
+                                        </div>
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-md">
+                                    <DialogHeader>
+                                        <DialogTitle>Share this Perfume</DialogTitle>
+                                        <DialogDescription>
+                                            Share this perfume with friends! Anyone with the link can view this page.
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="flex items-center space-x-2">
+                                        <div className="grid flex-1 gap-2">
+                                            <Label htmlFor="perfumeLink" className="sr-only">
+                                                Link
+                                            </Label>
+                                            <Input
+                                                id="perfumeLink"
+                                                defaultValue={window.location.href}
+                                                readOnly
+                                            />
+                                        </div>
+                                        <Button type="button" onClick={copyStoreLink} size="sm" className="px-3">
+                                            <span className="sr-only">Copy</span>
+                                            <FaRegCopy className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <DialogFooter className="sm:justify-start">
+                                        <DialogClose asChild>
+                                            <Button type="button" variant="secondary">
+                                                Close
+                                            </Button>
+                                        </DialogClose>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+
+                            {/* Like Button */}
+                            <div className="flex justify-center sm:justify-start mb-4 mr-4 sm:mb-0 space-x-2 w-full mt-3 sm:mt-0">
+                                <Button className="flex justify-between md:p-6 p-5 border w-full sm:w-auto" variant="outline">
                                     <div className="mr-4">
-                                        <IoShareSocial size="20" />
+                                        <FaRegHeart size="20" />
+                                        {/* <FcLike size="20"/> */}
                                     </div>
                                     <div>
-                                        Share
+                                        Like
                                     </div>
                                 </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-md">
-                                <DialogHeader>
-                                    <DialogTitle>Share this Perfume</DialogTitle>
-                                    <DialogDescription>
-                                        Share this perfume with friends! Anyone with the link can view this page.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <div className="flex items-center space-x-2">
-                                    <div className="grid flex-1 gap-2">
-                                        <Label htmlFor="link" className="sr-only">
-                                            Link
-                                        </Label>
-                                        <Input
-                                            id="link"
-                                            defaultValue={pageURL}
-                                            readOnly
-                                        />
+                            </div>
+
+                            {/* Add to Cart / Buy Now */}
+                            <div className="flex justify-center sm:justify-end mb-4 sm:mb-0 w-full sm:w-1/2">
+                                <Button className="flex md:p-6 p-5 border w-full sm:w-auto">
+                                    <div className="mr-4">
+                                        (${price})
                                     </div>
-                                    <Button type="submit" size="sm" className="px-3">
-                                        <span className="sr-only">Copy</span>
-                                        <FaRegCopy className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                                <DialogFooter className="sm:justify-start">
-                                    <DialogClose asChild>
-                                        <Button type="button" variant="secondary">
-                                            Close
-                                        </Button>
-                                    </DialogClose>
-                                </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
+                                    <div>
+                                        Add to Cart
+                                    </div>
+                                </Button>
+                            </div>
 
-                        {/* Like Button */}
-                        <div className="flex justify-center sm:justify-start mb-4 mr-4 sm:mb-0 space-x-2 w-full mt-3 sm:mt-0">
-                            <Button className="flex justify-between md:p-6 p-5 border w-full sm:w-auto" variant="outline">
-                                <div className="mr-4">
-                                    <FaRegHeart size="20" />
-                                    {/* <FcLike size="20"/> */}
-                                </div>
-                                <div>
-                                    Like
-                                </div>
-                            </Button>
                         </div>
-
-                        {/* Add to Cart / Buy Now */}
-                        <div className="flex justify-center sm:justify-end mb-4 sm:mb-0 w-full sm:w-1/2">
-                            <Button className="flex md:p-6 p-5 border w-full sm:w-auto">
-                                <div className="mr-4">
-                                    (${perfumePrice})
-                                </div>
-                                <div>
-                                    Add to Cart
-                                </div>
-                            </Button>
-                        </div>
-
                     </div>
+
+
                 </div>
-
-
             </div>
-        </div>
-    )
+        )
+    }
 }
