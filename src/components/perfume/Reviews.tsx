@@ -1,3 +1,6 @@
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
+// UI
 import {
     DropdownMenuTrigger,
     DropdownMenuRadioItem,
@@ -33,7 +36,43 @@ import { LuSend } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
 import { FaRegThumbsUp } from "react-icons/fa";
 
+// SERVICES
+import { getFeedback } from "@/backend/services/products/getFeedback"
+
+// STATES
+import useUserState from "@/lib/states/userStates"
+import useUserId from "@/lib/states/userId"
+
 export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
+
+    const
+        { loggedinUserId } = useUserId(),
+        { id: perfumeId } = useParams<string>(),
+        // Check if user logged-in
+        { isLoggedin } = useUserState();
+
+    // Check for comments
+    useEffect(() => {
+        if (isLoggedin) {
+            // get the isLiked value and pass it as a State
+            async function handleGetComments() {
+                await getFeedback(`${perfumeId}`, `${loggedinUserId}`)
+                    .then((res) => {
+                        if (res.length > 0) {
+                            console.log('comments', res.comment)
+                            // setHasFeedbackDoc(true)
+                            // setIsLiked(res[0].comment)
+                        } else {
+                            console.log('comments', res.comment)
+                            // setHasFeedbackDoc(false);
+                        }
+                    });
+            }
+            handleGetComments();
+        } else {
+            // setComments(null)
+        }
+    }, [isLoggedin, perfumeId])
 
     if (loadingScreen) {
         return <LoadingScreen />

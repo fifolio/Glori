@@ -45,7 +45,7 @@ import { getProduct } from "@/backend/services/products/getProduct"
 import { getStore } from "@/backend/services/store/getStore"
 import { getFeedback } from "@/backend/services/products/getFeedback"
 import { updateIsLiked } from "@/backend/services/products/updateIsLiked"
-import { handleCreateFeedback } from "@/backend/services/products/createFeedback"
+import { createIsLiked } from "@/backend/services/products/createIsLiked"
 
 // STATES
 import useLoadingPerfume from "@/lib/states/useLoadingPerufme"
@@ -98,15 +98,12 @@ export default function Perfume() {
                 setIsLiked(newState)
                 await updateIsLiked(storeId, perfumeId as string, newState);
             } else if (!hasFeedbackDoc) {
-                await handleCreateFeedback({
-                    productId: `${perfumeId}`,
-                    userId: `${loggedinUserId}`,
-                    isLiked: newState,
-                    rating: null,
-                    comment: null,
-                    isHelpful: null,
-                }).then((res) => {
-                    setIsLiked(res[0].isLiked)
+                await createIsLiked(
+                    loggedinUserId,
+                    perfumeId as string,
+                    newState
+                ).then((res) => {
+                    setIsLiked(res.isLiked)
                 })
             }
         } else {
