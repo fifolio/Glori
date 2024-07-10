@@ -45,21 +45,26 @@ import { getProduct } from "@/backend/services/products/getProduct"
 import { getStore } from "@/backend/services/store/getStore"
 import { getFeedback } from "@/backend/services/products/getFeedback"
 import { updateIsLiked } from "@/backend/services/products/updateIsLiked"
+import { handleCreateFeedback } from "@/backend/services/products/createFeedback"
 
 // STATES
 import useLoadingPerfume from "@/lib/states/useLoadingPerufme"
 import { LoadingScreen } from "../ui/loading"
 import useIsLiked from "@/lib/states/useIsLiked"
 import useUserState from "@/lib/states/userStates"
+import useUserId from "@/lib/states/userId"
 
 
 export default function Perfume() {
 
-    // Check if user logged-in
-    const { isLoggedin } = useUserState();
 
     const
+        { loggedinUserId } = useUserId(),
         { id: perfumeId } = useParams<string>(),
+        // Check if user logged-in
+        { isLoggedin } = useUserState(),
+        // Check if user has related feedback to the current product
+        [hasFeedbackDoc, setHasFeedbackDoc] = useState<boolean | null>(null),
         navigate = useNavigate(),
         { loadingPerfume, setLoadingPerfume } = useLoadingPerfume();
 
@@ -89,8 +94,21 @@ export default function Perfume() {
     // Handle update isLiked State func
     async function handleUpdateIsLiked(newState: boolean) {
         if (isLoggedin) {
-            setIsLiked(newState)
-            await updateIsLiked(storeId, perfumeId as string, newState);
+            if (hasFeedbackDoc) {
+                setIsLiked(newState)
+                await updateIsLiked(storeId, perfumeId as string, newState);
+            } else if (!hasFeedbackDoc) {
+                await handleCreateFeedback({
+                    productId: `${perfumeId}`,
+                    userId: `${loggedinUserId}`,
+                    isLiked: newState,
+                    rating: null,
+                    comment: null,
+                    isHelpful: null,
+                }).then((res) => {
+                    setIsLiked(res[0].isLiked)
+                })
+            }
         } else {
             setIsLiked(false)
             toast.error("Please Log-in or Sign-up to activate the Like button.")
@@ -123,13 +141,17 @@ export default function Perfume() {
             async function handleGetIsLiked() {
                 await getFeedback(`${perfumeId}`, `${storeId}`)
                     .then((res) => {
-                        setIsLiked(res[0].isLiked)
+                        if (res.length > 0) {
+                            setHasFeedbackDoc(true)
+                            setIsLiked(res[0].isLiked)
+                        } else {
+                            setHasFeedbackDoc(false);
+                        }
                     });
             }
             handleGetIsLiked();
         } else {
             setIsLiked(false)
-            console.log('user is not logged in')
         }
     }, [isLoggedin, storeId])
 

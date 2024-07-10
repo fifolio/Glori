@@ -1,12 +1,12 @@
 import { ID, databases } from "@/backend/configs/config";
 
 type CreateFeedbackDataTypes = {
-    productId: string;
-    userId: string;
-    isLiked: boolean;
-    rating: number;
-    comment: string;
-    isHelpful: number;
+    productId: string | null;
+    userId: string | null;
+    isLiked: boolean | null;
+    rating: number | null;
+    comment: string | null;
+    isHelpful: number | null;
 }
 
 // CREATE
@@ -23,11 +23,10 @@ export async function handleCreateFeedback(payload: CreateFeedbackDataTypes) {
 
     const res = await databases.createDocument(
         `${import.meta.env.VITE_DATABASES_MAIN}`,
-        `${import.meta.env.VITE_COL_FEEDBACK}`,
+        `${import.meta.env.VITE_COL_FEEDBACKS}`,
         ID.unique(),
         documentData
     ).then((response) => {
-        console.log(response)
         return response
     }).catch((err) => {
 

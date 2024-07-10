@@ -30,7 +30,6 @@ export default function PerfumeDetails() {
       async function getCurrentUserFeedback() {
         await getFeedback(`${perfumeId}`, `${loggedinUserId}`)
           .then((res) => {
-            console.log(res)
             setIsLiked(res.isLiked)
             setLoadingScreen(false)  
           })
