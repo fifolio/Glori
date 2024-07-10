@@ -70,6 +70,7 @@ import useUserState from '@/lib/states/userStates';
 import useVerificationAlertState from '@/lib/states/verificationAlert';
 import useUserId from '@/lib/states/userId';
 import useCheckStoreState from '@/lib/states/userStoreState';
+import useIsLiked from '@/lib/states/useIsLiked';
 
 
 
@@ -144,6 +145,9 @@ export default function Navbar() {
         });
     }
 
+     // Get the current use Feedbacks to update them when user logged-out
+     const { setIsLiked } = useIsLiked();
+
     // handle Logout func.
     async function handleLogout() {
         setLogoutSpinner(true)
@@ -152,6 +156,7 @@ export default function Navbar() {
             setIsLoggedin(false)
             console.log('logged out successfully');
             setLogoutSpinner(false)
+            setIsLiked(false)
         } else {
             console.log('Can not logout! something went wrong while logging out!');
         }

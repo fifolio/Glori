@@ -38,22 +38,30 @@ import { toast } from "sonner"
 import { IoShareSocial } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCopy } from "react-icons/fa6";
+import { FcLike } from "react-icons/fc"
 
 // SERVICES
 import { getProduct } from "@/backend/services/products/getProduct"
 import { getStore } from "@/backend/services/store/getStore"
+import { getFeedback } from "@/backend/services/products/getFeedback"
+import { updateIsLiked } from "@/backend/services/products/updateIsLiked"
 
 // STATES
 import useLoadingPerfume from "@/lib/states/useLoadingPerufme"
 import { LoadingScreen } from "../ui/loading"
+import useIsLiked from "@/lib/states/useIsLiked"
+import useUserState from "@/lib/states/userStates"
 
 
 export default function Perfume() {
 
+    // Check if user logged-in
+    const { isLoggedin } = useUserState();
+
     const
         { id: perfumeId } = useParams<string>(),
         navigate = useNavigate(),
-        {loadingPerfume, setLoadingPerfume } = useLoadingPerfume();
+        { loadingPerfume, setLoadingPerfume } = useLoadingPerfume();
 
 
     const
@@ -74,6 +82,21 @@ export default function Perfume() {
         [price, setPrice] = useState<string>(''),
         [sizes, setSizes] = useState<string[]>([]);
 
+
+    // Pass the current use Feedback to the UI
+    const { isLiked, setIsLiked } = useIsLiked();
+
+    // Handle update isLiked State func
+    async function handleUpdateIsLiked(newState: boolean) {
+        if (isLoggedin) {
+            setIsLiked(newState)
+            await updateIsLiked(storeId, perfumeId as string, newState);
+        } else {
+            setIsLiked(false)
+            toast.error("Please Log-in or Sign-up to activate the Like button.")
+        }
+    }
+
     // Scroll top when perfumeID updated
     function scrollTopFunc() {
         window.scrollTo({
@@ -83,7 +106,7 @@ export default function Perfume() {
     }
 
     // Set the Page title
-    document.title = `Glori | ${title}`;
+    document.title = `Glori | ${title ? title : 'Loading...'}`;
 
     // Handle Copy Store Link
     function copyStoreLink() {
@@ -94,12 +117,27 @@ export default function Perfume() {
     }
 
 
+    useEffect(() => {
+        if (isLoggedin) {
+            // get the isLiked value and pass it as a State
+            async function handleGetIsLiked() {
+                await getFeedback(`${perfumeId}`, `${storeId}`)
+                    .then((res) => {
+                        setIsLiked(res[0].isLiked)
+                    });
+            }
+            handleGetIsLiked();
+        } else {
+            setIsLiked(false)
+            console.log('user is not logged in')
+        }
+    }, [isLoggedin, storeId])
 
     useEffect(() => {
         // calling scroll top function
         scrollTopFunc()
-        if (perfumeId) {
 
+        if (perfumeId) {
             async function getCurrentProduct() {
                 const results = await getProduct(`${perfumeId}`)
 
@@ -135,8 +173,8 @@ export default function Perfume() {
                 }, 1000)
 
             }
+            // Run Get current product details func.
             getCurrentProduct();
-
         }
     }, [perfumeId]);
 
@@ -303,8 +341,8 @@ export default function Perfume() {
                                             htmlFor="size"
                                             key={index}
                                         >
-                                            <RadioGroupItem key={index} id="size" value={size} />
-                                            <span key={index}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+100)' : size}</span>
+                                            <RadioGroupItem key={index + 1} id="size" value={size} />
+                                            <span key={index + 2}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+100)' : size}</span>
                                         </Label>
                                     ))}
                                 </RadioGroup>
@@ -364,15 +402,44 @@ export default function Perfume() {
 
                             {/* Like Button */}
                             <div className="flex justify-center sm:justify-start mb-4 mr-4 sm:mb-0 space-x-2 w-full mt-3 sm:mt-0">
-                                <Button className="flex justify-between md:p-6 p-5 border w-full sm:w-auto" variant="outline">
-                                    <div className="mr-4">
-                                        <FaRegHeart size="20" />
-                                        {/* <FcLike size="20"/> */}
-                                    </div>
-                                    <div>
-                                        Like
-                                    </div>
-                                </Button>
+                                {isLoggedin && isLiked === true ? (
+                                    <Button onClick={() => handleUpdateIsLiked(false)} type="button" className="flex justify-between hover:border-gray-300 md:p-6 p-5 border border-red-300 w-full sm:w-auto bg-pink-200 text-pink-600" variant="outline">
+                                        <div className="mr-4">
+                                            <FcLike size="20" />
+                                        </div>
+                                        <div>
+                                            Liked
+                                        </div>
+                                    </Button>
+                                ) : (
+                                    <Button onClick={() => handleUpdateIsLiked(true)} type="button" className="flex justify-between md:p-6 p-5 border w-full sm:w-auto" variant="outline">
+                                        <div className="mr-4">
+                                            <FaRegHeart size="20" />
+                                        </div>
+                                        <div>
+                                            Like
+                                        </div>
+                                    </Button>
+                                )}
+                                {/* {loggedinUserId.length > 2 && isLiked === true ? (
+                                    <Button onClick={() => handleUpdateIsLiked(false)} type="button" className="flex justify-between hover:border-gray-300 md:p-6 p-5 border border-red-300 w-full sm:w-auto bg-pink-200 text-pink-600" variant="outline">
+                                        <div className="mr-4">
+                                            <FcLike size="20" />
+                                        </div>
+                                        <div>
+                                            Liked
+                                        </div>
+                                    </Button>
+                                ) : (
+                                    <Button onClick={() => handleUpdateIsLiked(true)} type="button" className="flex justify-between md:p-6 p-5 border w-full sm:w-auto" variant="outline">
+                                        <div className="mr-4">
+                                            <FaRegHeart size="20" />
+                                        </div>
+                                        <div>
+                                            Like
+                                        </div>
+                                    </Button>
+                                )} */}
                             </div>
 
                             {/* Add to Cart / Buy Now */}
