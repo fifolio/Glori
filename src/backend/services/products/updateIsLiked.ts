@@ -37,3 +37,4 @@ export async function updateIsLiked(userId: string, productId: string, isLiked: 
     })
     return results
 }
+ 
