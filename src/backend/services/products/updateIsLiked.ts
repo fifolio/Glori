@@ -5,7 +5,7 @@ import { Query } from "appwrite";
 export async function updateIsLiked(userId: string, productId: string, isLiked: boolean) {
     const results = await databases.listDocuments(
         `${import.meta.env.VITE_DATABASES_MAIN}`,
-        `${import.meta.env.VITE_COL_FEEDBACKS}`,
+        `${import.meta.env.VITE_COL_LIKES}`,
         [
             Query.equal('userId', `${userId}`),
             Query.equal('productId', `${productId}`)
@@ -21,7 +21,7 @@ export async function updateIsLiked(userId: string, productId: string, isLiked: 
         if (documentId) {
             const isLikedRes = await databases.updateDocument(
                 `${import.meta.env.VITE_DATABASES_MAIN}`,
-                `${import.meta.env.VITE_COL_FEEDBACKS}`,
+                `${import.meta.env.VITE_COL_LIKES}`,
                 documentId,
                 data
             ).then((res) => {

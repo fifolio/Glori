@@ -4,7 +4,7 @@ import { ID, databases } from "@/backend/configs/config";
 export async function createIsLiked(userId: string, productId: string, isLiked: boolean) {
     const results = await databases.createDocument(
         `${import.meta.env.VITE_DATABASES_MAIN}`,
-        `${import.meta.env.VITE_COL_FEEDBACKS}`,
+        `${import.meta.env.VITE_COL_LIKES}`,
         ID.unique(),
         {
             productId: productId,

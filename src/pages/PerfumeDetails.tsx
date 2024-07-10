@@ -3,7 +3,7 @@ import { TopSelling, Brands, Newsletter, Perfumes, Perfume, Reviews } from "@/co
 import { useParams } from 'react-router-dom';
 import useUserId from '@/lib/states/userId';
 import useIsLiked from '@/lib/states/useIsLiked';
-import { getFeedback } from '@/backend/services/products/getFeedback';
+import { getLikes } from '@/backend/services/products/getLikes';
 
 
 export default function PerfumeDetails() {
@@ -28,7 +28,7 @@ export default function PerfumeDetails() {
   useEffect(() => {
     if (perfumeId !== undefined && loggedinUserId !== undefined) {
       async function getCurrentUserFeedback() {
-        await getFeedback(`${perfumeId}`, `${loggedinUserId}`)
+        await getLikes(`${perfumeId}`, `${loggedinUserId}`)
           .then((res) => {
             setIsLiked(res.isLiked)
             setLoadingScreen(false)  

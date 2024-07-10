@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 // UI
 import {
     DropdownMenuTrigger,
@@ -27,7 +27,8 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { LoadingScreen } from "../ui/loading"
+import Loading, { LoadingScreen } from "../ui/loading"
+import { toast } from "sonner"
 
 // ICONS
 import { RiArrowUpDownFill } from "react-icons/ri";
@@ -37,38 +38,74 @@ import { FaStar } from "react-icons/fa";
 import { FaRegThumbsUp } from "react-icons/fa";
 
 // SERVICES
-import { getFeedback } from "@/backend/services/products/getFeedback"
+import { createReview } from "@/backend/services/products/createReview"
 
 // STATES
 import useUserState from "@/lib/states/userStates"
 import useUserId from "@/lib/states/userId"
 
-export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
+export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
     const
         { loggedinUserId } = useUserId(),
         { id: perfumeId } = useParams<string>(),
         // Check if user logged-in
-        { isLoggedin } = useUserState();
+        { isLoggedin } = useUserState(),
+        [submitDisabled, setSubmitDisabled] = useState<boolean>(true),
+        [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+
+    const
+        // Collect the Review Comment 
+        [review, setReview] = useState<string>(''),
+        [rating, setRating] = useState<string>('5');
+
+
+    // handle create new comment func
+    async function handleCreateNewComment() {
+        setLoadingSubmit(true);
+
+        // Check if user loggedin & perfume Id is valid
+        if (isLoggedin && perfumeId) {
+            await createReview(perfumeId, loggedinUserId, review, rating)
+                .then((res) => {
+                    console.log(res)
+                    setReview('')
+                    setLoadingSubmit(false)
+                    toast.success('Review submitted successfully')
+                })
+        } else {
+            setLoadingSubmit(false)
+            toast.error("Please Log-in or Sign-up to submit your review.")
+        }
+    }
+
+    // Check if Review contain a value
+    useEffect(() => {
+        if (review.length >= 1) {
+            setSubmitDisabled(false)
+        } else {
+            setSubmitDisabled(true)
+        }
+    }, [review])
 
     // Check for comments
     useEffect(() => {
         if (isLoggedin) {
             // get the isLiked value and pass it as a State
-            async function handleGetComments() {
-                await getFeedback(`${perfumeId}`, `${loggedinUserId}`)
-                    .then((res) => {
-                        if (res.length > 0) {
-                            console.log('comments', res.comment)
-                            // setHasFeedbackDoc(true)
-                            // setIsLiked(res[0].comment)
-                        } else {
-                            console.log('comments', res.comment)
-                            // setHasFeedbackDoc(false);
-                        }
-                    });
+            async function handleGetReviews() {
+                // await getLikes(`${perfumeId}`, `${loggedinUserId}`)
+                //     .then((res) => {
+                //         if (res.length > 0) {
+                //             console.log('comments', res.comment)
+                //             // setHasFeedbackDoc(true)
+                //             // setIsLiked(res[0].comment)
+                //         } else {
+                //             console.log('comments', res.comment)
+                //             // setHasFeedbackDoc(false);
+                //         }
+                //     });
             }
-            handleGetComments();
+            handleGetReviews();
         } else {
             // setComments(null)
         }
@@ -107,6 +144,8 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                 </DialogHeader>
                                 <div>
                                     <Textarea
+                                        onChange={(e) => setReview(e.target.value)}
+                                        value={review}
                                         placeholder="Pour Your Perfume Ponderings Here..."
                                         style={{
                                             resize: 'none',
@@ -118,12 +157,12 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                 {/* Rating */}
                                 <div className="flex items-center space-x-3 w-52 mb-5">
                                     <Label htmlFor="quantity">Rating</Label>
-                                    <Select defaultValue="1">
+                                    <Select defaultValue='5' onValueChange={(e) => setRating(e)}>
                                         <SelectTrigger className="bg-white">
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="1">
+                                            <SelectItem value="5">
                                                 <div className="flex items-center">
                                                     {[...Array(5)].map(() => (<FaStar />))}
                                                     <span className="ml-2">
@@ -131,7 +170,7 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                                     </span>
                                                 </div>
                                             </SelectItem>
-                                            <SelectItem value="2">
+                                            <SelectItem value="4">
                                                 <div className="flex items-center">
                                                     {[...Array(4)].map(() => (<FaStar />))}
                                                     <span className="ml-2">
@@ -147,7 +186,7 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                                     </span>
                                                 </div>
                                             </SelectItem>
-                                            <SelectItem value="4">
+                                            <SelectItem value="2">
                                                 <div className="flex items-center">
                                                     {[...Array(2)].map(() => (<FaStar />))}
                                                     <span className="ml-2">
@@ -155,7 +194,7 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                                     </span>
                                                 </div>
                                             </SelectItem>
-                                            <SelectItem value="5">
+                                            <SelectItem value="1">
                                                 <div className="flex items-center">
                                                     {[...Array(1)].map(() => (<FaStar />))}
                                                     <span className="ml-2">
@@ -169,9 +208,14 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
 
 
                                 <DialogFooter>
-                                    <Button type="submit" className="w-full">
-                                        Submit My Review
-                                        <LuSend size="14" className="ml-3" />
+                                    <Button disabled={submitDisabled} onClick={handleCreateNewComment} type="button" className="w-full">
+                                        <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
+                                            Submit My Review
+                                            <LuSend size="14" className="ml-3" />
+                                        </span>
+                                        <span className={loadingSubmit ? '' : 'hidden'}>
+                                            <Loading w={24} />
+                                        </span>
                                     </Button>
                                 </DialogFooter>
                             </DialogContent>
@@ -237,7 +281,7 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
 
                         {[...Array(10)].map(() => (
                             <>
-                                <div className="flex items-start gap-4 mb-5">
+                                <div className="flex items-start gap-4 mb-5 bg-yellow-50 p-3 rounded-md">
                                     <Avatar className="w-10 h-10 border">
                                         <AvatarImage src="/placeholder-user.jpg" />
                                         <AvatarFallback>CN</AvatarFallback>
@@ -265,11 +309,21 @@ export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
                                                 some healthier options.
                                             </p>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <Button size="sm" variant="outline">
-                                                <FaRegThumbsUp className="w-4 h-4 mr-2" />
-                                                Helpful (23)
-                                            </Button>
+                                        <div className="flex items-center justify-between gap-2">
+                                            <div>
+                                                <Button size="sm" variant="outline">
+                                                    <FaRegThumbsUp className="w-4 h-4 mr-2" />
+                                                    Helpful (23)
+                                                </Button>
+                                            </div>
+                                            <div className="space-x-3">
+                                                <Button size="sm" variant="outline">
+                                                    Edit
+                                                </Button>
+                                                <Button size="sm" variant="destructive">
+                                                    Delete
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

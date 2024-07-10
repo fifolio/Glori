@@ -43,7 +43,7 @@ import { FcLike } from "react-icons/fc"
 // SERVICES
 import { getProduct } from "@/backend/services/products/getProduct"
 import { getStore } from "@/backend/services/store/getStore"
-import { getFeedback } from "@/backend/services/products/getFeedback"
+import { getLikes } from "@/backend/services/products/getLikes"
 import { updateIsLiked } from "@/backend/services/products/updateIsLiked"
 import { createIsLiked } from "@/backend/services/products/createIsLiked"
 
@@ -136,7 +136,7 @@ export default function Perfume() {
         if (isLoggedin) {
             // get the isLiked value and pass it as a State
             async function handleGetIsLiked() {
-                await getFeedback(`${perfumeId}`, `${storeId}`)
+                await getLikes(`${perfumeId}`, `${storeId}`)
                     .then((res) => {
                         if (res.length > 0) {
                             setHasFeedbackDoc(true)
