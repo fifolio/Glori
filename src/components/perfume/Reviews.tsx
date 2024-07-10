@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom"
-
 import {
     DropdownMenuTrigger,
     DropdownMenuRadioItem,
@@ -36,37 +33,7 @@ import { LuSend } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
 import { FaRegThumbsUp } from "react-icons/fa";
 
-// SERVICES
-import { getFeedback } from '@/backend/services/products/getFeedback';
-
-// STATES
-import useUserId from '@/lib/states/userId';
-import useIsLiked from '@/lib/states/useIsLiked';
-
-
-
 export default function Reviews({loadingScreen}: {loadingScreen: boolean}) {
-
-    // const
-    //     { id: perfumeId } = useParams(),
-    //     { loggedinUserId } = useUserId();
-
-    // const
-    //     // Pass the current user feedback to its specific section in the UI
-    //     { isLiked, setIsLiked } = useIsLiked();
-
-
-    // async function getCurrentUserFeedback() {
-    //     const res = await getFeedback(`${perfumeId}`, `${loggedinUserId}`);
-    //     if (res) {
-    //         console.log(res)
-    //         setIsLiked(res.isLiked)
-    //         setLoadingScreen(false)
-    //     }
-    // }
-    // useEffect(() => {
-    //     getCurrentUserFeedback()
-    // }, [isLiked])
 
     if (loadingScreen) {
         return <LoadingScreen />
