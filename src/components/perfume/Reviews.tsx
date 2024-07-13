@@ -314,7 +314,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                     <Button onClick={() => setIsOpen(false)} type="button" className="text-white bg-red-600 hover:bg-red-800">
                                         Cancel
                                     </Button>
-                                    <Button disabled={submitDisabled} onClick={handleCreateNewComment} type="button" className="w-full">
+                                    <Button disabled={submitDisabled} onClick={handleCreateNewComment} type="button" className="w-full mb-4 sm:mb-0">
                                         <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
                                             Submit My Review
                                             <LuSend size="14" className="ml-3" />
@@ -486,7 +486,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                     <Button onClick={() => setIsOpen(false)} type="button" className="text-white bg-red-600 hover:bg-red-800">
                                                         Cancel
                                                     </Button>
-                                                    <Button disabled={submitDisabled} onClick={handleCreateNewComment} type="button" className="w-full">
+                                                    <Button disabled={submitDisabled} onClick={handleCreateNewComment} type="button" className="w-full mb-4 sm:mb-0">
                                                         <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
                                                             Submit My Review
                                                             <LuSend size="14" className="ml-3" />
@@ -516,7 +516,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                     <div className="flex items-center gap-0.5 ml-auto">
                                                         <div className="flex items-center">
                                                             {[...Array(Number(review.rating))].map(() => (<FaStar />))}
-                                                            <span className="ml-2">
+                                                            <span className="ml-2 hidden sm:flex">
                                                                 ({review.rating} stars)
                                                             </span>
                                                         </div>
@@ -628,7 +628,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                                             <Button disabled={loadingSubmit} onClick={() => setReviewId(null)} type="button" className="text-white bg-red-600 hover:bg-red-800">
                                                                                 Cancel
                                                                             </Button>
-                                                                            <Button disabled={loadingSubmit} onClick={() => handleUpdateReview()} type="button" className="w-full text-white bg-blue-600 hover:bg-blue-800">
+                                                                            <Button disabled={loadingSubmit} onClick={() => handleUpdateReview()} type="button" className="mb-4 sm:mb-0 w-full text-white bg-blue-600 hover:bg-blue-800">
                                                                                 <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
                                                                                     Edit My Review
                                                                                     <LuSend size="14" className="ml-3" />
