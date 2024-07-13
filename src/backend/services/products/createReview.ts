@@ -8,6 +8,7 @@ export async function createReview(productId: string, userId: string, review: st
         userId: userId,
         review: review,
         rating: rating,
+        user: userId,
     };
 
     const res = await databases.createDocument(
