@@ -35,13 +35,18 @@ import { RiArrowUpDownFill } from "react-icons/ri";
 import { FiFilter } from "react-icons/fi";
 import { LuSend } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
-import { FaRegThumbsUp } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
+
 
 // SERVICES
 import { getReviews } from "@/backend/services/products/getReviews"
 import { createReview } from "@/backend/services/products/createReview"
 import { deleteReview } from "@/backend/services/products/deleteReview"
 import { updateReview } from "@/backend/services/products/updateReview"
+import { getIsHelpful } from "@/backend/services/products/getIsHelpful"
+import { updateIsHelpful } from "@/backend/services/products/updateIsHelpful"
+
 
 // STATES
 import useUserState from "@/lib/states/userStates"
@@ -53,7 +58,7 @@ interface Review {
     $databaseId: string;
     $id: string;
     $updatedAt: string;
-    isHelpful: number;
+    isHelpful: string[];
     productId: string;
     rating: string;
     review: string;
@@ -72,18 +77,19 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
         // Check if user logged-in
         { isLoggedin } = useUserState(),
         [submitDisabled, setSubmitDisabled] = useState<boolean>(true),
+
         [loadingSubmit, setLoadingSubmit] = useState<boolean>(false),
         [loadingDelete, setLoadingDelete] = useState<{ [key: string]: boolean }>({}),
         [updateReviews, setUpdateReviews] = useState<boolean>(false),
+        [voting, setVoting] = useState<{ [key: string]: boolean }>({}),
         // Edit Review
         [isOpen, setIsOpen] = useState<boolean>(false),
         [reviewId, setReviewId] = useState<string | null>(null),
         [editedReviewText, setEditedReviewText] = useState<string>(''),
         [editedRating, setEditedRating] = useState<string>('');
 
-
     const
-        // Collect the Review Comment 
+        // Collect the Review Comment
         [review, setReview] = useState<string>(''),
         [rating, setRating] = useState<string>('5');
 
@@ -92,6 +98,8 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
         [allReviews, setAllReviews] = useState<[]>([]),
         // Store the number of rates
         [numberOfRates, setNumberOfRates] = useState<number>(0);
+
+
 
     // Calculate the Rating Stars
     function generateStarRating(starsArray: number) {
@@ -176,6 +184,58 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
         })
     }
 
+    // Handle isHelpful func.
+    async function handleIsHelpful(reviewId: string) {
+
+        // Set the Btn loadingState true
+        setVoting((prevIds) => ({ ...prevIds, [reviewId]: true }))
+
+        let isHelpfulArray: string[] = [];
+
+        try {
+            // Get the clicked document's isHelpful array
+            const res = await getIsHelpful(reviewId);
+
+            // Pass and Store the response to the local array (isHelpfulArray)
+            isHelpfulArray = res;
+
+            // Check if the user ID is included or not
+            const userIdIndex = isHelpfulArray.find((prevIds) => prevIds === `${loggedinUserId}`);
+
+            // ADD THE USER-ID
+            if (userIdIndex === undefined) {
+                const updatedIsHelpfulArray = [...isHelpfulArray, loggedinUserId];
+                await updateIsHelpful(reviewId, updatedIsHelpfulArray)
+                    .then(() => {
+                        setUpdateReviews(!updateReviews)
+                        setTimeout(() => {
+                            setVoting((prevIds) => ({ ...prevIds, [reviewId]: false }))
+                        }, 2000)
+                    }).catch(() => {
+                        toast.error("Oops! something went wrong, please make sure you're logged-in and try again");
+                    })
+
+                // REMOVE THE USER-ID
+            } else if (typeof userIdIndex === 'string') {
+                const updatedIsHelpfulArray = isHelpfulArray.filter((prevIds) => prevIds !== loggedinUserId);
+                await updateIsHelpful(reviewId, updatedIsHelpfulArray)
+                    .then(() => {
+                        setUpdateReviews(!updateReviews)
+                        setTimeout(() => {
+                            setVoting((prevIds) => ({ ...prevIds, [reviewId]: false }))
+                        }, 2000)
+                    }) 
+            }
+
+        } catch (error) {
+            toast.error("Oops! something went wrong, please make sure you're logged-in and try again");
+            console.error(error);
+            setVoting((prevIds) => ({ ...prevIds, [reviewId]: false }))
+        }
+    }
+
+
+
     // Check if the new Review state contain a value
     useEffect(() => {
         if (review.length >= 1) {
@@ -187,13 +247,11 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
     // Get Reviews
     useEffect(() => {
-        if (isLoggedin) {
             if (perfumeId) {
                 async function getAllReviews() {
                     await getReviews(perfumeId as string)
                         .then((res) => {
                             setAllReviews(res.documents);
-
                             // Get the numbers of Rates from the return documents
                             const numOfRates = res.documents.map((review: { rating: string }) => Number(review.rating));
                             const allNumOfRates: number[] = numOfRates;
@@ -210,7 +268,6 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                 }
                 getAllReviews();
             }
-        }
     }, [updateReviews, isLoggedin, perfumeId])
 
     if (loadingScreen) {
@@ -267,7 +324,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                         <SelectContent>
                                             <SelectItem value="5">
                                                 <div className="flex items-center">
-                                                    {[...Array(5)].map(() => (<FaStar />))}
+                                                    {[...Array(5)].map((_, i) => (<FaStar key={i} />))}
                                                     <span className="ml-2">
                                                         (5 stars)
                                                     </span>
@@ -275,7 +332,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                             </SelectItem>
                                             <SelectItem value="4">
                                                 <div className="flex items-center">
-                                                    {[...Array(4)].map(() => (<FaStar />))}
+                                                    {[...Array(4)].map((_, i) => (<FaStar key={i} />))}
                                                     <span className="ml-2">
                                                         (4 stars)
                                                     </span>
@@ -283,7 +340,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                             </SelectItem>
                                             <SelectItem value="3">
                                                 <div className="flex items-center">
-                                                    {[...Array(3)].map(() => (<FaStar />))}
+                                                    {[...Array(3)].map((_, i) => (<FaStar key={i} />))}
                                                     <span className="ml-2">
                                                         (3 stars)
                                                     </span>
@@ -291,7 +348,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                             </SelectItem>
                                             <SelectItem value="2">
                                                 <div className="flex items-center">
-                                                    {[...Array(2)].map(() => (<FaStar />))}
+                                                    {[...Array(2)].map((_, i) => (<FaStar key={i} />))}
                                                     <span className="ml-2">
                                                         (2 stars)
                                                     </span>
@@ -299,7 +356,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                             </SelectItem>
                                             <SelectItem value="1">
                                                 <div className="flex items-center">
-                                                    {[...Array(1)].map(() => (<FaStar />))}
+                                                    {[...Array(1)].map((_, i) => (<FaStar key={i} />))}
                                                     <span className="ml-2">
                                                         (1 stars)
                                                     </span>
@@ -380,7 +437,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
                 {/* Reviews */}
                 <div className="mt-6">
-                    <ScrollArea className="h-[400px] pr-2 w-full">
+                    <ScrollArea className="h-[400px] pr-2 w-full border-t-[1px] pt-2">
 
                         {/* Users Reviews */}
                         {allReviews.length == 0 ? (
@@ -439,7 +496,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                         <SelectContent>
                                                             <SelectItem value="5">
                                                                 <div className="flex items-center">
-                                                                    {[...Array(5)].map(() => (<FaStar />))}
+                                                                    {[...Array(5)].map((_, i) => (<FaStar key={i} />))}
                                                                     <span className="ml-2">
                                                                         (5 stars)
                                                                     </span>
@@ -447,7 +504,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                             </SelectItem>
                                                             <SelectItem value="4">
                                                                 <div className="flex items-center">
-                                                                    {[...Array(4)].map(() => (<FaStar />))}
+                                                                    {[...Array(4)].map((_, i) => (<FaStar key={i} />))}
                                                                     <span className="ml-2">
                                                                         (4 stars)
                                                                     </span>
@@ -455,7 +512,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                             </SelectItem>
                                                             <SelectItem value="3">
                                                                 <div className="flex items-center">
-                                                                    {[...Array(3)].map(() => (<FaStar />))}
+                                                                    {[...Array(3)].map((_, i) => (<FaStar key={i} />))}
                                                                     <span className="ml-2">
                                                                         (3 stars)
                                                                     </span>
@@ -463,7 +520,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                             </SelectItem>
                                                             <SelectItem value="2">
                                                                 <div className="flex items-center">
-                                                                    {[...Array(2)].map(() => (<FaStar />))}
+                                                                    {[...Array(2)].map((_, i) => (<FaStar key={i} />))}
                                                                     <span className="ml-2">
                                                                         (2 stars)
                                                                     </span>
@@ -471,7 +528,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                             </SelectItem>
                                                             <SelectItem value="1">
                                                                 <div className="flex items-center">
-                                                                    {[...Array(1)].map(() => (<FaStar />))}
+                                                                    {[...Array(1)].map((_, i) => (<FaStar key={i} />))}
                                                                     <span className="ml-2">
                                                                         (1 stars)
                                                                     </span>
@@ -505,7 +562,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                             <>
                                 {allReviews.map((review: Review, index) => (
                                     <>
-                                        <div className={`${isLoggedin === true && review.userId == loggedinUserId ? 'bg-yellow-50' : ''} flex items-start gap-4 mb-5 p-3 rounded-md`}>
+                                        <div className={`${review.userId == loggedinUserId ? 'bg-yellow-50' : ''} flex items-start gap-4 mb-5 p-3 rounded-md`}>
                                             <Avatar className="w-10 h-10 border">
                                                 <AvatarImage src={`${review.user.avatar}`} />
                                             </Avatar>
@@ -527,7 +584,8 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                         {review.$createdAt === review.$updatedAt ? (
                                                             <span>{review.$createdAt.split('T')[0]}</span>
                                                         ) : (
-                                                            <span>{review.$updatedAt.split('T')[0]} (edited)</span>
+                                                            <span>{review.$createdAt.split('T')[0]}</span>
+                                                            // <span>{review.$updatedAt.split('T')[0]} (edited)</span>
                                                         )}
                                                     </time>
                                                 </div>
@@ -538,14 +596,33 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                 </div>
                                                 <div className="flex items-center justify-between gap-2">
                                                     <div>
-                                                        <Button size="sm" variant="outline">
-                                                            <FaRegThumbsUp className="w-4 h-4 mr-2" />
-                                                            Helpful ({review.isHelpful})
+                                                        <Button
+                                                            onClick={() => handleIsHelpful(review.$id)}
+                                                            type="button"
+                                                            variant="outline"
+                                                            className={
+                                                                review.isHelpful.includes(`${loggedinUserId}`) ? 'bg-blue-500 hover:bg-blue-600 hover:text-white text-white' : ''
+                                                            }>
+                                                            {voting[review.$id] ? (
+                                                                <Loading w={20} />
+                                                            ) : (
+                                                                review.isHelpful.includes(`${loggedinUserId}`) ? (
+                                                                    <>
+                                                                        <AiFillLike className="w-4 h-4 mr-2" />
+                                                                        Unvote ({review.isHelpful.length})
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <AiOutlineLike className="w-4 h-4 mr-2" />
+                                                                        Vote ({review.isHelpful.length})
+                                                                    </>
+                                                                )
+                                                            )}
                                                         </Button>
                                                     </div>
                                                     <div className="space-x-3">
 
-                                                        {isLoggedin === true && review.userId == loggedinUserId ? (
+                                                        {review.userId == loggedinUserId ? (
                                                             <>
                                                                 {/* Edit review dialog */}
                                                                 <Dialog open={reviewId === review.$id}>

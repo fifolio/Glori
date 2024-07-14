@@ -153,9 +153,9 @@ export default function Navbar() {
         setLogoutSpinner(true)
         const res = await logout();
         if (res) {
+            window.location.reload()
             setIsLoggedin(false)
-            console.log('logged out successfully');
-            setLogoutSpinner(false)
+            // setLogoutSpinner(false)
             setIsLiked(false)
         } else {
             console.log('Can not logout! something went wrong while logging out!');
