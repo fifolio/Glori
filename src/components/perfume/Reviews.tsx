@@ -46,6 +46,8 @@ import { deleteReview } from "@/backend/services/products/deleteReview"
 import { updateReview } from "@/backend/services/products/updateReview"
 import { getIsHelpful } from "@/backend/services/products/getIsHelpful"
 import { updateIsHelpful } from "@/backend/services/products/updateIsHelpful"
+import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineAutoDelete } from "react-icons/md";
 
 
 // STATES
@@ -224,7 +226,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         setTimeout(() => {
                             setVoting((prevIds) => ({ ...prevIds, [reviewId]: false }))
                         }, 2000)
-                    }) 
+                    })
             }
 
         } catch (error) {
@@ -247,27 +249,27 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
     // Get Reviews
     useEffect(() => {
-            if (perfumeId) {
-                async function getAllReviews() {
-                    await getReviews(perfumeId as string)
-                        .then((res) => {
-                            setAllReviews(res.documents);
-                            // Get the numbers of Rates from the return documents
-                            const numOfRates = res.documents.map((review: { rating: string }) => Number(review.rating));
-                            const allNumOfRates: number[] = numOfRates;
+        if (perfumeId) {
+            async function getAllReviews() {
+                await getReviews(perfumeId as string)
+                    .then((res) => {
+                        setAllReviews(res.documents);
+                        // Get the numbers of Rates from the return documents
+                        const numOfRates = res.documents.map((review: { rating: string }) => Number(review.rating));
+                        const allNumOfRates: number[] = numOfRates;
 
-                            // Calculate the average of Number of Rates
-                            let total: number = 0;
-                            for (let i: number = 0; i < allNumOfRates.length; i++) {
-                                total += allNumOfRates[i];
-                            }
-                            const average: number = total / allNumOfRates.length;
+                        // Calculate the average of Number of Rates
+                        let total: number = 0;
+                        for (let i: number = 0; i < allNumOfRates.length; i++) {
+                            total += allNumOfRates[i];
+                        }
+                        const average: number = total / allNumOfRates.length;
 
-                            setNumberOfRates(average);
-                        })
-                }
-                getAllReviews();
+                        setNumberOfRates(average);
+                    })
             }
+            getAllReviews();
+        }
     }, [updateReviews, isLoggedin, perfumeId])
 
     if (loadingScreen) {
@@ -437,7 +439,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
                 {/* Reviews */}
                 <div className="mt-6">
-                    <ScrollArea className="h-[400px] pr-2 w-full border-t-[1px] pt-2">
+                    <ScrollArea className="h-[400px] pr-2 w-full border-t-[1px]">
 
                         {/* Users Reviews */}
                         {allReviews.length == 0 ? (
@@ -623,7 +625,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                     <div className="space-x-3">
 
                                                         {review.userId == loggedinUserId ? (
-                                                            <>
+                                                            <div className="flex flex-row items-center space-x-3">
                                                                 {/* Edit review dialog */}
                                                                 <Dialog open={reviewId === review.$id}>
                                                                     <DialogTrigger asChild>
@@ -719,11 +721,20 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                                                 </Dialog>
 
                                                                 <Button disabled={loadingDelete[review.$id]} type="button" onClick={() => handleDeleteReview(review.$id)} variant="destructive">
-                                                                    {loadingDelete[review.$id] ? (
-                                                                        'Wiping...'
-                                                                    ) : 'Wipe'}
+                                                                    <span className="hidden sm:block">
+                                                                        {loadingDelete[review.$id] ? (
+                                                                            'Wiping...'
+                                                                        ) : 'Wipe'}
+                                                                    </span>
+                                                                    <span className="block sm:hidden text-xl">
+                                                                        {loadingDelete[review.$id] ? (
+                                                                                <MdOutlineAutoDelete />
+                                                                        ) :
+                                                                                <MdDeleteOutline />
+                                                                        }
+                                                                    </span>
                                                                 </Button>
-                                                            </>
+                                                            </div>
                                                         ) : null}
                                                     </div>
                                                 </div>
