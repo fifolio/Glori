@@ -2,13 +2,18 @@ import { databases } from "@/backend/configs/config";
 import { Query } from "appwrite";
 
 // Fetch all the Reviews based on specific perfumeId
-export async function getReviews(perfumeId: string) {
+export async function getReviews(perfumeId: string, ratingFilter?: string ) {
+
+    // Check for filter validation
+    const rating: string | undefined = ratingFilter !== undefined && ratingFilter > '5' ? undefined : ratingFilter;
+    
 
     const results = await databases.listDocuments(
         `${import.meta.env.VITE_DATABASES_MAIN}`,
         `${import.meta.env.VITE_COL_REVIEWS}`,
         [
             Query.equal('productId', `${perfumeId}`),
+            rating ? Query.equal('rating', `${rating}`) : Query.notEqual('rating', '6'),
         ]
         
     ).then((res) => {

@@ -1,16 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 // UI
-import {
-    DropdownMenuTrigger,
-    DropdownMenuRadioItem,
-    DropdownMenuRadioGroup,
-    DropdownMenuContent,
-    DropdownMenu,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuCheckboxItem
-} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -23,7 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select, SelectGroup, SelectLabel } from "@/components/ui/select"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -100,6 +90,12 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
         [allReviews, setAllReviews] = useState<[]>([]),
         // Store the number of rates
         [numberOfRates, setNumberOfRates] = useState<number>(0);
+
+
+    const
+        // Filter
+        [ratingFilter, setRatingFilter] = useState<string>(''),
+        [loadingFilter, setLoadingFilter] = useState<boolean>(false);
 
 
 
@@ -251,7 +247,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
     useEffect(() => {
         if (perfumeId) {
             async function getAllReviews() {
-                await getReviews(perfumeId as string)
+                await getReviews(perfumeId as string, ratingFilter)
                     .then((res) => {
                         setAllReviews(res.documents);
                         // Get the numbers of Rates from the return documents
@@ -266,11 +262,17 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         const average: number = total / allNumOfRates.length;
 
                         setNumberOfRates(average);
+                        setLoadingFilter(false)
                     })
             }
             getAllReviews();
         }
-    }, [updateReviews, isLoggedin, perfumeId])
+    }, [ratingFilter, updateReviews, isLoggedin, perfumeId])
+
+    // Turn the LoadingFilter spinner On while fetching
+    useEffect(() => {
+        setLoadingFilter(true)
+    }, [ratingFilter])
 
     if (loadingScreen) {
         return <LoadingScreen />
@@ -279,7 +281,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
             <div className="p-6 border rounded-lg mt-5">
 
                 {/* Header section */}
-                <div className="flex-col lg:flex lg:flex-row lg:justify-between items-center sm:text-left text-center header mb-3">
+                <div className="flex-col xl:flex xl:flex-row xl:justify-between items-center xl:text-left text-center header mb-3">
 
                     {/* Title + Subtitle */}
                     <div className="title-subtitle mb-5">
@@ -290,12 +292,12 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                     </div>
 
                     {/* Filters + Sort by + Write a review */}
-                    <div className={`${allReviews.length == 0 ? 'hidden' : ''} actions flex space-x-3 sm:justify-start justify-center`}>
+                    <div className={`${allReviews.length == 0 ? 'hidden' : ''} actions flex sm:flex-row flex-col sm:space-x-3 space-x-0 xl:justify-normal justify-center space-y-3 sm:space-y-0`}>
 
                         {/* Write a review */}
                         <Dialog open={isOpen}>
                             <DialogTrigger asChild>
-                                <Button onClick={() => setIsOpen(true)} size="sm">Write a review</Button>
+                                <Button onClick={() => setIsOpen(true)}>📃 Write a review</Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
@@ -387,41 +389,41 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         </Dialog>
 
                         {/* Sort by */}
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="sm" variant="outline">
-                                    <RiArrowUpDownFill className="w-4 h-4 mr-2" />
-                                    Sort by
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-[120px]">
-                                <DropdownMenuRadioGroup value="newest">
-                                    <DropdownMenuRadioItem value="newest">Newest</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value="oldest">Oldest</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value="highest">Highest Rating</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value="lowest">Lowest Rating</DropdownMenuRadioItem>
-                                </DropdownMenuRadioGroup>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Select>
+                            <SelectTrigger className="sm:w-[200px] w-full text-left">
+                                <RiArrowUpDownFill className="w-4 h-4" />
+                                <SelectValue placeholder="Sort by" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Sort by</SelectLabel>
+                                    <SelectItem value="newest">Newest</SelectItem>
+                                    <SelectItem value="oldest">Oldest</SelectItem>
+                                    <SelectItem value="highest">Highest Rating</SelectItem>
+                                    <SelectItem value="lowest">Lowest Rating</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
 
                         {/* Filter */}
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="sm" variant="outline">
-                                    <FiFilter className="w-4 h-4 mr-2" />
-                                    Filter
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-[100px]">
-                                <DropdownMenuLabel>Filter Reviews</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuCheckboxItem>5 stars</DropdownMenuCheckboxItem>
-                                <DropdownMenuCheckboxItem>4 stars</DropdownMenuCheckboxItem>
-                                <DropdownMenuCheckboxItem>3 stars</DropdownMenuCheckboxItem>
-                                <DropdownMenuCheckboxItem>2 stars</DropdownMenuCheckboxItem>
-                                <DropdownMenuCheckboxItem>1 star</DropdownMenuCheckboxItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Select onValueChange={e => setRatingFilter(e)}>
+                            <SelectTrigger className="sm:w-[210px] w-full text-left">
+                                <FiFilter className="w-4 h-4" />
+                                <SelectValue placeholder="Filter" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Filter Reviews</SelectLabel>
+                                    <SelectItem value="5">Only 5 stars reviews</SelectItem>
+                                    <SelectItem value="4">Only 4 stars reviews</SelectItem>
+                                    <SelectItem value="3">Only 3 stars reviews</SelectItem>
+                                    <SelectItem value="2">Only 2 stars reviews</SelectItem>
+                                    <SelectItem value="1">Only 1 stars reviews</SelectItem>
+                                    <SelectItem value="6">Show all reviews</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
                     </div>
                 </div>
 
@@ -562,199 +564,211 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                             </div>
                         ) : (
                             <>
-                                {allReviews.map((review: Review, index) => (
-                                    <>
-                                        <div className={`${review.userId == loggedinUserId ? 'bg-yellow-50' : ''} flex items-start gap-4 mb-5 p-3 rounded-md`}>
-                                            <Avatar className="w-10 h-10 border">
-                                                <AvatarImage src={`${review.user.avatar}`} />
-                                            </Avatar>
+                                {loadingFilter ?
+                                    (
+                                        <div className="flex justify-center items-center mt-28">
+                                            <Loading w={40} />
+                                        </div>
+                                    )
+                                    :
+                                    allReviews.map((review: Review, index) => (
+                                        <>
+                                            <div className={`${review.userId == loggedinUserId ? 'bg-yellow-50' : ''} flex items-start gap-4 mb-5 p-3 rounded-md`}>
+                                                <Avatar className="w-10 h-10 border">
+                                                    <AvatarImage src={`${review.user.avatar}`} />
+                                                </Avatar>
 
-                                            <div className="flex-1 grid gap-2">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="font-medium" key={index}>{review.user ? review.user.username : 'unknown'}</div>
-                                                    <div className="flex items-center gap-0.5 ml-auto">
-                                                        <div className="flex items-center">
-                                                            {[...Array(Number(review.rating))].map(() => (<FaStar />))}
-                                                            <span className="ml-2 hidden sm:flex">
-                                                                ({review.rating} stars)
-                                                            </span>
+                                                <div className="flex-1 grid gap-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="font-medium" key={index}>{review.user ? review.user.username : 'unknown'}</div>
+                                                        <div className="flex items-center gap-0.5 ml-auto">
+                                                            <div className="flex items-center">
+                                                                {[...Array(Number(review.rating))].map(() => (<FaStar />))}
+                                                                <span className="ml-2 hidden sm:flex">
+                                                                    ({review.rating} stars)
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 mt-[-5px]">
+                                                        <time className="text-sm text-gray-500 dark:text-gray-400">
+                                                            {review.$createdAt === review.$updatedAt ? (
+                                                                <span>{review.$createdAt.split('T')[0]}</span>
+                                                            ) : (
+                                                                <span>{review.$createdAt.split('T')[0]}</span>
+                                                                // <span>{review.$updatedAt.split('T')[0]} (edited)</span>
+                                                            )}
+                                                        </time>
+                                                    </div>
+                                                    <div className="text-sm leading-loose text-gray-500 dark:text-gray-400">
+                                                        <p>
+                                                            {review.review}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex items-center justify-between gap-2">
+                                                        <div>
+                                                            <Button
+                                                                onClick={() => handleIsHelpful(review.$id)}
+                                                                type="button"
+                                                                variant="outline"
+                                                                className={
+                                                                    review.isHelpful.includes(`${loggedinUserId}`) ? 'bg-blue-500 hover:bg-blue-600 hover:text-white text-white' : ''
+                                                                }>
+                                                                {voting[review.$id] ? (
+                                                                    <Loading w={20} />
+                                                                ) : (
+                                                                    review.isHelpful.includes(`${loggedinUserId}`) ? (
+                                                                        <>
+                                                                            <AiFillLike className="w-4 h-4 mr-2" />
+                                                                            Unvote ({review.isHelpful.length})
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <AiOutlineLike className="w-4 h-4 mr-2" />
+                                                                            Vote ({review.isHelpful.length})
+                                                                        </>
+                                                                    )
+                                                                )}
+                                                            </Button>
+                                                        </div>
+                                                        <div className="space-x-3">
+
+                                                            {review.userId == loggedinUserId ? (
+                                                                <div className="flex flex-row items-center space-x-3">
+                                                                    {/* Edit review dialog */}
+                                                                    <Dialog open={reviewId === review.$id}>
+                                                                        <DialogTrigger asChild>
+                                                                            <Button onClick={() => setEditReview(review)} type="button" variant="outline">Edit</Button>
+                                                                        </DialogTrigger>
+                                                                        <DialogContent className="sm:max-w-[425px]">
+                                                                            <DialogHeader>
+                                                                                <DialogTitle>Edit Your Scent Story</DialogTitle>
+                                                                                <DialogDescription>
+                                                                                    Your thoughts matter! Re-leave your mark on the fragrance canvas.
+                                                                                </DialogDescription>
+                                                                            </DialogHeader>
+                                                                            <div>
+                                                                                <Textarea
+                                                                                    onChange={(e) => setEditedReviewText(e.target.value)}
+                                                                                    value={editedReviewText}
+                                                                                    placeholder="Pour Your Perfume Ponderings Here..."
+                                                                                    style={{
+                                                                                        resize: 'none',
+                                                                                        height: '200px'
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+
+                                                                            {/* Rating */}
+                                                                            <div className="flex items-center space-x-3 w-52 mb-5">
+                                                                                <Label htmlFor="quantity">Rating</Label>
+                                                                                <Select defaultValue={editedRating} onValueChange={(e) => setEditedRating(e)}>
+                                                                                    <SelectTrigger className="bg-white">
+                                                                                        <SelectValue placeholder="Select" />
+                                                                                    </SelectTrigger>
+                                                                                    <SelectContent>
+                                                                                        <SelectItem value="5">
+                                                                                            <div className="flex items-center">
+                                                                                                {[...Array(5)].map(() => (<FaStar />))}
+                                                                                                <span className="ml-2">
+                                                                                                    (5 stars)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </SelectItem>
+                                                                                        <SelectItem value="4">
+                                                                                            <div className="flex items-center">
+                                                                                                {[...Array(4)].map(() => (<FaStar />))}
+                                                                                                <span className="ml-2">
+                                                                                                    (4 stars)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </SelectItem>
+                                                                                        <SelectItem value="3">
+                                                                                            <div className="flex items-center">
+                                                                                                {[...Array(3)].map(() => (<FaStar />))}
+                                                                                                <span className="ml-2">
+                                                                                                    (3 stars)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </SelectItem>
+                                                                                        <SelectItem value="2">
+                                                                                            <div className="flex items-center">
+                                                                                                {[...Array(2)].map(() => (<FaStar />))}
+                                                                                                <span className="ml-2">
+                                                                                                    (2 stars)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </SelectItem>
+                                                                                        <SelectItem value="1">
+                                                                                            <div className="flex items-center">
+                                                                                                {[...Array(1)].map(() => (<FaStar />))}
+                                                                                                <span className="ml-2">
+                                                                                                    (1 stars)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </SelectItem>
+                                                                                    </SelectContent>
+                                                                                </Select>
+                                                                            </div>
+
+
+                                                                            <DialogFooter>
+                                                                                <Button disabled={loadingSubmit} onClick={() => setReviewId(null)} type="button" className="text-white bg-red-600 hover:bg-red-800">
+                                                                                    Cancel
+                                                                                </Button>
+                                                                                <Button disabled={loadingSubmit} onClick={() => handleUpdateReview()} type="button" className="mb-4 sm:mb-0 w-full text-white bg-blue-600 hover:bg-blue-800">
+                                                                                    <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
+                                                                                        Edit My Review
+                                                                                        <LuSend size="14" className="ml-3" />
+                                                                                    </span>
+                                                                                    <span className={loadingSubmit ? '' : 'hidden'}>
+                                                                                        <Loading w={24} />
+                                                                                    </span>
+                                                                                </Button>
+                                                                            </DialogFooter>
+                                                                        </DialogContent>
+                                                                    </Dialog>
+
+                                                                    <Button disabled={loadingDelete[review.$id]} type="button" onClick={() => handleDeleteReview(review.$id)} variant="destructive">
+                                                                        <span className="hidden sm:block">
+                                                                            {loadingDelete[review.$id] ? (
+                                                                                'Wiping...'
+                                                                            ) : 'Wipe'}
+                                                                        </span>
+                                                                        <span className="block sm:hidden text-xl">
+                                                                            {loadingDelete[review.$id] ? (
+                                                                                <MdOutlineAutoDelete />
+                                                                            ) :
+                                                                                <MdDeleteOutline />
+                                                                            }
+                                                                        </span>
+                                                                    </Button>
+                                                                </div>
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex items-center gap-2 mt-[-5px]">
-                                                    <time className="text-sm text-gray-500 dark:text-gray-400">
-                                                        {review.$createdAt === review.$updatedAt ? (
-                                                            <span>{review.$createdAt.split('T')[0]}</span>
-                                                        ) : (
-                                                            <span>{review.$createdAt.split('T')[0]}</span>
-                                                            // <span>{review.$updatedAt.split('T')[0]} (edited)</span>
-                                                        )}
-                                                    </time>
-                                                </div>
-                                                <div className="text-sm leading-loose text-gray-500 dark:text-gray-400">
-                                                    <p>
-                                                        {review.review}
-                                                    </p>
-                                                </div>
-                                                <div className="flex items-center justify-between gap-2">
-                                                    <div>
-                                                        <Button
-                                                            onClick={() => handleIsHelpful(review.$id)}
-                                                            type="button"
-                                                            variant="outline"
-                                                            className={
-                                                                review.isHelpful.includes(`${loggedinUserId}`) ? 'bg-blue-500 hover:bg-blue-600 hover:text-white text-white' : ''
-                                                            }>
-                                                            {voting[review.$id] ? (
-                                                                <Loading w={20} />
-                                                            ) : (
-                                                                review.isHelpful.includes(`${loggedinUserId}`) ? (
-                                                                    <>
-                                                                        <AiFillLike className="w-4 h-4 mr-2" />
-                                                                        Unvote ({review.isHelpful.length})
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <AiOutlineLike className="w-4 h-4 mr-2" />
-                                                                        Vote ({review.isHelpful.length})
-                                                                    </>
-                                                                )
-                                                            )}
-                                                        </Button>
-                                                    </div>
-                                                    <div className="space-x-3">
-
-                                                        {review.userId == loggedinUserId ? (
-                                                            <div className="flex flex-row items-center space-x-3">
-                                                                {/* Edit review dialog */}
-                                                                <Dialog open={reviewId === review.$id}>
-                                                                    <DialogTrigger asChild>
-                                                                        <Button onClick={() => setEditReview(review)} type="button" variant="outline">Edit</Button>
-                                                                    </DialogTrigger>
-                                                                    <DialogContent className="sm:max-w-[425px]">
-                                                                        <DialogHeader>
-                                                                            <DialogTitle>Edit Your Scent Story</DialogTitle>
-                                                                            <DialogDescription>
-                                                                                Your thoughts matter! Re-leave your mark on the fragrance canvas.
-                                                                            </DialogDescription>
-                                                                        </DialogHeader>
-                                                                        <div>
-                                                                            <Textarea
-                                                                                onChange={(e) => setEditedReviewText(e.target.value)}
-                                                                                value={editedReviewText}
-                                                                                placeholder="Pour Your Perfume Ponderings Here..."
-                                                                                style={{
-                                                                                    resize: 'none',
-                                                                                    height: '200px'
-                                                                                }}
-                                                                            />
-                                                                        </div>
-
-                                                                        {/* Rating */}
-                                                                        <div className="flex items-center space-x-3 w-52 mb-5">
-                                                                            <Label htmlFor="quantity">Rating</Label>
-                                                                            <Select defaultValue={editedRating} onValueChange={(e) => setEditedRating(e)}>
-                                                                                <SelectTrigger className="bg-white">
-                                                                                    <SelectValue placeholder="Select" />
-                                                                                </SelectTrigger>
-                                                                                <SelectContent>
-                                                                                    <SelectItem value="5">
-                                                                                        <div className="flex items-center">
-                                                                                            {[...Array(5)].map(() => (<FaStar />))}
-                                                                                            <span className="ml-2">
-                                                                                                (5 stars)
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </SelectItem>
-                                                                                    <SelectItem value="4">
-                                                                                        <div className="flex items-center">
-                                                                                            {[...Array(4)].map(() => (<FaStar />))}
-                                                                                            <span className="ml-2">
-                                                                                                (4 stars)
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </SelectItem>
-                                                                                    <SelectItem value="3">
-                                                                                        <div className="flex items-center">
-                                                                                            {[...Array(3)].map(() => (<FaStar />))}
-                                                                                            <span className="ml-2">
-                                                                                                (3 stars)
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </SelectItem>
-                                                                                    <SelectItem value="2">
-                                                                                        <div className="flex items-center">
-                                                                                            {[...Array(2)].map(() => (<FaStar />))}
-                                                                                            <span className="ml-2">
-                                                                                                (2 stars)
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </SelectItem>
-                                                                                    <SelectItem value="1">
-                                                                                        <div className="flex items-center">
-                                                                                            {[...Array(1)].map(() => (<FaStar />))}
-                                                                                            <span className="ml-2">
-                                                                                                (1 stars)
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </SelectItem>
-                                                                                </SelectContent>
-                                                                            </Select>
-                                                                        </div>
-
-
-                                                                        <DialogFooter>
-                                                                            <Button disabled={loadingSubmit} onClick={() => setReviewId(null)} type="button" className="text-white bg-red-600 hover:bg-red-800">
-                                                                                Cancel
-                                                                            </Button>
-                                                                            <Button disabled={loadingSubmit} onClick={() => handleUpdateReview()} type="button" className="mb-4 sm:mb-0 w-full text-white bg-blue-600 hover:bg-blue-800">
-                                                                                <span className={loadingSubmit ? 'hidden' : 'flex items-center'}>
-                                                                                    Edit My Review
-                                                                                    <LuSend size="14" className="ml-3" />
-                                                                                </span>
-                                                                                <span className={loadingSubmit ? '' : 'hidden'}>
-                                                                                    <Loading w={24} />
-                                                                                </span>
-                                                                            </Button>
-                                                                        </DialogFooter>
-                                                                    </DialogContent>
-                                                                </Dialog>
-
-                                                                <Button disabled={loadingDelete[review.$id]} type="button" onClick={() => handleDeleteReview(review.$id)} variant="destructive">
-                                                                    <span className="hidden sm:block">
-                                                                        {loadingDelete[review.$id] ? (
-                                                                            'Wiping...'
-                                                                        ) : 'Wipe'}
-                                                                    </span>
-                                                                    <span className="block sm:hidden text-xl">
-                                                                        {loadingDelete[review.$id] ? (
-                                                                                <MdOutlineAutoDelete />
-                                                                        ) :
-                                                                                <MdDeleteOutline />
-                                                                        }
-                                                                    </span>
-                                                                </Button>
-                                                            </div>
-                                                        ) : null}
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <Separator className="mb-5" />
-                                    </>
-                                )).reverse()}
+                                            <Separator className="mb-5" />
+                                        </>
+                                    )).reverse()
+                                }
                             </>
                         )}
 
-                        {allReviews.length > 0 && (
-                            <div className="flex flex-col justify-center w-full mx-auto">
-                                <center className="my-12 text-2xl text-gray-500 font-semibold">
-                                    <h1>
-                                        No more reviews to show
-                                    </h1>
-                                </center>
-                            </div>
-                        )}
+                        {loadingFilter ?
+                            null
+                            :
+                            allReviews.length > 0 && (
+                                <div className="flex flex-col justify-center w-full mx-auto">
+                                    <center className="my-12 text-2xl text-gray-500 font-semibold">
+                                        <h1>
+                                            No more reviews to show
+                                        </h1>
+                                    </center>
+                                </div>
+                            )
+                        }
                     </ScrollArea>
                 </div>
 
