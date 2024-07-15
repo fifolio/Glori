@@ -213,8 +213,10 @@ export default function Sell() {
                     occasion: occasion,
                     photos: photosUrls,
                     collection: collection,
+                    store: userID,
                 }).then((response) => {
                     const perfumeId = response?.$id;
+                    console.log(response)
                     toast.success(`You just listed ${title} to sell successfully`);
                     setLoadingSubmit(false);
                     setTimeout(() => {

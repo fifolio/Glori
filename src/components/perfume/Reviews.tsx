@@ -443,7 +443,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
                         {/* Users Reviews */}
                         {allReviews.length == 0 ? (
-                            <div className="flex flex-row w-full">
+                            <div className="flex flex-row w-full mt-10">
                                 <div className="w-full hidden xl:flex mr-2">
                                     <img src="/images/feedback.jpg" className="w-auto h-[400px] mx-auto rounded-md shadow-md object-cover" />
                                 </div>

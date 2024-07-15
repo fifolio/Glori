@@ -15,6 +15,7 @@ type CreateProductDataTypes = {
     occasion: string;
     photos: string[];
     collection: string;
+    store: string;
 }
 
 // CREATE
@@ -34,7 +35,8 @@ export async function handleCreateProduct(payload: CreateProductDataTypes) {
         sillage: payload.sillage,
         occasion: payload.occasion,
         photos: payload.photos,
-        collection: payload.collection
+        collection: payload.collection,
+        store: payload.userId
 
     };
 
