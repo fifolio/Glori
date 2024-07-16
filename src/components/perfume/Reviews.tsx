@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+
 // UI
 import { Button } from "@/components/ui/button"
 import {
@@ -28,7 +29,6 @@ import { FaStar } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 
-
 // SERVICES
 import { getReviews } from "@/backend/services/products/getReviews"
 import { createReview } from "@/backend/services/products/createReview"
@@ -38,7 +38,6 @@ import { getIsHelpful } from "@/backend/services/products/getIsHelpful"
 import { updateIsHelpful } from "@/backend/services/products/updateIsHelpful"
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineAutoDelete } from "react-icons/md";
-
 
 // STATES
 import useUserState from "@/lib/states/userStates"
@@ -232,7 +231,6 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
             setVoting((prevIds) => ({ ...prevIds, [reviewId]: false }))
         }
     }
-
 
 
     // Check if the new Review state contain a value
