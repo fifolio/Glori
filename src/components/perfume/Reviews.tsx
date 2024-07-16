@@ -93,8 +93,9 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
 
     const
-        // Filter
+        // Filters
         [ratingFilter, setRatingFilter] = useState<string>(''),
+        [sortByFilter, setSortByFilter] = useState<string>(''),
         [loadingFilter, setLoadingFilter] = useState<boolean>(false);
 
 
@@ -247,7 +248,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
     useEffect(() => {
         if (perfumeId) {
             async function getAllReviews() {
-                await getReviews(perfumeId as string, ratingFilter)
+                await getReviews(perfumeId as string, ratingFilter, sortByFilter)
                     .then((res) => {
                         setAllReviews(res.documents);
                         // Get the numbers of Rates from the return documents
@@ -261,18 +262,19 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         }
                         const average: number = total / allNumOfRates.length;
 
+                        console.log(res.documents)
                         setNumberOfRates(average);
                         setLoadingFilter(false)
                     })
             }
             getAllReviews();
         }
-    }, [ratingFilter, updateReviews, isLoggedin, perfumeId])
+    }, [sortByFilter, ratingFilter, updateReviews, isLoggedin, perfumeId])
 
     // Turn the LoadingFilter spinner On while fetching
     useEffect(() => {
         setLoadingFilter(true)
-    }, [ratingFilter])
+    }, [sortByFilter, ratingFilter])
 
     if (loadingScreen) {
         return <LoadingScreen />
@@ -389,7 +391,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         </Dialog>
 
                         {/* Sort by */}
-                        <Select>
+                        <Select onValueChange={e => setSortByFilter(e)}>
                             <SelectTrigger className="sm:w-[200px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
                                 <SelectValue placeholder="Sort by" />
@@ -751,7 +753,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                                             </div>
                                             <Separator className="mb-5" />
                                         </>
-                                    )).reverse()
+                                    ))
                                 }
                             </>
                         )}
