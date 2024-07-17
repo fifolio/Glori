@@ -32,9 +32,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "sonner"
+import Loading, { LoadingScreen } from "../ui/loading"
 
 // ICONS
-// import { FcLike } from "react-icons/fc";
 import { IoShareSocial } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCopy } from "react-icons/fa6";
@@ -46,13 +46,14 @@ import { getStore } from "@/backend/services/store/getStore"
 import { getLikes } from "@/backend/services/products/getLikes"
 import { updateIsLiked } from "@/backend/services/products/updateIsLiked"
 import { createIsLiked } from "@/backend/services/products/createIsLiked"
+import { addToCart } from "@/backend/services/cart/addToCart"
 
 // STATES
 import useLoadingPerfume from "@/lib/states/useLoadingPerufme"
-import { LoadingScreen } from "../ui/loading"
 import useIsLiked from "@/lib/states/useIsLiked"
 import useUserState from "@/lib/states/userStates"
 import useUserId from "@/lib/states/userId"
+import useUpdateCart from "@/lib/states/useUpdateCart"
 
 
 export default function Perfume() {
@@ -66,8 +67,11 @@ export default function Perfume() {
         // Check if user has related feedback to the current product
         [hasFeedbackDoc, setHasFeedbackDoc] = useState<boolean | null>(null),
         navigate = useNavigate(),
-        { loadingPerfume, setLoadingPerfume } = useLoadingPerfume();
+        { loadingPerfume, setLoadingPerfume } = useLoadingPerfume(),
+        [loadingAddaingToCart, setLoadingAddingToCart] = useState<boolean>(false);
 
+
+        const {cartState, setCartState} = useUpdateCart();
 
     const
         // Get product details from API and pass the data to the UI
@@ -87,6 +91,36 @@ export default function Perfume() {
         [price, setPrice] = useState<string>(''),
         [sizes, setSizes] = useState<string[]>([]);
 
+
+    const
+        // Collect the data for Cart
+        [selectedQuantity, setSelectedQuantity] = useState<string>('1'),
+        [selectedSize, setSelectedSize] = useState<string>('50');
+
+
+    // Calculate the final Price function 
+    function calcFinalPrice() {
+
+        let defaultPrice: number = Number(price);
+        let finalPrice: number = defaultPrice;
+
+        // Validate and calculate quantity
+        let quantity: number = Number(selectedQuantity);
+        if (quantity >= 1 && quantity <= 5) {
+            finalPrice *= quantity;
+        } else {
+            quantity = 1; // Default to 1 if the selected quantity is out of range
+        }
+
+        // Add price for size if selected
+        if (selectedSize === '100') {
+            finalPrice += 50;
+        } else if (selectedSize === '200') {
+            finalPrice += 100;
+        }
+
+        return finalPrice
+    }
 
     // Pass the current use Feedback to the UI
     const { isLiked, setIsLiked } = useIsLiked();
@@ -110,6 +144,24 @@ export default function Perfume() {
             setIsLiked(false)
             toast.error("Please Log-in or Sign-up to activate the Like button.")
         }
+    }
+
+    // Handle AddtoCart func.
+    async function handleAddToCart() {
+        setLoadingAddingToCart(true)
+
+        await addToCart({
+            userId: loggedinUserId,
+            productId: perfumeId as string,
+            size: Number(selectedSize),
+            quantity: Number(selectedQuantity),
+            defaultPrice: Number(price)
+        })
+            .then(() => {
+                setCartState(!cartState)
+                toast.success(`Added ${title} to your cart successfully`)
+                setLoadingAddingToCart(false)
+            })
     }
 
     // Scroll top when perfumeID updated
@@ -194,6 +246,9 @@ export default function Perfume() {
             }
             // Run Get current product details func.
             getCurrentProduct();
+
+            // Run the final price calc func.
+            calcFinalPrice();
         }
     }, [perfumeId]);
 
@@ -335,7 +390,7 @@ export default function Perfume() {
                             {/* Quantity */}
                             <div className="w-20 mr-3">
                                 <Label htmlFor="quantity">Quantity</Label>
-                                <Select defaultValue="1">
+                                <Select defaultValue="1" onValueChange={e => setSelectedQuantity(e)}>
                                     <SelectTrigger className="bg-white mt-2 shadow-none">
                                         <SelectValue placeholder="Select" />
                                     </SelectTrigger>
@@ -352,18 +407,17 @@ export default function Perfume() {
                             {/* Size */}
                             <div className="w-full mr-3">
                                 <Label htmlFor="quantity">Available Size</Label>
-                                <RadioGroup defaultValue="50ml" id="size" className="flex flex-row mt-2">
+                                <RadioGroup onValueChange={e => setSelectedSize(e)} defaultValue='50' id="size" className="flex flex-row mt-2">
                                     {sizes.map((size, index) => (
                                         <Label
-                                            className="bg-white border cursor-pointer rounded-md px-4 py-2  space-x-2 
-                                    [&:has(:checked)]:bg-green-500 flex items-center w-fit"
+                                            className="bg-white border cursor-pointer rounded-md px-4 py-2  space-x-2 [&:has(:checked)]:bg-green-500 flex items-center w-fit"
                                             htmlFor="size"
                                             key={index}
                                         >
-                                            <RadioGroupItem key={index + 1} id="size" value={size} />
-                                            <span key={index + 2}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+100)' : size}</span>
+                                            <RadioGroupItem key={index} id="size" value={size === '100ml' ? '100' : size === '200ml' ? '200' : '50'} />
+                                            <span key={index + 2}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+$100)' : size}</span>
                                         </Label>
-                                    ))}
+                                    )).reverse()}
                                 </RadioGroup>
                             </div>
                         </div>
@@ -463,13 +517,17 @@ export default function Perfume() {
 
                             {/* Add to Cart / Buy Now */}
                             <div className="flex justify-center sm:justify-end mb-4 sm:mb-0 w-full sm:w-1/2">
-                                <Button className="flex md:p-6 p-5 border w-full sm:w-auto">
-                                    <div className="mr-4">
-                                        (${price})
-                                    </div>
-                                    <div>
-                                        Add to Cart
-                                    </div>
+                                <Button onClick={() => handleAddToCart()} className="flex md:p-6 p-5 border w-full sm:w-auto">
+                                    {loadingAddaingToCart ? (
+                                        <Loading w={24} />
+                                    ) : (
+                                        <>
+                                            <div className="mr-4">
+                                                (${calcFinalPrice()})
+                                            </div>
+                                            Add to Cart
+                                        </>
+                                    )}
                                 </Button>
                             </div>
 

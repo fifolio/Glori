@@ -40,6 +40,7 @@ export default function Cart() {
             name: "Chanel No. 5",
             thumbnail: "http://placeholder.co/200",
             quantity: "1",
+            size: "1",
             price: '74',
             total: '74',
         },
@@ -48,6 +49,7 @@ export default function Cart() {
             name: "Chanel No. 5",
             thumbnail: "http://placeholder.co/200",
             quantity: "1",
+            size: "50",
             price: '74',
             total: '74',
         },
@@ -56,6 +58,7 @@ export default function Cart() {
             name: "Chanel No. 5",
             thumbnail: "http://placeholder.co/200",
             quantity: "1",
+            size: "100",
             price: '74',
             total: '74',
         },
@@ -64,6 +67,7 @@ export default function Cart() {
             name: "Chanel No. 5",
             thumbnail: "http://placeholder.co/200",
             quantity: "1",
+            size: "100",
             price: '74',
             total: '74',
         },
@@ -72,6 +76,7 @@ export default function Cart() {
             name: "Chanel No. 5",
             thumbnail: "http://placeholder.co/200",
             quantity: "1",
+            size: "200",
             price: '74',
             total: '74',
         },
@@ -118,6 +123,7 @@ export default function Cart() {
                                 <span className='hidden md:block'>Product Name</span>
                                 <span className='block md:hidden'>Name</span>
                                 </TableHead>
+                            <TableHead>Bottle Size</TableHead>
                             <TableHead>Quantity</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead className="text-right">Total</TableHead>
@@ -137,6 +143,12 @@ export default function Cart() {
                                                 View Details
                                                 <DropdownMenuShortcut>
                                                     <MdOutlineViewCarousel size="15" />
+                                                </DropdownMenuShortcut>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                Adjust Size
+                                                <DropdownMenuShortcut>
+                                                    <PiPlusMinusBold size="15" />
                                                 </DropdownMenuShortcut>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
@@ -173,7 +185,8 @@ export default function Cart() {
                                 {/* Product Name */}
                                 <TableCell>{item.name}</TableCell>
 
-                                {/*  */}
+                                {/* Product details */}
+                                <TableCell>{item.size}</TableCell>
                                 <TableCell>{item.quantity}</TableCell>
                                 <TableCell>{item.price}</TableCell>
                                 <TableCell className="text-right">{item.total}</TableCell>
@@ -183,7 +196,7 @@ export default function Cart() {
 
                     <TableFooter>
                         <TableRow>
-                            <TableCell colSpan={5}>Total</TableCell>
+                            <TableCell colSpan={6}>Total</TableCell>
                             <TableCell className="text-right font-bold">$323</TableCell>
                         </TableRow>
                     </TableFooter>

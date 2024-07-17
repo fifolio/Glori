@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { getUserMetaData } from '@/backend/services/user/getUser';
 import { getStore } from '@/backend/services/store/getStore';
 import { logout } from '@/backend/services/auth/logout';
+import { getCartItems } from '@/backend/services/cart/getCartItems';
+import { emptyCart } from '@/backend/services/cart/emptyCart';
 
 // Components
 import Auth from '@/components/auth/Auth'
@@ -51,6 +53,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { toast } from 'sonner';
 
 // ICONS
 import { CiSearch } from "react-icons/ci";
@@ -71,6 +74,7 @@ import useVerificationAlertState from '@/lib/states/verificationAlert';
 import useUserId from '@/lib/states/userId';
 import useCheckStoreState from '@/lib/states/userStoreState';
 import useIsLiked from '@/lib/states/useIsLiked';
+import useUpdateCart from '@/lib/states/useUpdateCart';
 
 
 
@@ -95,46 +99,69 @@ export default function Navbar() {
         { isOpen, setIsOpen } = useVerificationAlertState();
 
     // Display the loading spinner while checking on User Store validation
-    const [loadingStoreValidation, setLoadingStoreValidation] = useState<boolean>(true)
+    const [loadingStoreValidation, setLoadingStoreValidation] = useState<boolean>(true);
 
     // Check if user logged-in
     const { isLoggedin, setIsLoggedin } = useUserState();
 
     // Pass the Store ID to the Navlink (View Store / Update Board)
-    const [storeID, setStoreID] = useState<string>('')
+    const [storeID, setStoreID] = useState<string>('');
 
+    const
+        // Check on Cart State when ever user Add a new product to the cart
+        { cartState } = useUpdateCart(),
+        [numOfCartItems, setNumOfCartItems] = useState<number | null>(null),
+        [loadingEmptyCart, setLoadingEmptyCart] = useState<boolean>(false),
+        [cartItems, setCartItems] = useState<any[] | null>([]),
+        [cartItemsSum, setCartItemsSum] = useState<number>();
 
-    // Fake Products items for cart
-    const cartItems = [{
-        id: 1,
-        name: "Cozy Blanket",
-        price: 29.99,
-        quantity: 1,
-    },
-    {
-        id: 2,
-        name: "Autumn Mug",
-        price: 12.99,
-        quantity: 2,
-    },
-    {
-        id: 3,
-        name: "Fall Fragrance Candle",
-        price: 16.99,
-        quantity: 1,
-    },
-    {
-        id: 2,
-        name: "Autumn Mug",
-        price: 12.99,
-        quantity: 2,
-    },
-    {
-        id: 3,
-        name: "Fall Fragrance Candle",
-        price: 16.99,
-        quantity: 1,
-    }];
+    // handle get cart items function
+    async function handleGetCartItems() {
+        try {
+            const res = await getCartItems(loggedinUserId);
+            setNumOfCartItems(res.total);
+            setCartItems(res.documents);
+    
+            // Initialize the total sum
+            let collectTheSums = 0;
+    
+            // Loop through each cart item to calculate the sum
+            for (let i = 0; i < res.documents.length; i++) {
+                const item = res.documents[i];
+                const sum = item.defaultPrice * item.quantity + (item.size === 50 ? 0 : item.size === 100 ? 50 : item.size === 200 ? 100 : 0);
+                collectTheSums += sum;
+            }
+    
+            // Set the total sum
+            setCartItemsSum(collectTheSums);
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+        }
+    }
+    
+
+    console.log(cartItems)
+
+    // handle empty cart items
+    async function handleEmptyCart() {
+        setLoadingEmptyCart(true)
+        await emptyCart(loggedinUserId)
+            .then((res) => {
+                if (res === true) {
+                    setCartItems(null)
+                    setNumOfCartItems(null)
+                    toast.success('Deleted all Items in your cart successfully')
+                    setLoadingEmptyCart(false)
+                } else {
+                    console.log(res)
+                    setLoadingEmptyCart(false)
+                }
+            })
+    }
+
+    useEffect(() => {
+        handleGetCartItems();
+    }, [cartState])
 
 
     // Scroll top when click on Link
@@ -145,8 +172,8 @@ export default function Navbar() {
         });
     }
 
-     // Get the current use Feedbacks to update them when user logged-out
-     const { setIsLiked } = useIsLiked();
+    // Get the current use Feedbacks to update them when user logged-out
+    const { setIsLiked } = useIsLiked();
 
     // handle Logout func.
     async function handleLogout() {
@@ -200,6 +227,7 @@ export default function Navbar() {
                     }
                 }
                 checkStoreState();
+                handleGetCartItems();
             }
         }
     }, [isStoreValid, userID]);
@@ -511,38 +539,47 @@ export default function Navbar() {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline">
                                     <RiShoppingCartLine />
-                                    {/* <span className="flex item-center bg-red-400 px-1 ml-2 text-xs text-white rounded-full">1 </span> */}
+                                    {numOfCartItems == 0 || numOfCartItems === null ?
+                                        ''
+                                        :
+                                        (<span className="flex item-center bg-red-400 px-1 ml-2 text-xs text-white rounded-full">{numOfCartItems}</span>)}
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-80 p-3">
+                            <DropdownMenuContent className="w-80 p-2">
 
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-3">
                                     <div className="flex items-center justify-between">
                                         <h3 className="text-md font-semibold">Cart</h3>
-                                        <Button variant="ghost" size="sm" // onClick={} // handleEmptyCart
-                                            className={`${!cartItems ? 'hidden' : ''} text-red-500 hover:bg-red-100`}>Empty Cart</Button>
+                                        <Button disabled={loadingEmptyCart} onClick={() => handleEmptyCart()} variant="ghost" size="sm"
+                                            className={`${!cartItems ? 'hidden' : ''} text-red-500 hover:bg-red-100`}>
+                                            {loadingEmptyCart ? (
+                                                <Loading w={20} />
+                                            ) : 'Empty Cart'}
+                                        </Button>
                                     </div>
-                                    {cartItems ? (
+                                    {cartItems !== null ? (
                                         <div className="flex flex-col gap-4">
                                             <ScrollArea className="h-[150px] w-auto pr-4">
-                                                {cartItems.map((item) => (
-                                                    <div key={item.id} className="flex items-center py-1 justify-between">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-12 h-12 rounded-md bg-gray-100 dark:bg-gray-800" />
-                                                            <div>
-                                                                <p className="font-medium text-sm">{item.name}</p>
-                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                    {item.quantity} x ${item.price}
-                                                                </p>
+                                                {cartItems.map((item: any, i: number) => (
+                                                    <Link key={i} to={`${window.location.origin}/perfumes/${item.productId[0].$id}`}>
+                                                        <div key={i} className="flex items-center py-1 px-1 justify-between hover:bg-slate-100 rounded-md mb-1">
+                                                            <div className="flex items-center gap-2">
+                                                                <img src={item.productId[0].photos[0]} className="w-10 h-10 rounded-md" alt={item.productId.title} />
+                                                                <div>
+                                                                    <p className="font-medium text-sm">{item.productId[0].title}</p>
+                                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                        {item.quantity} x ${item.defaultPrice} (Size: {item.size}ml)
+                                                                    </p>
+                                                                </div>
                                                             </div>
+                                                            <p className="font-medium text-sm">${(item.defaultPrice * item.quantity + (item.size === 50 ? 0 : item.size === 100 ? 50 : item.size === 200 ? 100 : 0)).toFixed(2)}</p>
                                                         </div>
-                                                        <p className="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</p>
-                                                    </div>
+                                                    </Link>
                                                 ))}
                                             </ScrollArea>
-                                            <div className="flex items-center justify-between border-t pt-4">
+                                            <div className="flex items-center justify-between border-t pt-4 px-2">
                                                 <p className="font-medium">Total</p>
-                                                <p className="font-medium">$23</p>
+                                                <p className="font-medium">${cartItemsSum}</p>
                                             </div>
                                             <div className="flex w-full">
                                                 <Link to="/cart" onClick={scrollTopFunc} className='w-full text-center bg-gray-950 hover:bg-gray-900 shadow-md rounded-md text-white py-2 text-sm'>View Cart</Link>
