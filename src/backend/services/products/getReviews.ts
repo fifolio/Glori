@@ -5,8 +5,13 @@ import { Query } from "appwrite";
 export async function getReviews(perfumeId: string, ratingFilter?: string, sortBy?: string) {
 
     // Check for filters validation
-    const rating: string | undefined = 
-    ratingFilter !== undefined && ratingFilter > '5' ? Query.notEqual('rating', '6') : Query.equal('rating', `${ratingFilter}`);
+    let rating: any;
+    if (['1','2','3','4','5'].includes(ratingFilter as string)) {
+        rating = Query.equal('rating', `${ratingFilter}`)
+    } else {
+        rating = Query.notEqual('rating', '6')
+    }
+
 
     let order: any;
     switch (sortBy) {
@@ -37,6 +42,7 @@ export async function getReviews(perfumeId: string, ratingFilter?: string, sortB
         ]
 
     ).then((res) => {
+        console.log(res)
         return res
     }).catch((err) => {
         return err

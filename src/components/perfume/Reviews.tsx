@@ -266,6 +266,8 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                     })
             }
             getAllReviews();
+        } else {
+            console.log('perfume Id is not ready')
         }
     }, [sortByFilter, ratingFilter, updateReviews, isLoggedin, perfumeId])
 

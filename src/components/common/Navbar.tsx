@@ -139,9 +139,6 @@ export default function Navbar() {
         }
     }
     
-
-    console.log(cartItems)
-
     // handle empty cart items
     async function handleEmptyCart() {
         setLoadingEmptyCart(true)
@@ -153,7 +150,6 @@ export default function Navbar() {
                     toast.success('Deleted all Items in your cart successfully')
                     setLoadingEmptyCart(false)
                 } else {
-                    console.log(res)
                     setLoadingEmptyCart(false)
                 }
             })
