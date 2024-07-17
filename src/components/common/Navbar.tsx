@@ -8,6 +8,7 @@ import { getStore } from '@/backend/services/store/getStore';
 import { logout } from '@/backend/services/auth/logout';
 import { getCartItems } from '@/backend/services/cart/getCartItems';
 import { emptyCart } from '@/backend/services/cart/emptyCart';
+import { getUserExtraMetaData } from '@/backend/services/user/getUserExtraMetaData';
 
 // Components
 import Auth from '@/components/auth/Auth'
@@ -95,9 +96,9 @@ export default function Navbar() {
     const [logoutSpinner, setLogoutSpinner] = useState<boolean>(false),
         // Store the logged-in user meta data
         [userMetaData, setUserMetaData] = useState<Models.Preferences>({}),
+        [userExtraMetaDetails, setUserExtraMetaDetails] = useState<Models.Preferences>({}),
         [isVerified, setIsVerified] = useState<boolean>(true),
         { isOpen, setIsOpen } = useVerificationAlertState();
-
     // Display the loading spinner while checking on User Store validation
     const [loadingStoreValidation, setLoadingStoreValidation] = useState<boolean>(true);
 
@@ -119,27 +120,27 @@ export default function Navbar() {
     async function handleGetCartItems() {
         try {
             const res = await getCartItems(loggedinUserId);
-    
+
             setNumOfCartItems(res.total == 0 ? null : res.total);
             setCartItems(res.documents.length == 0 ? null : res.documents);
-    
+
             // Initialize the total sum
             let collectTheSums = 0;
-    
+
             // Loop through each cart item to calculate the sum
             for (let i = 0; i < res.documents.length; i++) {
                 const item = res.documents[i];
                 const sum = item.defaultPrice * item.quantity + (item.size === 50 ? 0 : item.size === 100 ? 50 : item.size === 200 ? 100 : 0);
                 collectTheSums += sum;
             }
-    
+
             // Set the total sum
             setCartItemsSum(collectTheSums);
         } catch (error) {
             console.error('Error fetching cart items:', error);
         }
     }
-    
+
     // handle empty cart items
     async function handleEmptyCart() {
         setLoadingEmptyCart(true)
@@ -212,6 +213,13 @@ export default function Navbar() {
     useEffect(() => {
         if (userID) {
             if (userID.length >= 5) {
+                async function getUserPicture() {
+                    await getUserExtraMetaData(userID)
+                    .then((res) => {
+                        setUserExtraMetaDetails(res)
+                    })
+                }
+
                 async function checkStoreState() {
                     const res = await getStore(userID);
                     if (res.code === 404) {
@@ -225,6 +233,7 @@ export default function Navbar() {
                 }
                 checkStoreState();
                 handleGetCartItems();
+                getUserPicture();
             }
         }
     }, [isStoreValid, userID]);
@@ -600,15 +609,21 @@ export default function Navbar() {
 
                                     {/* My Account */}
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="outline">
-                                            <span className={`${logoutSpinner ? 'hidden' : ''} capitalize`}>
-                                                {userMetaData.name && userMetaData.name}
-                                            </span>
+                                        <Button variant="outline" className='p-0 sm:mt-0 mt-1 items-center sm:shadow-sm shadow-none'>
+                                            <div className="hidden sm:block">
+                                                <span className={`${logoutSpinner ? 'hidden' : ''} capitalize px-3`}>
+                                                    {userMetaData.name && userMetaData.name}
+                                                </span>
 
-                                            {/* Get the Loading spinner when logout */}
-                                            <span className={`${logoutSpinner ? '' : 'hidden'} mx-5`}>
-                                                <Loading w={24} />
-                                            </span>
+                                                {/* Get the Loading spinner when logout */}
+                                                <span className={`${logoutSpinner ? '' : 'hidden'} mx-5`}>
+                                                    <Loading w={24} />
+                                                </span>
+                                            </div>
+
+                                            <div className="block sm:hidden">
+                                                <img src={userExtraMetaDetails.avatar} className='h-[35px] w-[35px] rounded-md shadow-sm' />
+                                            </div>
                                         </Button>
 
                                     </DropdownMenuTrigger>
@@ -725,7 +740,7 @@ export default function Navbar() {
 
                     </div>
                 </div>
-            </nav>
+            </nav >
         </div >
     )
 }
