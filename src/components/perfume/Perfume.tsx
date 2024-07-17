@@ -517,7 +517,7 @@ export default function Perfume() {
 
                             {/* Add to Cart / Buy Now */}
                             <div className="flex justify-center sm:justify-end mb-4 sm:mb-0 w-full sm:w-1/2">
-                                <Button onClick={() => handleAddToCart()} className="flex md:p-6 p-5 border w-full sm:w-auto">
+                                <Button disabled={loadingAddaingToCart} onClick={() => handleAddToCart()} className="flex md:p-6 p-5 border w-full sm:w-auto">
                                     {loadingAddaingToCart ? (
                                         <Loading w={24} />
                                     ) : (
