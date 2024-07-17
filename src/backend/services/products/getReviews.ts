@@ -42,7 +42,6 @@ export async function getReviews(perfumeId: string, ratingFilter?: string, sortB
         ]
 
     ).then((res) => {
-        console.log(res)
         return res
     }).catch((err) => {
         return err

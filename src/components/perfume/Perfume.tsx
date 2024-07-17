@@ -148,20 +148,24 @@ export default function Perfume() {
 
     // Handle AddtoCart func.
     async function handleAddToCart() {
-        setLoadingAddingToCart(true)
-
-        await addToCart({
-            userId: loggedinUserId,
-            productId: perfumeId as string,
-            size: Number(selectedSize),
-            quantity: Number(selectedQuantity),
-            defaultPrice: Number(price)
-        })
-            .then(() => {
-                setCartState(!cartState)
-                toast.success(`Added ${title} to your cart successfully`)
-                setLoadingAddingToCart(false)
+        if(isLoggedin){
+            setLoadingAddingToCart(true)
+    
+            await addToCart({
+                userId: loggedinUserId,
+                productId: perfumeId as string,
+                size: Number(selectedSize),
+                quantity: Number(selectedQuantity),
+                defaultPrice: Number(price)
             })
+                .then(() => {
+                    setCartState(!cartState)
+                    toast.success(`Added ${title} to your cart successfully`)
+                    setLoadingAddingToCart(false)
+                })
+            } else {
+                toast.error(`Oops! You must log-in or Sign-up first to Add items`)
+        }
     }
 
     // Scroll top when perfumeID updated

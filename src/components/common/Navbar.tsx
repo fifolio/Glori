@@ -119,8 +119,9 @@ export default function Navbar() {
     async function handleGetCartItems() {
         try {
             const res = await getCartItems(loggedinUserId);
-            setNumOfCartItems(res.total);
-            setCartItems(res.documents);
+    
+            setNumOfCartItems(res.total == 0 ? null : res.total);
+            setCartItems(res.documents.length == 0 ? null : res.documents);
     
             // Initialize the total sum
             let collectTheSums = 0;
@@ -533,7 +534,7 @@ export default function Navbar() {
                         {/* Cart */}
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline">
+                                <Button disabled={!isLoggedin} variant="outline">
                                     <RiShoppingCartLine />
                                     {numOfCartItems == 0 || numOfCartItems === null ?
                                         ''

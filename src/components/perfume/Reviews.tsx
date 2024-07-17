@@ -260,7 +260,6 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
                         }
                         const average: number = total / allNumOfRates.length;
 
-                        console.log(res.documents)
                         setNumberOfRates(average);
                         setLoadingFilter(false)
                     })
