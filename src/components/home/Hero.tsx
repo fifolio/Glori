@@ -21,7 +21,6 @@ interface Images {
 
 export default function Hero() {
 
-
     // Store photos from API
     const [images, setImages] = useState<Images[]>([]),
         // Turn Skeleton on/off while loading Hero Carousel
