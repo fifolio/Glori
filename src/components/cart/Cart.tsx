@@ -34,6 +34,7 @@ import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import Loading, { LoadingScreen } from '../ui/loading';
 import { toast } from 'sonner';
+import { Label } from '../ui/label';
 
 // ICONS
 import { IoIosMore } from "react-icons/io";
@@ -51,13 +52,21 @@ import useUpdateCart from '@/lib/states/useUpdateCart';
 import { getCartItems } from '@/backend/services/cart/getCartItems';
 import { deleteCartItem } from '@/backend/services/cart/deleteCartItem';
 import { adjustCartItem } from '@/backend/services/cart/adjustCartItem';
-import { Label } from '../ui/label';
+import { getShoppingDetails } from '@/backend/services/user/shoppingDetails';
 
 interface ItemData {
     itemId: string;
     itemTitle: string;
     itemSize: string;
     itemQuantity: string;
+}
+
+interface ShoppingDetails {
+    nameOnCard: string,
+    cardNumber: string,
+    expYear: string,
+    expMonth: string,
+    cvc: string
 }
 
 export default function Cart() {
@@ -68,6 +77,13 @@ export default function Cart() {
         [loadingScreen, setLoadingScreen] = useState<boolean>(true),
         [loadingAdjusting, setLoadingAdjusting] = useState<boolean>(false),
         [cartItems, setCartItems] = useState<any[] | null>([]),
+        [shoppingDetails, setShoppingDetails] = useState<ShoppingDetails>({
+            nameOnCard: '',
+            cardNumber: '',
+            expYear: '',
+            expMonth: '',
+            cvc: ''
+        }),
         [numOfCartItems, setNumOfCartItems] = useState<number | null>(null),
         [cartItemsSum, setCartItemsSum] = useState<number>(),
         [isAdjustSizeDialogOpen, setIsAdjustSizeDialogOpen] = useState<boolean>(false),
@@ -152,6 +168,24 @@ export default function Cart() {
                 }
             })
     }
+
+    // Fetch user Shopping Details
+    async function getUserShoppingDetails() {
+        await getShoppingDetails(loggedinUserId)
+            .then((res: any) => {
+                setShoppingDetails({
+                    nameOnCard: res.username ? res.username : '',
+                    cardNumber: res.cardNumber ? res.cardNumber : '',
+                    expMonth: res.expiryMonth ? res.expiryMonth : '',
+                    expYear: res.expiryYear ? res.expiryYear : '',
+                    cvc: res.cvc ? res.cvc : ''
+                })
+            })
+    }
+
+    useEffect(() => {
+        getUserShoppingDetails()
+    }, [])
 
     useEffect(() => {
         // handle get cart items function
@@ -459,11 +493,11 @@ export default function Cart() {
 
                         {/* Payment Gateway dialogs */}
                         <Dialog open={isCheckoutDialogOpen}>
-                            <DialogContent className="sm:max-w-md max-h-[600px]">
+                            <DialogContent className="min-w-fit min-h-[550px] ">
 
                                 <div className="w-full pt-1 pb-1">
                                     <div className="bg-indigo-500 text-white overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg flex justify-center items-center">
-                                        <FaRegCreditCard size={34}/>
+                                        <FaRegCreditCard size={34} />
                                     </div>
                                 </div>
                                 <div className="mb-2">
@@ -472,61 +506,117 @@ export default function Cart() {
                                 <div className="flex justify-center mb-3 w-full text-center">
                                     <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" className="h-8" alt="Card 1" />
                                 </div>
+
+                                {/* Name on card */}
                                 <div>
-                                    <label className="font-bold text-sm mb-2 ml-1">Name on card</label>
+                                    <label className="font-bold text-md ml-1">Name on card</label>
                                     <div>
-                                        <input className="w-full px-3 py-3 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="John Smith" type="text" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="font-bold text-sm mb-2 ml-1">Card number</label>
-                                    <div>
-                                        <input className="w-full px-3 py-3 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="0000 0000 0000 0000" type="text" />
-                                    </div>
-                                </div>
-                                <div className="-mx-2 flex items-end">
-                                    <div className="px-2 w-1/2">
-                                        <label className="font-bold text-sm mb-2 ml-1">Expiration date</label>
-                                        <div>
-                                            <select className="form-select w-full px-3 py-3 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
-                                                <option value="01">01 - January</option>
-                                                <option value="02">02 - February</option>
-                                                <option value="03">03 - March</option>
-                                                <option value="04">04 - April</option>
-                                                <option value="05">05 - May</option>
-                                                <option value="06">06 - June</option>
-                                                <option value="07">07 - July</option>
-                                                <option value="08">08 - August</option>
-                                                <option value="09">09 - September</option>
-                                                <option value="10">10 - October</option>
-                                                <option value="11">11 - November</option>
-                                                <option value="12">12 - December</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="px-2 w-1/2">
-                                        <select className="form-select w-full px-3 py-3 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                            <option value="2027">2027</option>
-                                            <option value="2028">2028</option>
-                                            <option value="2029">2029</option>
-                                        </select>
+                                        <input
+                                            onChange={e => setShoppingDetails({
+                                                nameOnCard: e.target.value,
+                                                cardNumber: shoppingDetails.cardNumber,
+                                                expYear: shoppingDetails.expYear,
+                                                expMonth: shoppingDetails.expMonth,
+                                                cvc: shoppingDetails.cvc
+                                            })}
+                                            value={shoppingDetails.nameOnCard} className="w-full mt-2 px-3 py-3 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="John Smith" type="text" />
                                     </div>
                                 </div>
 
+                                {/* Card number */}
+                                <div>
+                                    <label className="font-bold text-md mb-2 ml-1">Card number</label>
+                                    <div>
+                                        <input
+                                            maxLength={16}
+                                            onChange={e => setShoppingDetails({
+                                                nameOnCard: `${shoppingDetails.nameOnCard}`,
+                                                cardNumber: e.target.value,
+                                                expYear: shoppingDetails.expYear,
+                                                expMonth: shoppingDetails.expMonth,
+                                                cvc: shoppingDetails.cvc
+                                            })}
+                                            value={shoppingDetails.cardNumber} className="w-full mt-2 px-3 py-3 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="0000 0000 0000 0000" type="text" />
+                                    </div>
+                                </div>
+
+                                {/* Expiration date */}
+                                <div className="flex sm:flex-row flex-col items-end sm:space-x-3">
+                                    <div className="w-full">
+                                        <label className="font-bold text-md mb-2">Expiration date</label>
+                                        <div>
+                                            <Select onValueChange={e => setShoppingDetails({
+                                                nameOnCard: `${shoppingDetails.nameOnCard}`,
+                                                cardNumber: shoppingDetails.cardNumber,
+                                                expYear: shoppingDetails.expYear,
+                                                expMonth: e,
+                                                cvc: shoppingDetails.cvc
+                                            })}>
+                                                <SelectTrigger className="mt-3 py-6 text-center">
+                                                    <SelectValue placeholder={shoppingDetails?.expMonth} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        <SelectItem value="1">1</SelectItem>
+                                                        <SelectItem value="2">2</SelectItem>
+                                                        <SelectItem value="3">3</SelectItem>
+                                                        <SelectItem value="4">4</SelectItem>
+                                                        <SelectItem value="5">5</SelectItem>
+                                                        <SelectItem value="6">6</SelectItem>
+                                                        <SelectItem value="7">7</SelectItem>
+                                                        <SelectItem value="8">8</SelectItem>
+                                                        <SelectItem value="9">9</SelectItem>
+                                                        <SelectItem value="10">10</SelectItem>
+                                                        <SelectItem value="11">11</SelectItem>
+                                                        <SelectItem value="12">12</SelectItem>
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                    <div className="w-full ">
+                                        <Select onValueChange={e => setShoppingDetails({
+                                            nameOnCard: `${shoppingDetails.nameOnCard}`,
+                                            cardNumber: shoppingDetails.cardNumber,
+                                            expYear: e,
+                                            expMonth: shoppingDetails.expMonth,
+                                            cvc: shoppingDetails.cvc
+                                        })}>
+                                            <SelectTrigger className=" mt-3 py-6 text-center">
+                                                <SelectValue placeholder={shoppingDetails?.expYear} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="2024">2024</SelectItem>
+                                                    <SelectItem value="2025">2025</SelectItem>
+                                                    <SelectItem value="2026">2026</SelectItem>
+                                                    <SelectItem value="2027">2027</SelectItem>
+                                                    <SelectItem value="2028">2028</SelectItem>
+                                                    <SelectItem value="2029">2029</SelectItem>
+                                                    <SelectItem value="2030">2030</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+
+                                {/* Security code */}
                                 <div className="flex flex-col sm:flex-row items-end space-x-4">
                                     <div className="flex flex-col w-full">
-                                        <label className="font-bold text-sm mb-2 ml-1">Security code</label>
+                                        <label className="font-bold text-md mb-2 ml-1">Security code</label>
                                         <input
                                             className="w-full px-3 py-3 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                                             placeholder="000"
                                             type="text"
+                                            maxLength={3}
+                                            value={shoppingDetails.cvc}
+                                            onChange={e => setShoppingDetails({
+                                                nameOnCard: `${shoppingDetails.nameOnCard}`,
+                                                cardNumber: shoppingDetails.cardNumber,
+                                                expYear: shoppingDetails.expYear,
+                                                expMonth: shoppingDetails.expMonth,
+                                                cvc: e.target.value
+                                            })}
                                         />
                                     </div>
 
