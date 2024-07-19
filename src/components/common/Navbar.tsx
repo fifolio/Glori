@@ -110,7 +110,7 @@ export default function Navbar() {
 
     const
         // Check on Cart State when ever user Add a new product to the cart
-        { cartState } = useUpdateCart(),
+        { cartState, setCartState } = useUpdateCart(),
         [numOfCartItems, setNumOfCartItems] = useState<number | null>(null),
         [loadingEmptyCart, setLoadingEmptyCart] = useState<boolean>(false),
         [cartItems, setCartItems] = useState<any[] | null>([]),
@@ -149,6 +149,7 @@ export default function Navbar() {
                 if (res === true) {
                     setCartItems(null)
                     setNumOfCartItems(null)
+                    setCartState(!cartState)
                     toast.success('Deleted all Items in your cart successfully')
                     setLoadingEmptyCart(false)
                 } else {
