@@ -442,7 +442,7 @@ export default function Reviews({ loadingScreen }: { loadingScreen: boolean }) {
 
                 {/* Reviews */}
                 <div className="mt-6">
-                    <ScrollArea className="h-[400px] pr-2 w-full border-t-[1px]">
+                    <ScrollArea className="h-[460px] pr-2 w-full border-t-[1px]">
 
                         {/* Users Reviews */}
                         {allReviews.length == 0 ? (

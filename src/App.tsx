@@ -109,7 +109,7 @@ export default function App() {
             <Route path='sell' element={isLoggedin ? <SellDetails /> : <Navigate to="/" />} />
             <Route path="store/create" element={storeRoute()} />
 
-            <Route path='edit/:id' element={isLoggedin ? <EditDetails /> : <Navigate to="/" />} />
+            <Route path='edit' element={isLoggedin ? <EditDetails /> : <Navigate to="/" />} />
 
             {/* Custom Routes */}
             <Route path='collections/:id' element={<Collections />} />

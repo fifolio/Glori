@@ -568,12 +568,12 @@ export default function Navbar() {
                                         <div className="flex flex-col gap-4">
                                             <ScrollArea className="h-[150px] w-auto pr-4">
                                                 {cartItems.map((item: any, i: number) => (
-                                                    <Link key={i} to={`${window.location.origin}/perfumes/${item.productId[0].$id}`}>
+                                                    <Link key={i} to={`${window.location.origin}/perfumes/${item.productDetails[0].$id}`}>
                                                         <div key={i} className="flex items-center py-1 px-1 justify-between hover:bg-slate-100 rounded-md mb-1">
                                                             <div className="flex items-center gap-2">
-                                                                <img src={item.productId[0].photos[0]} className="w-10 h-10 rounded-md" alt={item.productId.title} />
+                                                                <img src={item.productDetails[0].photos[0]} className="w-10 h-10 rounded-md" alt={item.productDetails.title} />
                                                                 <div>
-                                                                    <p className="font-medium text-sm">{item.productId[0].title}</p>
+                                                                    <p className="font-medium text-sm">{item.productDetails[0].title}</p>
                                                                     <p className="text-xs text-gray-500 dark:text-gray-400">
                                                                         {item.quantity} x ${item.defaultPrice} (Size: {item.size}ml)
                                                                     </p>
@@ -585,7 +585,7 @@ export default function Navbar() {
                                                 ))}
                                             </ScrollArea>
                                             <div className="flex items-center justify-between border-t pt-4 px-2">
-                                                <p className="font-medium">Total</p>
+                                                <p className="font-semibold">Total <span className='text-sm text-gray- font-normal'>(Pre Taxs)</span></p>
                                                 <p className="font-medium">${cartItemsSum}</p>
                                             </div>
                                             <div className="flex w-full">

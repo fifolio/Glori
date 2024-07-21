@@ -153,7 +153,8 @@ export default function Perfume() {
     
             await addToCart({
                 userId: loggedinUserId,
-                productId: perfumeId as string,
+                productTitle: title,
+                productDetails: perfumeId as string,
                 size: Number(selectedSize),
                 quantity: Number(selectedQuantity),
                 defaultPrice: Number(price)

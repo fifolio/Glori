@@ -2,7 +2,8 @@ import { ID, databases } from "@/backend/configs/config";
 
 type CartDataTypes = {
     userId: string;
-    productId: string;
+    productTitle: string;
+    productDetails: string;
     size: number;
     quantity: number;
     defaultPrice: number;
@@ -13,7 +14,8 @@ export async function addToCart(payload: CartDataTypes) {
 
     let documentData = {
         userId: payload.userId,
-        productId: [`${payload.productId}`],
+        productTitle: payload.productTitle,
+        productDetails: [`${payload.productDetails}`],
         size: payload.size,
         quantity: payload.quantity,
         defaultPrice: payload.defaultPrice,

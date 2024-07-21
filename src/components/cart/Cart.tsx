@@ -175,13 +175,23 @@ export default function Cart() {
     async function getUserShoppingDetails() {
         await getShoppingDetails(loggedinUserId)
             .then((res: any) => {
-                setShoppingDetails({
-                    nameOnCard: res.username ? res.username : '',
-                    cardNumber: res.cardNumber ? res.cardNumber : '',
-                    expMonth: res.expiryMonth ? res.expiryMonth : '',
-                    expYear: res.expiryYear ? res.expiryYear : '',
-                    cvc: res.cvc ? res.cvc : ''
-                })
+                if(res.productDetails === undefined) {
+                    setShoppingDetails({
+                        nameOnCard: '',
+                        cardNumber: '',
+                        expMonth: '',
+                        expYear: '',
+                        cvc: ''
+                    })
+                } else{
+                    setShoppingDetails({
+                        nameOnCard: res.username ? res.username : '',
+                        cardNumber: res.cardNumber ? res.cardNumber : '',
+                        expMonth: res.expiryMonth ? res.expiryMonth : '',
+                        expYear: res.expiryYear ? res.expiryYear : '',
+                        cvc: res.cvc ? res.cvc : ''
+                    })
+                }
             })
     }
 
@@ -308,7 +318,7 @@ export default function Cart() {
                                                     <Button variant="outline"><IoIosMore /></Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent className="w-52">
-                                                    <Link to={`/perfumes/${item.productId[0].$id}`}>
+                                                    <Link to={`/perfumes/${item.productDetails[0].$id}`}>
                                                         <DropdownMenuItem className="cursor-pointer">
                                                             View Perfume Details
                                                             <DropdownMenuShortcut>
@@ -316,20 +326,20 @@ export default function Cart() {
                                                             </DropdownMenuShortcut>
                                                         </DropdownMenuItem>
                                                     </Link>
-                                                    <DropdownMenuItem onClick={() => adjustItem(item.$id, item.productId[0].title, item.size, item.quantity)} className="cursor-pointer">
+                                                    <DropdownMenuItem onClick={() => adjustItem(item.$id, item.productDetails[0].title, item.size, item.quantity)} className="cursor-pointer">
                                                         Adjust Size or Quantity
                                                         <DropdownMenuShortcut>
                                                             <PiPlusMinusBold size="15" />
                                                         </DropdownMenuShortcut>
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={() => handleCopyPerfumeLink(item.productId[0].$id)} className='cursor-pointer'>
+                                                    <DropdownMenuItem onClick={() => handleCopyPerfumeLink(item.productDetails[0].$id)} className='cursor-pointer'>
                                                         Copy perfume link
                                                         <DropdownMenuShortcut>
                                                             <IoShareSocial size="15" />
                                                         </DropdownMenuShortcut>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuSeparator />
-                                                    <DropdownMenuItem onClick={() => handleDeleteItem(item.$id, item.productId[0].title)} className="text-red-500 cursor-pointer">
+                                                    <DropdownMenuItem onClick={() => handleDeleteItem(item.$id, item.productDetails[0].title)} className="text-red-500 cursor-pointer">
                                                         Remove from cart
                                                         <DropdownMenuShortcut>
                                                             <MdOutlineRemoveCircleOutline size="15" />
@@ -342,14 +352,14 @@ export default function Cart() {
                                         {/* Thumbnail */}
                                         <TableCell>
                                             <div className='flex flex-row'>
-                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white object-cover' src={item.productId[0].photos[2]} />
-                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white ml-[-15px] object-cover' src={item.productId[0].photos[1]} />
-                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white ml-[-15px] object-cover' src={item.productId[0].photos[0]} />
+                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white object-cover' src={item.productDetails[0].photos[2]} />
+                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white ml-[-15px] object-cover' src={item.productDetails[0].photos[1]} />
+                                                <img className='min-w-10 min-h-10 max-w-10 max-h-10 rounded-full border-[2px] border-white ml-[-15px] object-cover' src={item.productDetails[0].photos[0]} />
                                             </div>
                                         </TableCell>
 
                                         {/* Product Name */}
-                                        <TableCell>{item.productId[0].title}</TableCell>
+                                        <TableCell>{item.productDetails[0].title}</TableCell>
 
                                         {/* Product details */}
                                         <TableCell>{item.size === 100 ? '100 (+$50)' : item.size === 200 ? '200 (+$100)' : item.size}</TableCell>
