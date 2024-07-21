@@ -359,7 +359,7 @@ export default function Cart() {
                                         </TableCell>
 
                                         {/* Product Name */}
-                                        <TableCell>{item.productDetails[0].title}</TableCell>
+                                        <TableCell className='min-w-[200px]'>{item.productDetails[0].title}</TableCell>
 
                                         {/* Product details */}
                                         <TableCell>{item.size === 100 ? '100 (+$50)' : item.size === 200 ? '200 (+$100)' : item.size}</TableCell>
