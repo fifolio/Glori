@@ -372,7 +372,7 @@ export default function Cart() {
 
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={6} className="text-lg">Total Price</TableCell>
+                                    <TableCell colSpan={6} className="text-lg">Total Price <span className='text-sm text-gray- font-normal'>(Pre Taxs)</span></TableCell>
                                     <TableCell className="text-right font-bold text-lg">${cartItemsSum}</TableCell>
                                 </TableRow>
                             </TableFooter>

@@ -71,7 +71,7 @@ export default function Perfume() {
         [loadingAddaingToCart, setLoadingAddingToCart] = useState<boolean>(false);
 
 
-        const {cartState, setCartState} = useUpdateCart();
+    const { cartState, setCartState } = useUpdateCart();
 
     const
         // Get product details from API and pass the data to the UI
@@ -95,7 +95,7 @@ export default function Perfume() {
     const
         // Collect the data for Cart
         [selectedQuantity, setSelectedQuantity] = useState<string>('1'),
-        [selectedSize, setSelectedSize] = useState<string>('50');
+        [selectedSize, setSelectedSize] = useState<string | null>(null);
 
 
     // Calculate the final Price function 
@@ -148,9 +148,15 @@ export default function Perfume() {
 
     // Handle AddtoCart func.
     async function handleAddToCart() {
-        if(isLoggedin){
+
+        // Validations
+        if(selectedSize == null) {
+            return toast.error('You must select which bottle size will be added to your cart')
+        } 
+
+        if (isLoggedin) {
             setLoadingAddingToCart(true)
-    
+
             await addToCart({
                 userId: loggedinUserId,
                 productTitle: title,
@@ -164,10 +170,11 @@ export default function Perfume() {
                     toast.success(`Added ${title} to your cart successfully`)
                     setLoadingAddingToCart(false)
                 })
-            } else {
-                toast.error(`Oops! You must log-in or Sign-up first to Add items`)
+        } else {
+            toast.error(`Oops! You must log-in or Sign-up first to Add items`)
         }
     }
+
 
     // Scroll top when perfumeID updated
     function scrollTopFunc() {
@@ -265,7 +272,7 @@ export default function Perfume() {
 
                 {/* Perfume details: breadcrumb, name, owner, price */}
                 <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
-                    <Breadcrumb className="w-full xl:w-1/2 capitalize sm:ml-0 ml-[-5px]">
+                    <Breadcrumb className="w-[450px] capitalize sm:ml-0 ml-[-5px] mr-0 pr-0">
                         <BreadcrumbList>
                             <BreadcrumbItem className="sm:block hidden">
                                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -286,8 +293,8 @@ export default function Perfume() {
                     </Breadcrumb>
 
                     <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
-                        <div className="sm:flex items-center sm:space-x-3">
-                            <div className="text-gray-900">
+                        <div className="sm:flex items-left">
+                            <div className="text-gray-900 text-left">
                                 <span className="font-bold text-2xl">
                                     {title}
                                 </span>
@@ -303,6 +310,25 @@ export default function Perfume() {
                             ${price}
                         </div>
                     </div>
+
+                    {/* <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
+                        <div className="sm:flex items-left">
+                            <div className="text-gray-900 text-left bg-yellow-200">
+                                <span className="font-bold text-2xl">
+                                    {title}
+                                </span>
+                                <span className="mx-2">
+                                    By
+                                </span>
+                                <Link to={`/store/${storeId}`} className="font-bold">
+                                    {storeName}
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="sm:text-4xl text-2xl font-bold sm:block hidden">
+                            ${price}
+                        </div>
+                    </div> */}
                 </header>
 
                 {/* Perfume details: gallery, details */}
@@ -412,10 +438,10 @@ export default function Perfume() {
                             {/* Size */}
                             <div className="w-full mr-3">
                                 <Label htmlFor="quantity">Available Size</Label>
-                                <RadioGroup onValueChange={e => setSelectedSize(e)} defaultValue='50' id="size" className="flex flex-row mt-2">
+                                <RadioGroup onValueChange={e => setSelectedSize(e)} id="size" className="flex flex-row mt-2">
                                     {sizes.map((size, index) => (
                                         <Label
-                                            className="bg-white border cursor-pointer rounded-md px-4 py-2  space-x-2 [&:has(:checked)]:bg-green-500 flex items-center w-fit"
+                                            className="bg-white border cursor-pointer rounded-md px-4 py-2 space-x-2 flex items-center w-fit"
                                             htmlFor="size"
                                             key={index}
                                         >
