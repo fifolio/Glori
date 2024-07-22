@@ -68,6 +68,9 @@ export default function App() {
     } else if (isLoggedin === true && isStoreValid === false) {
       return <CreateDetails />
     }
+    else if (isLoggedin === false && isStoreValid === false) {
+      return <Home />
+    }
   }
 
 

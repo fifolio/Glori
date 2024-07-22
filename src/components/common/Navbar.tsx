@@ -617,9 +617,9 @@ export default function Navbar() {
                                                 </span>
 
                                                 {/* Get the Loading spinner when logout */}
-                                                <span className={`${logoutSpinner ? '' : 'hidden'} mx-5`}>
+                                                <div className={`${logoutSpinner ? '' : 'hidden'} px-5`}>
                                                     <Loading w={24} />
-                                                </span>
+                                                </div>
                                             </div>
 
                                             <div className="block sm:hidden">

@@ -47,6 +47,7 @@ import { MdOutlineRemoveCircleOutline, MdOutlineViewCarousel } from 'react-icons
 import { IoShareSocial } from 'react-icons/io5';
 import { FaRegCopy, FaRegEdit } from "react-icons/fa";
 import { getProducts } from '@/backend/services/store/getAllProduct';
+import { RiArrowUpDownFill } from 'react-icons/ri';
 
 // SERVICES
 import { deleteProduct } from '@/backend/services/products/deleteProduct';
@@ -54,6 +55,8 @@ import { deleteProduct } from '@/backend/services/products/deleteProduct';
 // STATES
 import useEditProduct from '@/lib/states/useEditProductId';
 import useUpdateCart from '@/lib/states/useUpdateCart';
+import useUserState from '@/lib/states/userStates';
+import useUserId from '@/lib/states/userId';
 
 
 
@@ -67,16 +70,22 @@ type Collections = {
 
 export default function Collections({ AllowFiltering, NavigateToCollectionsPageBtn }: Collections) {
 
-    // Check if user logged-in
-    const [isSessionValid] = useState<boolean>(true),
+    const
+        // Check if user logged-in
+        { isLoggedin } = useUserState(),
+        { loggedinUserId } = useUserId(),
         { id: storeId } = useParams<string>(),
         { cartState, setCartState } = useUpdateCart(),
         [loadingScreen, setLoadingScreen] = useState<boolean>(true),
+        // Use setUpdate when you need to update the fetching product
         [update, setUpdate] = useState<boolean>(true),
         [allProduct, setAllProduct] = useState<[]>([]);
 
-    const { setEditProductId } = useEditProduct();
+        const
+        // Filters
+        [sortByFilter, setSortByFilter] = useState<string>('');
 
+    const { setEditProductId } = useEditProduct();
 
     // Scroll top when click on Link
     function scrollTopFunc() {
@@ -86,6 +95,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
         });
     }
 
+    // Delete product from store/carts
     async function handleDeleteProduct(itemId: string, itemTitle: string) {
         await deleteProduct(itemId, itemTitle)
             .then((res) => {
@@ -99,11 +109,11 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
             })
     }
 
-
     useEffect(() => {
         async function fetchProducts() {
-            await getProducts(storeId as string)
+            await getProducts(storeId as string, sortByFilter)
                 .then((res: any) => {
+                    setUpdate(!update)
                     setAllProduct(res.documents)
                     setLoadingScreen(false)
                 })
@@ -112,7 +122,6 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
         fetchProducts()
     }, [update])
 
-    console.log(allProduct)
 
     if (loadingScreen) {
         return <LoadingScreen />
@@ -132,18 +141,17 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                     <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden`}>
 
                         {/* Filter by sort */}
-                        <Select>
-                            <SelectTrigger className="w-[170px] shadow-sm">
-                                <SelectValue placeholder="Sort" />
+                        <Select onValueChange={e => setSortByFilter(e)}>
+                            <SelectTrigger className="sm:w-[200px] w-full text-left">
+                                <RiArrowUpDownFill className="w-4 h-4" />
+                                <SelectValue placeholder="Sort by" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>Sort by</SelectLabel>
-                                    <Separator />
+                                    <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                    <SelectItem value="oldest">Oldest Perfumes</SelectItem>
                                 </SelectGroup>
-                                <SelectItem value="Newest">Newest</SelectItem>
-                                <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
-                                <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
                             </SelectContent>
                         </Select>
 
@@ -151,7 +159,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                 </div>
 
                 {/* Perfumes section */}
-                <div className="flex flex-wrap md:justify-between justify-evenly my-6">
+                <div className="flex flex-wrap justify-evenly my-6">
 
                     {allProduct.map((item: any) => (
                         <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
@@ -161,25 +169,21 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                 </Badge>
                             </Link>
 
-                            {/* Preview Images */}
-
-                            {/* <Link to={`/perfumes/${index}`} className="relative z-10"> */}
                             <Carousel className="hover:cursor-w-resize">
                                 <CarouselContent>
-                                    <CarouselItem><img src={`${item.photos[0]}`} className='max-h-[300px]' /></CarouselItem>
-                                    <CarouselItem><img src={`${item.photos[1]}`} className='max-h-[300px]' /></CarouselItem>
-                                    <CarouselItem><img src={`${item.photos[2]}`} className='max-h-[300px]' /></CarouselItem>
+                                    <CarouselItem><img src={`${item.photos[0]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
+                                    <CarouselItem><img src={`${item.photos[1]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
+                                    <CarouselItem><img src={`${item.photos[2]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
                                 </CarouselContent>
 
                             </Carousel>
-                            {/* </Link> */}
 
                             {/* Card Details */}
                             <div className="details my-1">
 
                                 {/* Title + Description */}
                                 <Link to={`/perfumes/${item.$id}`}>
-                                    <h6 className="font-semibold">{item.title}</h6>
+                                    <h6 className="font-semibold">{item.title.length > 25 ? item.title.substring(0, 25) : item.title}</h6>
                                     <p className="text-sm">
                                         Available sizes: {item.size.sort((a: string, b: string) => parseInt(a) - parseInt(b)).join(', ')}
                                     </p>
@@ -192,7 +196,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                     </div>
                                     <div className="w-full">
 
-                                        {isSessionValid ? (
+                                        {isLoggedin && loggedinUserId === item.userId? (
                                             <div className='flex items-center justify-end'>
                                                 {/* Share Product */}
                                                 <Dialog>
@@ -250,7 +254,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                             </DropdownMenuItem>
                                                         </Link>
 
-                                                        <Link to={`/edit`} onClick={() => setEditProductId(item.$id)}>
+                                                        <Link to={`/edit`} onClick={() => {setEditProductId(item.$id), scrollTopFunc()}}>
                                                             <DropdownMenuItem className='cursor-pointer'>
                                                                 Edit Details
                                                                 <DropdownMenuShortcut>
@@ -272,9 +276,9 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                             </div>
 
                                         ) : (
-                                            <div>
-                                                <Button variant="outline" className="w-full font-light shadow-none">Add to Cart</Button>
-                                            </div>
+                                            <Link to={`/perfumes/${item.$id}`}>
+                                                <Button variant="outline" className="w-full shadow-none">Perfume Details</Button>
+                                            </Link>
                                         )}
 
                                     </div>
@@ -300,20 +304,19 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                 <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
 
                     {/* Filter by sort */}
-                    <Select>
-                        <SelectTrigger className="w- shadow-sm">
-                            <SelectValue placeholder="Sort" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Sort by</SelectLabel>
-                                <Separator />
-                            </SelectGroup>
-                            <SelectItem value="Newest">Newest</SelectItem>
-                            <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
-                            <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Select onValueChange={e => setSortByFilter(e)}>
+                            <SelectTrigger className="sm:w-[200px] w-full text-left">
+                                <RiArrowUpDownFill className="w-4 h-4" />
+                                <SelectValue placeholder="Sort by" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Sort by</SelectLabel>
+                                    <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                    <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
                 </div>
             </>
         )

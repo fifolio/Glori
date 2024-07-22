@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 // SERVICES
 import { getStore } from "@/backend/services/store/getStore";
+import { getProducts } from "@/backend/services/store/getAllProduct";
 
 // UI
 import { Button } from "@/components/ui/button"
@@ -18,6 +19,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { toast } from "sonner";
 
 // STATES
 import useUserId from "@/lib/states/userId";
@@ -29,7 +31,7 @@ import { MdOutlinePhone } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
 import { IoShareSocial } from "react-icons/io5";
 import { FaRegCopy } from "react-icons/fa";
-import { toast } from "sonner";
+import { TbShoppingBagExclamation } from "react-icons/tb";
 
 
 export default function Store() {
@@ -61,6 +63,9 @@ export default function Store() {
         [youtube, setYoutube] = useState<string>(''),
         [instagram, setInstagram] = useState<string>('');
 
+
+    const [totalProducts, setTotalProducts] = useState<number | null>(null)
+
     // Update the page title
     document.title = `Glori | ${name} `;
 
@@ -76,6 +81,7 @@ export default function Store() {
 
             async function checkStoreState() {
                 const results = await getStore(`${storeURL}`);
+                console.log(results)
                 if (results) {
                     if (results.code === 404) {
                         navigate('/')
@@ -110,6 +116,26 @@ export default function Store() {
         toast.success("Store Link Copied")
     }
 
+    // Scroll top when click on Link
+    function scrollTopFunc() {
+        window.scrollTo({
+            top: -10,
+            behavior: 'instant'
+        });
+    }
+
+    // Fetch and Check on Store total products
+    async function productsChecker() {
+        await getProducts(storeURL as string)
+            .then((res: any) => {
+                setTotalProducts(res.total)
+            })
+    }
+
+    useEffect(() => {
+        productsChecker()
+    }, [storeURL])
+
 
     if (loadingComponent) {
         return <LoadingScreen />
@@ -124,7 +150,7 @@ export default function Store() {
 
                     <div className="flex flex-col md:flex-row items-start justify-between md:w-full text-center md:text-left">
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-bold">{name}</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold capitalize">{name}</h1>
                             {/* <p className="text-gray-500 dark:text-gray-400">Store ID: {storeID}</p> */}
                         </div>
                     </div>
@@ -187,7 +213,7 @@ export default function Store() {
                     <div>
                         <h2 className="text-lg font-bold mb-4">Contact {name}</h2>
 
-                        {/* Phone + Emali + Website */}
+                        {/* Phone + Email + Website */}
                         <div className="flex flex-col space-y-1 text-md">
                             <div className="flex items-center gap-2">
                                 <MdAlternateEmail className="w-5 h-5 text-gray-500" />
@@ -231,8 +257,45 @@ export default function Store() {
                     </div>
                 </div>
 
+
                 {/* Products */}
-                <Perfumes AllowFiltering={true} />
+
+                {/* Check if the total items is above 0 (so there's a products) */}
+                {totalProducts as number > 0 ? (
+                    <Perfumes AllowFiltering={true} />
+                ) :
+                // If there's no products items, and if the store ID is equal to the current ID of the logged-in user:
+                    totalProducts == 0 && storeURL == loggedinUserId ? (
+                        <>
+                            <hr />
+                            <div className="flex flex-col items-center justify-center text-center mt-10 p-5 bg-yellow-50 border-dashed border-[1px] rounded-lg">
+                                <h2 className="text-2xl font-semibold mb-4 text-yellow-600">Ready to Start Your Store Journey?</h2>
+                                <p className="mb-4 text-yellow-800">
+                                    You currently have no perfumes listed in your <span className="capitalize">{name}</span> store. Let's change that!
+                                    Selling your first product is a great step towards building your brand and reaching new customers.
+                                    Get started now and make your mark in the world of fragrances.
+                                </p>
+                                <Link to='/sell' onClick={() => scrollTopFunc()}>
+                                    <button className="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 focus:outline-none">
+                                        Sell My First Perfume
+                                    </button>
+                                </Link>
+                            </div>
+                        </>
+                    ) : 
+                    // If there's no products items, and if the store ID is not equal to the current logged-in user (so it's a guest)
+                    totalProducts == 0 && storeURL !== loggedinUserId ?
+                        (
+                            <>
+                                <hr />
+                                <div className="flex flex-col items-center justify-center text-center mt-10 p-5 border-dashed border-[1px] rounded-lg">
+                                    <h2 className="text-2xl font-semibold mb-8 text-gray-400"><TbShoppingBagExclamation size={100} /></h2>
+                                    <p className="mb-4 text-gray-500">
+                                    <span className="capitalize">{name}</span> has no products available at this time.
+                                    </p>
+                                </div>
+                            </>
+                        ) : null}
             </div>
 
         )

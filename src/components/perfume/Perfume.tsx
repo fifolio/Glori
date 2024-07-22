@@ -310,25 +310,6 @@ export default function Perfume() {
                             ${price}
                         </div>
                     </div>
-
-                    {/* <div className="xl:container flex items-center justify-between w-2/2 sm:mt-auto mt-2">
-                        <div className="sm:flex items-left">
-                            <div className="text-gray-900 text-left bg-yellow-200">
-                                <span className="font-bold text-2xl">
-                                    {title}
-                                </span>
-                                <span className="mx-2">
-                                    By
-                                </span>
-                                <Link to={`/store/${storeId}`} className="font-bold">
-                                    {storeName}
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="sm:text-4xl text-2xl font-bold sm:block hidden">
-                            ${price}
-                        </div>
-                    </div> */}
                 </header>
 
                 {/* Perfume details: gallery, details */}
@@ -448,7 +429,7 @@ export default function Perfume() {
                                             <RadioGroupItem key={index} id="size" value={size === '100ml' ? '100' : size === '200ml' ? '200' : '50'} />
                                             <span key={index + 2}>{size == '100ml' ? '100ml (+50)' : size == '200ml' ? '200ml (+$100)' : size}</span>
                                         </Label>
-                                    )).reverse()}
+                                    ))}
                                 </RadioGroup>
                             </div>
                         </div>
