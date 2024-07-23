@@ -2,39 +2,45 @@ import { databases } from "@/backend/configs/config";
 import { Query } from "appwrite";
 
 // Get the Logged-in user store details
-export async function getProducts(storeId: string, sortBy?: string) {
+export async function getProducts(storeId?: string, sortBy?: string, cursor?: string) {
 
-    let order: any;
+    let order;
     switch (sortBy) {
         case 'newest':
-            order = Query.orderDesc('$createdAt')
+            order = Query.orderDesc('$createdAt');
             break;
         case 'oldest':
-            order = Query.orderAsc('$createdAt')
+            order = Query.orderAsc('$createdAt');
             break;
         case 'highest':
-            order = Query.orderDesc('price')
+            order = Query.orderDesc('price');
             break;
         case 'lowest':
-            order = Query.orderAsc('price')
+            order = Query.orderAsc('price');
             break;
         default:
-            order = Query.orderDesc('$createdAt')
+            order = Query.orderDesc('$createdAt');
             break;
     }
 
-    const results = await databases.listDocuments(
-        `${import.meta.env.VITE_DATABASES_MAIN}`,
-        `${import.meta.env.VITE_COL_PRODUCTS}`,
-        [
-            Query.equal('store', `${storeId}`),
-            order
-        ]
-    ).then((res) => {
-        return res
-    }).catch((err) => {
-        return err
-    })
+    const queries = [
+        Query.equal('store', `${storeId}`),
+        order,
+        Query.limit(10)
+    ];
 
-    return results
+    if (cursor) {
+        queries.push(Query.cursorAfter(cursor));
+    }
+
+    try {
+        const results = await databases.listDocuments(
+            `${import.meta.env.VITE_DATABASES_MAIN}`,
+            `${import.meta.env.VITE_COL_PRODUCTS}`,
+            queries
+        );
+        return results;
+    } catch (err) {
+        return err;
+    }
 }

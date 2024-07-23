@@ -2,9 +2,6 @@ import { FormEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
-// SERVICES
-import { handleCreateProduct } from "@/backend/services/products/createProduct"
-
 // UI
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -22,7 +19,6 @@ import { toast } from "sonner"
 
 
 // ICONS
-import { MdAddPhotoAlternate } from "react-icons/md";
 import { TbCubeSend } from "react-icons/tb";
 
 // STATES

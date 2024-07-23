@@ -38,7 +38,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { LoadingScreen } from '../ui/loading';
+import Loading, { LoadingScreen } from '../ui/loading';
 import { toast } from 'sonner';
 
 // ICONS
@@ -67,6 +67,10 @@ type Collections = {
     NavigateToCollectionsPageBtn?: boolean;
 }
 
+type Product = {
+    $id: string;
+};
+
 export default function Collections({ AllowFiltering, NavigateToCollectionsPageBtn }: Collections) {
 
     const
@@ -76,11 +80,15 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
         { id: storeId } = useParams<string>(),
         { cartState, setCartState } = useUpdateCart(),
         [loadingScreen, setLoadingScreen] = useState<boolean>(true),
+        [loadingMore, setLoadingMore] = useState<boolean>(false),
+
         // Use setUpdate when you need to update the fetching product
         [update, setUpdate] = useState<boolean>(true),
-        [allProduct, setAllProduct] = useState<[]>([]);
+        [allProduct, setAllProduct] = useState<Product[] | []>([]),
+        [productsTotal, setProductsTotal] = useState<number | null>(null),
+        [cursor, setCursor] = useState<string | null>(null);
 
-        const
+    const
         // Filters
         [sortByFilter, setSortByFilter] = useState<string>('');
 
@@ -110,17 +118,26 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
 
     useEffect(() => {
         async function fetchProducts() {
-            await getProducts(storeId as string, sortByFilter)
+            setLoadingMore(true)
+            await getProducts(storeId as string, sortByFilter, cursor as string)
                 .then((res: any) => {
-                    setUpdate(!update)
-                    setAllProduct(res.documents)
+                    setAllProduct([...allProduct, ...res.documents]);
+                    setProductsTotal(res.total)
                     setLoadingScreen(false)
+                    setLoadingMore(false)
                 })
         }
 
         fetchProducts()
-    }, [update])
+    }, [sortByFilter, cursor])
 
+    const loadMoreProducts = () => {
+        if (allProduct.length > 0) {
+            setCursor(allProduct[allProduct.length - 1].$id);
+        }
+    };
+
+    console.log('total', productsTotal)
 
     if (loadingScreen) {
         return <LoadingScreen />
@@ -128,18 +145,12 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
     } else {
         return (
             <>
-
-                {/* Header section */}
                 <div className="sm:text-left sm:flex text-center justify-between header mt-10 mb-6">
-
                     <div className="w-full">
                         <h2 className="text-2xl font-bold capitalize">Our Perfumes</h2>
                     </div>
 
-                    {/* Filters */}
                     <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden`}>
-
-                        {/* Filter by sort */}
                         <Select onValueChange={e => setSortByFilter(e)}>
                             <SelectTrigger className="sm:w-[200px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
@@ -153,13 +164,10 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
-
                     </div>
                 </div>
 
-                {/* Perfumes section */}
                 <div className="flex flex-wrap justify-evenly my-6">
-
                     {allProduct.map((item: any) => (
                         <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
                             <Link to={`/store/${item.store.$id}`}>
@@ -174,13 +182,9 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                     <CarouselItem><img src={`${item.photos[1]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
                                     <CarouselItem><img src={`${item.photos[2]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
                                 </CarouselContent>
-
                             </Carousel>
 
-                            {/* Card Details */}
                             <div className="details my-1">
-
-                                {/* Title + Description */}
                                 <Link to={`/perfumes/${item.$id}`}>
                                     <h6 className="font-semibold">{item.title.length > 25 ? item.title.substring(0, 25) : item.title}</h6>
                                     <p className="text-sm">
@@ -188,16 +192,13 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                     </p>
                                 </Link>
 
-                                {/* Price + Buy/Modify Button */}
                                 <div className="flex items-center py-1 w-full">
                                     <div className="font-bold mr-2 text-lg">
                                         <span>${item.price}</span>
                                     </div>
                                     <div className="w-full">
-
-                                        {isLoggedin && loggedinUserId === item.userId? (
+                                        {isLoggedin && loggedinUserId === item.userId ? (
                                             <div className='flex items-center justify-end'>
-                                                {/* Share Product */}
                                                 <Dialog>
                                                     <DialogTrigger asChild>
                                                         <Button size="sm"><IoShareSocial size="15" /></Button>
@@ -235,7 +236,6 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                     </DialogContent>
                                                 </Dialog>
 
-                                                {/* Modify Product List */}
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
                                                         <Button variant="outline" className="w-fit flex justify-between ml-3">
@@ -243,7 +243,6 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent className="w-52">
-
                                                         <Link to={`/perfumes/${item.$id}`}>
                                                             <DropdownMenuItem className='cursor-pointer' onClick={scrollTopFunc}>
                                                                 View Product
@@ -253,7 +252,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                             </DropdownMenuItem>
                                                         </Link>
 
-                                                        <Link to={`/edit`} onClick={() => {setEditProductId(item.$id), scrollTopFunc()}}>
+                                                        <Link to={`/edit`} onClick={() => { setEditProductId(item.$id), scrollTopFunc() }}>
                                                             <DropdownMenuItem className='cursor-pointer'>
                                                                 Edit Details
                                                                 <DropdownMenuShortcut>
@@ -265,7 +264,7 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                         <DropdownMenuSeparator />
 
                                                         <DropdownMenuItem onClick={() => handleDeleteProduct(item.$id, item.title)} className="text-red-500 cursor-pointer">
-                                                            Delete this product
+                                                            Delete Product
                                                             <DropdownMenuShortcut>
                                                                 <MdOutlineRemoveCircleOutline size="15" />
                                                             </DropdownMenuShortcut>
@@ -273,50 +272,25 @@ export default function Collections({ AllowFiltering, NavigateToCollectionsPageB
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
-
                                         ) : (
-                                            <Link to={`/perfumes/${item.$id}`}>
-                                                <Button variant="outline" className="w-full shadow-none">Perfume Details</Button>
-                                            </Link>
+                                            <Button size="sm" className="float-right" onClick={() => { }}>
+                                                Add to Cart
+                                            </Button>
                                         )}
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     ))}
-
                 </div>
 
-                {/* Load more button */}
-                <div className="flex justify-center mt-20 mb-6">
-                    <Button className={`${NavigateToCollectionsPageBtn ? 'hidden' : ''} w-52 bg-blue-600 hover:bg-blue-800 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
-                        Show more Perfumes
+                {allProduct.length < (productsTotal || 0) && (
+                    <Button disabled={loadingMore} onClick={loadMoreProducts} className="mx-auto block">
+                        {loadingMore ? (
+                            <Loading w={20} />
+                        ) : 'Load More Perfumes'}
                     </Button>
-                    <Button className={`${NavigateToCollectionsPageBtn ? '' : 'hidden'} w-52 bg-blue-600 hover:bg-blue-800 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
-                        Explore more Perfumes
-                    </Button>
-                </div>
-
-                {/* Filters Button (For Mobiles) */}
-                <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
-
-                    {/* Filter by sort */}
-                    <Select onValueChange={e => setSortByFilter(e)}>
-                            <SelectTrigger className="sm:w-[200px] w-full text-left">
-                                <RiArrowUpDownFill className="w-4 h-4" />
-                                <SelectValue placeholder="Sort by" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Sort by</SelectLabel>
-                                    <SelectItem value="newest">Newest Perfumes</SelectItem>
-                                    <SelectItem value="oldest">Oldest Perfumes</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                </div>
+                )}
             </>
         )
     }

@@ -80,8 +80,7 @@ export default function Store() {
             }
 
             async function checkStoreState() {
-                const results = await getStore(`${storeURL}`);
-                console.log(results)
+                const results = await getStore(`${storeURL}`)
                 if (results) {
                     if (results.code === 404) {
                         navigate('/')
