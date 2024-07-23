@@ -137,8 +137,6 @@ export default function Collections({ AllowFiltering }: Collections) {
         }
     };
 
-    console.log('total', productsTotal)
-
     if (loadingScreen) {
         return <LoadingScreen />
 
