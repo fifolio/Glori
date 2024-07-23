@@ -35,7 +35,6 @@ import {
 import ResetDetails from "./pages/ResetDetails";
 
 
-
 export default function App() {
 
   // Active loading screen while fetching data
@@ -60,7 +59,6 @@ export default function App() {
     }
   }
 
-
 // Return specific route based on specific checks
   function storeRoute() {
     if (isLoggedin === true && isStoreValid === true) {
@@ -73,13 +71,10 @@ export default function App() {
     }
   }
 
-
   // Run Checks everytime App got mounted
   useEffect(() => {
     sessionCheck()
   }, []);
-
-
 
   return (
     <>
