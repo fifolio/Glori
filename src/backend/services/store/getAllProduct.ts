@@ -12,12 +12,12 @@ export async function getProducts(storeId?: string, sortBy?: string, cursor?: st
         case 'oldest':
             order = Query.orderAsc('$createdAt');
             break;
-        // case 'highest':
-        //     order = Query.orderDesc('price');
-        //     break;
-        // case 'lowest':
-        //     order = Query.orderAsc('price');
-        //     break;
+        case 'highest':
+            order = Query.orderDesc('price');
+            break;
+        case 'lowest':
+            order = Query.orderAsc('price');
+            break;
         default:
             order = Query.orderDesc('$createdAt');
             break;
@@ -39,6 +39,7 @@ export async function getProducts(storeId?: string, sortBy?: string, cursor?: st
             `${import.meta.env.VITE_COL_PRODUCTS}`,
             queries
         );
+
         return results;
     } catch (err) {
         return err;

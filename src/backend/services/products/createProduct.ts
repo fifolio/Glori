@@ -25,7 +25,7 @@ export async function handleCreateProduct(payload: CreateProductDataTypes) {
         userId: payload.userId,
         title: payload.title,
         description: payload.description,
-        price: payload.price,
+        price: Number(payload.price),
         size: payload.size,
         fragranceFamily: payload.fragranceFamily,
         ingredients: payload.ingredients,

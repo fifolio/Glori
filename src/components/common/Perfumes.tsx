@@ -136,9 +136,8 @@ export default function Collections(AllowFiltering?: boolean) {
                 });
         }
 
-        if (cursor) {
-            fetchMoreProducts();
-        }
+
+        fetchMoreProducts();
     }, [cursor]);
 
     const loadMoreProducts = () => {
@@ -161,15 +160,22 @@ export default function Collections(AllowFiltering?: boolean) {
 
                     <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden`}>
                         <Select onValueChange={e => setSortByFilter(e)}>
-                            <SelectTrigger className="sm:w-[200px] w-full text-left">
+                            <SelectTrigger className="sm:w-[240px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
-                                <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes'} />
+                                <SelectValue placeholder={
+                                    sortByFilter === 'newest' ? 'Newest Perfumes' :
+                                        sortByFilter === 'oldest' ? 'Oldest Perfumes' :
+                                            sortByFilter === 'highest' ? 'Price: Highest to Lowest' :
+                                                sortByFilter === 'lowest' ? 'Price: Lowest to Highest' : 'Sort By'
+                                } />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>Sort by</SelectLabel>
                                     <SelectItem value="newest">Newest Perfumes</SelectItem>
                                     <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                    <SelectItem value="highest">Price: Highest to Lowest</SelectItem>
+                                    <SelectItem value="lowest">Price: Lowest to Highest</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -297,15 +303,22 @@ export default function Collections(AllowFiltering?: boolean) {
 
                                 {/* Filter by sort */}
                                 <Select onValueChange={e => setSortByFilter(e)}>
-                                    <SelectTrigger className="sm:w-[200px] w-full text-left">
+                                    <SelectTrigger className="sm:w-[240px] w-full text-left">
                                         <RiArrowUpDownFill className="w-4 h-4" />
-                                        <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes'} />
+                                        <SelectValue placeholder={
+                                            sortByFilter === 'newest' ? 'Newest Perfumes' :
+                                                sortByFilter === 'oldest' ? 'Oldest Perfumes' :
+                                                    sortByFilter === 'highest' ? 'Price: Highest to Lowest' :
+                                                        sortByFilter === 'lowest' ? 'Price: Lowest to Highest' : 'Sort By'
+                                        } />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Sort by</SelectLabel>
                                             <SelectItem value="newest">Newest Perfumes</SelectItem>
                                             <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                            <SelectItem value="highest">Price: Highest to Lowest</SelectItem>
+                                            <SelectItem value="lowest">Price: Lowest to Highest</SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
