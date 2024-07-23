@@ -71,7 +71,7 @@ type Product = {
     $id: string;
 };
 
-export default function Collections({ AllowFiltering, NavigateToCollectionsPageBtn }: Collections) {
+export default function Collections({ AllowFiltering }: Collections) {
 
     const
         // Check if user logged-in
