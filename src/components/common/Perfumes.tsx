@@ -63,7 +63,7 @@ type Product = {
     $id: string;
 };
 
-export default function Collections(AllowFiltering?: boolean) {
+export default function Collections() {
 
     const
         // Check if user logged-in
@@ -158,7 +158,7 @@ export default function Collections(AllowFiltering?: boolean) {
                         <h2 className="text-2xl font-bold capitalize">Our Perfumes</h2>
                     </div>
 
-                    <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden`}>
+                    <div className="sm:flex sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden">
                         <Select onValueChange={e => setSortByFilter(e)}>
                             <SelectTrigger className="sm:w-[240px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
@@ -299,7 +299,7 @@ export default function Collections(AllowFiltering?: boolean) {
                             </div>
 
                             {/* Mobile filters */}
-                            <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
+                            <div className={`container sm:hidden block filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
 
                                 {/* Filter by sort */}
                                 <Select onValueChange={e => setSortByFilter(e)}>

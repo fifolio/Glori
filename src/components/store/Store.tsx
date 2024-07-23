@@ -261,7 +261,7 @@ export default function Store() {
 
                 {/* Check if the total items is above 0 (so there's a products) */}
                 {totalProducts as number > 0 ? (
-                    <Perfumes AllowFiltering={true} />
+                    <Perfumes />
                 ) :
                 // If there's no products items, and if the store ID is equal to the current ID of the logged-in user:
                     totalProducts == 0 && storeURL == loggedinUserId ? (
