@@ -178,7 +178,7 @@ export default function Collections(AllowFiltering?: boolean) {
 
                 <div className="flex flex-wrap justify-evenly my-6">
                     {allProduct.map((item: any) => (
-                        <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
+                        <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[95%] sm:mb-32 mb-10 capitalize product-card">
                             <Link to={`/store/${item.store.$id}`}>
                                 <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">
                                     {item.store.name}
@@ -282,12 +282,33 @@ export default function Collections(AllowFiltering?: boolean) {
                                                 </DropdownMenu>
                                             </div>
                                         ) : (
-                                            <Button size="sm" className="float-right" onClick={() => { }}>
-                                                Add to Cart
-                                            </Button>
+                                            <Link to={`/perfumes/${item.$id}`}>
+                                                <Button className="float-right" onClick={scrollTopFunc}>
+                                                    View Product
+                                                </Button>
+                                            </Link>
                                         )}
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Mobile filters */}
+                            <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
+
+                                {/* Filter by sort */}
+                                <Select onValueChange={e => setSortByFilter(e)}>
+                                    <SelectTrigger className="sm:w-[200px] w-full text-left">
+                                        <RiArrowUpDownFill className="w-4 h-4" />
+                                        <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes'} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Sort by</SelectLabel>
+                                            <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                            <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
                     ))}

@@ -150,9 +150,9 @@ export default function Perfume() {
     async function handleAddToCart() {
 
         // Validations
-        if(selectedSize == null) {
+        if (selectedSize == null) {
             return toast.error('You must select which bottle size will be added to your cart')
-        } 
+        }
 
         if (isLoggedin) {
             setLoadingAddingToCart(true)
@@ -272,7 +272,7 @@ export default function Perfume() {
 
                 {/* Perfume details: breadcrumb, name, owner, price */}
                 <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
-                    <Breadcrumb className="w-[450px] capitalize sm:ml-0 ml-[-5px] mr-0 pr-0">
+                    <Breadcrumb className="w-[320px] capitalize sm:ml-0 ml-[-5px] mr-0 pr-0">
                         <BreadcrumbList>
                             <BreadcrumbItem className="sm:block hidden">
                                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -314,18 +314,20 @@ export default function Perfume() {
 
                 {/* Perfume details: gallery, details */}
                 <div className="lg:flex w-full items-start justify-between px-4 capitalize">
+                    <center>
+                        {/* gallery */}
+                        <div className="gallery sm:min-w-[400px] w-full min-h-[400px]">
+                            <Carousel className="hover:cursor-w-resize mx-auto">
+                                <CarouselContent>
+                                    <CarouselItem><img src={`${photos[0]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                                    <CarouselItem><img src={`${photos[1]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                                    <CarouselItem><img src={`${photos[2]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
+                                </CarouselContent>
 
-                    {/* gallery */}
-                    <div className="gallery sm:min-w-[400px] w-full min-h-[400px] ">
-                        <Carousel className="hover:cursor-w-resize mx-auto">
-                            <CarouselContent>
-                                <CarouselItem><img src={`${photos[0]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                                <CarouselItem><img src={`${photos[1]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                                <CarouselItem><img src={`${photos[2]}`} className="rounded-lg aspect-square object-cover min-h-[650px]" /></CarouselItem>
-                            </CarouselContent>
+                            </Carousel>
+                        </div>
+                    </center>
 
-                        </Carousel>
-                    </div>
 
                     {/* Details / Payment */}
                     <div className="flex-col flex-wrap w-full lg:px-6 lg:mt-2 mt-4">
