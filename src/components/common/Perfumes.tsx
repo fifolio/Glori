@@ -59,19 +59,11 @@ import useUserId from '@/lib/states/userId';
 
 
 
-type Collections = {
-    quantity?: number;
-    title?: string;
-    subTitle?: string;
-    AllowFiltering?: boolean;
-    NavigateToCollectionsPageBtn?: boolean;
-}
-
 type Product = {
     $id: string;
 };
 
-export default function Collections({ AllowFiltering }: Collections) {
+export default function Collections(AllowFiltering?: boolean) {
 
     const
         // Check if user logged-in
@@ -118,20 +110,38 @@ export default function Collections({ AllowFiltering }: Collections) {
 
     useEffect(() => {
         async function fetchProducts() {
-            setLoadingMore(true)
-            await getProducts(storeId as string, sortByFilter, cursor as string)
+            setLoadingScreen(true);
+            await getProducts(storeId as string, sortByFilter)
                 .then((res: any) => {
-                    setAllProduct([...allProduct, ...res.documents]);
-                    setProductsTotal(res.total)
-                    setLoadingScreen(false)
-                    setLoadingMore(false)
-                })
+                        setAllProduct(res.documents);
+                    setProductsTotal(res.total);
+                    setLoadingScreen(false);
+                    setLoadingMore(false);
+                });
         }
 
-        fetchProducts()
-    }, [sortByFilter, cursor])
+        fetchProducts(); // Clear products when sort/filter changes
+
+    }, [sortByFilter]);
+
+    useEffect(() => {
+        async function fetchMoreProducts() {
+            await getProducts(storeId as string, sortByFilter, cursor as string)
+                .then((res: any) => {
+                    setAllProduct((prevProducts) => [...prevProducts, ...res.documents]);
+                    setProductsTotal(res.total);
+                    setLoadingScreen(false);
+                    setLoadingMore(false);
+                });
+        }
+
+        if (cursor) {
+            fetchMoreProducts(); // Fetch more products for pagination
+        }
+    }, [cursor]);
 
     const loadMoreProducts = () => {
+        setLoadingMore(true)
         if (allProduct.length > 0) {
             setCursor(allProduct[allProduct.length - 1].$id);
         }
@@ -152,7 +162,7 @@ export default function Collections({ AllowFiltering }: Collections) {
                         <Select onValueChange={e => setSortByFilter(e)}>
                             <SelectTrigger className="sm:w-[200px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
-                                <SelectValue placeholder="Sort by" />
+                                <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes' } />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>

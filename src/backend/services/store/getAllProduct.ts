@@ -12,12 +12,12 @@ export async function getProducts(storeId?: string, sortBy?: string, cursor?: st
         case 'oldest':
             order = Query.orderAsc('$createdAt');
             break;
-        case 'highest':
-            order = Query.orderDesc('price');
-            break;
-        case 'lowest':
-            order = Query.orderAsc('price');
-            break;
+        // case 'highest':
+        //     order = Query.orderDesc('price');
+        //     break;
+        // case 'lowest':
+        //     order = Query.orderAsc('price');
+        //     break;
         default:
             order = Query.orderDesc('$createdAt');
             break;
@@ -26,7 +26,7 @@ export async function getProducts(storeId?: string, sortBy?: string, cursor?: st
     const queries = [
         Query.equal('store', `${storeId}`),
         order,
-        Query.limit(10)
+        Query.limit(6)
     ];
 
     if (cursor) {
