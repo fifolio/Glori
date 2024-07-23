@@ -108,22 +108,23 @@ export default function Collections(AllowFiltering?: boolean) {
             })
     }
 
+    // Update when using Sort-filter
     useEffect(() => {
         async function fetchProducts() {
             setLoadingScreen(true);
             await getProducts(storeId as string, sortByFilter)
                 .then((res: any) => {
-                        setAllProduct(res.documents);
+                    setAllProduct(res.documents);
                     setProductsTotal(res.total);
                     setLoadingScreen(false);
                     setLoadingMore(false);
                 });
         }
 
-        fetchProducts(); // Clear products when sort/filter changes
-
+        fetchProducts();
     }, [sortByFilter]);
 
+    // Update when click on Load-More btn
     useEffect(() => {
         async function fetchMoreProducts() {
             await getProducts(storeId as string, sortByFilter, cursor as string)
@@ -136,7 +137,7 @@ export default function Collections(AllowFiltering?: boolean) {
         }
 
         if (cursor) {
-            fetchMoreProducts(); // Fetch more products for pagination
+            fetchMoreProducts();
         }
     }, [cursor]);
 
@@ -162,7 +163,7 @@ export default function Collections(AllowFiltering?: boolean) {
                         <Select onValueChange={e => setSortByFilter(e)}>
                             <SelectTrigger className="sm:w-[200px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
-                                <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes' } />
+                                <SelectValue placeholder={sortByFilter === 'newest' ? 'Newest Perfumes' : sortByFilter === 'oldest' ? 'Oldest Perfumes' : 'Newest Perfumes'} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
