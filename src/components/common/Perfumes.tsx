@@ -159,7 +159,7 @@ export default function Collections() {
                     </div>
 
                     <div className="sm:flex sm:mt-auto my-8 justify-end w-full space-x-3 filters hidden">
-                        <Select onValueChange={e => setSortByFilter(e)}>
+                        <Select onValueChange={e => {setSortByFilter(e), scrollTopFunc()}}>
                             <SelectTrigger className="sm:w-[240px] w-full text-left">
                                 <RiArrowUpDownFill className="w-4 h-4" />
                                 <SelectValue placeholder={
@@ -302,7 +302,7 @@ export default function Collections() {
                             <div className={`container sm:hidden block filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
 
                                 {/* Filter by sort */}
-                                <Select onValueChange={e => setSortByFilter(e)}>
+                                <Select onValueChange={e => {setSortByFilter(e), scrollTopFunc()}}>
                                     <SelectTrigger className="sm:w-[240px] w-full text-left">
                                         <RiArrowUpDownFill className="w-4 h-4" />
                                         <SelectValue placeholder={
