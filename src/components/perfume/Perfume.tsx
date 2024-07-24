@@ -272,7 +272,7 @@ export default function Perfume() {
 
                 {/* Perfume details: breadcrumb, name, owner, price */}
                 <header className="xl:flex items-center py-6 px-4 md:px-6 mt-8 w-full">
-                    <Breadcrumb className="w-[320px] capitalize sm:ml-0 ml-[-5px] mr-0 pr-0">
+                    <Breadcrumb className="sm:w-[500px] w-[320px] capitalize sm:ml-0 ml-[-5px] mr-0 pr-0">
                         <BreadcrumbList>
                             <BreadcrumbItem className="sm:block hidden">
                                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -314,7 +314,7 @@ export default function Perfume() {
 
                 {/* Perfume details: gallery, details */}
                 <div className="lg:flex w-full items-start justify-between px-4 capitalize">
-                    <center>
+                    <center className="sm:w-fit w-auto">
                         {/* gallery */}
                         <div className="gallery sm:min-w-[400px] w-full min-h-[400px]">
                             <Carousel className="hover:cursor-w-resize mx-auto">
