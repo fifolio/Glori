@@ -643,7 +643,7 @@ export default function Navbar() {
                                                     </DropdownMenuItem>
                                                 </Link>
 
-                                                <Link to="/cart" >
+                                                <Link to="/cart" onClick={scrollTopFunc}>
                                                     <DropdownMenuItem className="cursor-pointer">
                                                         <RiShoppingCartLine className="mr-2" /> Go to Cart
                                                     </DropdownMenuItem>

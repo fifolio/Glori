@@ -114,6 +114,39 @@ export default function Cart() {
         });
     }
 
+    // handle get cart items function
+    async function handleGetCartItems() {
+        try {
+            await getCartItems(loggedinUserId)
+                .then((res) => {
+                    setCartItems(res.documents.length == 0 ? null : res.documents);
+                    setNumOfCartItems(res.total == 0 ? null : res.total);
+                    let collectTheSums = 0;
+
+                    // Loop through each cart item to calculate the sum
+                    for (let i = 0; i < res.documents.length; i++) {
+                        const item = res.documents[i];
+                        const sum = item.defaultPrice * item.quantity + (item.size === 50 ? 0 : item.size === 100 ? 50 : item.size === 200 ? 100 : 0);
+                        collectTheSums += sum;
+                    }
+
+                    // Set the total sum
+                    setCartItemsSum(collectTheSums);
+
+                }).finally(() => {
+                    getUserShoppingDetails()
+                    setTimeout(() => {
+                        setLoadingScreen(false)
+                    }, 2000)
+                })
+
+            // Initialize the total sum
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+        }
+    }
+
+
     // Handle Copy product Link
     function handleCopyPerfumeLink(perfumeId: string) {
         // const linkElement = document.getElementById("perfumeLink") as HTMLInputElement;
@@ -175,7 +208,7 @@ export default function Cart() {
     async function getUserShoppingDetails() {
         await getShoppingDetails(loggedinUserId)
             .then((res: any) => {
-                if(res.productDetails === undefined) {
+                if (res === undefined) {
                     setShoppingDetails({
                         nameOnCard: '',
                         cardNumber: '',
@@ -183,13 +216,13 @@ export default function Cart() {
                         expYear: '',
                         cvc: ''
                     })
-                } else{
+                } else {
                     setShoppingDetails({
-                        nameOnCard: res.username ? res.username : '',
-                        cardNumber: res.cardNumber ? res.cardNumber : '',
-                        expMonth: res.expiryMonth ? res.expiryMonth : '',
-                        expYear: res.expiryYear ? res.expiryYear : '',
-                        cvc: res.cvc ? res.cvc : ''
+                        nameOnCard: res.username,
+                        cardNumber: res.cardNumber,
+                        expMonth: res.expiryMonth,
+                        expYear: res.expiryYear,
+                        cvc: res.cvc
                     })
                 }
             })
@@ -205,9 +238,6 @@ export default function Cart() {
             })
     }
 
-    useEffect(() => {
-        getUserShoppingDetails()
-    }, [cartState])
 
     // handle Paynow func.
     function payNow() {
@@ -218,40 +248,12 @@ export default function Cart() {
         }, 5000)
     }
 
+
+
     useEffect(() => {
-        // handle get cart items function
-        async function handleGetCartItems() {
-            try {
-                await getCartItems(loggedinUserId)
-                    .then((res) => {
-                        setCartItems(res.documents.length == 0 ? null : res.documents);
-                        setNumOfCartItems(res.total == 0 ? null : res.total);
-                        let collectTheSums = 0;
+        handleGetCartItems();
+    }, [loggedinUserId, cartState]);
 
-                        // Loop through each cart item to calculate the sum
-                        for (let i = 0; i < res.documents.length; i++) {
-                            const item = res.documents[i];
-                            const sum = item.defaultPrice * item.quantity + (item.size === 50 ? 0 : item.size === 100 ? 50 : item.size === 200 ? 100 : 0);
-                            collectTheSums += sum;
-                        }
-
-                        // Set the total sum
-                        setCartItemsSum(collectTheSums);
-
-                    }).finally(() => {
-                        setCartState(!cartState)
-                        setTimeout(() => {
-                            setLoadingScreen(false)
-                        }, 2000)
-                    })
-
-                // Initialize the total sum
-            } catch (error) {
-                console.error('Error fetching cart items:', error);
-            }
-        }
-        handleGetCartItems()
-    }, [cartState])
 
     if (loadingScreen) {
         return <LoadingScreen />

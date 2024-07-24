@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // UI
@@ -5,6 +6,8 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import Loading from '../ui/loading'
+import { toast } from 'sonner'
 
 // ICONS
 import { GoInbox } from "react-icons/go";
@@ -12,11 +15,60 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { FiMapPin } from "react-icons/fi";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithubSquare } from "react-icons/fa";
+import { LuSend } from 'react-icons/lu'
+
+// SERVICES
+import { connectSupport } from '@/backend/services/contactUs/contactSupport'
 
 export default function ContactForm() {
 
     // Update the page title
     document.title = `Glori | Contact Us`;
+
+    const
+        // Collect form data
+        [username, setUsername] = useState<string>(''),
+        [email, setEmail] = useState<string>(''),
+        [subject, setSubject] = useState<string>(''),
+        [message, setMessage] = useState<string>(''),
+        [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+
+        // form inputs validation
+        if (username == '') {
+            toast.error('You must enter your name to continue')
+            return;
+        } else if (email == '') {
+            toast.error('You must enter your email to continue')
+            return;
+        } else if (subject == '') {
+            toast.error('You must enter your subject to continue')
+            return;
+        } else if (message == '') {
+            toast.error('You must enter your message to continue')
+            return;
+        } else {
+
+
+            setLoadingSubmit(true)
+            await connectSupport({ username, email, subject, message })
+                .then((res) => {
+                    if (res == true) {
+                        toast.success("Your message sent to Glori's Customer Support Team successfully")
+                        setUsername('')
+                        setEmail('')
+                        setSubject('')
+                        setMessage('')
+                        setLoadingSubmit(false)
+                    } else {
+                        toast.error('Error occur while submitting your message, please reload the page and try again')
+                        setLoadingSubmit(false)
+                    }
+                })
+        }
+    }
 
     return (
         <div className="w-full max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
@@ -56,26 +108,29 @@ export default function ContactForm() {
                     </div>
                     <div className="space-y-4">
                         <h2 className="text-2xl font-bold">Contact Form</h2>
-                        <form className="space-y-4">
+
+                        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name">Name</Label>
-                                    <Input id="name" placeholder="Enter your name" />
+                                    <Input onChange={(e) => setUsername(e.target.value)} value={username} id="name" placeholder="Enter your name" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" placeholder="Enter your email" />
+                                    <Input onChange={(e) => setEmail(e.target.value)} value={email} id="email" type="email" placeholder="Enter your email" />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="subject">Subject</Label>
-                                <Input id="subject" placeholder="Enter a subject" />
+                                <Input onChange={(e) => setSubject(e.target.value)} value={subject} id="subject" placeholder="Enter a subject" />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="message">Message</Label>
-                                <Textarea id="message" placeholder="Enter your message" className="min-h-[150px]" />
+                                <Textarea onChange={(e) => setMessage(e.target.value)} value={message} id="message" placeholder="Enter your message" className="min-h-[150px]" />
                             </div>
-                            <Button type="submit">Submit</Button>
+                            <Button disabled={loadingSubmit} type="submit">
+                                {loadingSubmit ? <Loading w={24} /> : (<span className="flex items-center"><p className='mr-2'>Send message</p> <LuSend size={16}/></span>)}
+                            </Button>
                         </form>
                     </div>
                 </div>
