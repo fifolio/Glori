@@ -36,6 +36,7 @@ export async function getAllProducts(collection?: string, sortBy?: string, curso
         queries.push(Query.cursorAfter(cursor));
     }
 
+
     try {
         const results = await databases.listDocuments(
             `${import.meta.env.VITE_DATABASES_MAIN}`,

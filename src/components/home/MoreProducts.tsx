@@ -35,7 +35,7 @@ function MoreProducts() {
     // Update when click on Load-More btn
     useEffect(() => {
         async function fetchMoreProducts() {
-            await getAllProducts(undefined, 'oldest', undefined, 20)
+            await getAllProducts(undefined, undefined, undefined, 20)
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setTimeout(() => {
@@ -64,7 +64,7 @@ function MoreProducts() {
                     {loadingScreen ? (
                         <LoadingScreen />
                     ) :
-                        allProduct.map((item: any) => (
+                        allProduct.slice(4).map((item: any) => (
                             <div key={item.$id} className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
                                 <Badge className="absolute z-10 bg-stone-900 hover:bg-stone-900 text-white rounded-none">By {item.store.name}</Badge>
 
