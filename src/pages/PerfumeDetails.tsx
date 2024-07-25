@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 // UI
-import { TopSelling, Brands, Newsletter, Perfumes, Perfume, Reviews } from "@/components";
+import { Brands, Newsletter, Perfumes, Perfume, Reviews } from "@/components";
 
 // SERVICES
 import { getLikes } from '@/backend/services/products/getLikes';
