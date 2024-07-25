@@ -1,7 +1,7 @@
 import { databases } from "@/backend/configs/config";
 import { Query } from "appwrite";
 
-export async function getAllProducts(collection?: string, sortBy?: string, cursor?: string) {
+export async function getAllProducts(collection?: string, sortBy?: string, cursor?: string, limits?: number) {
 
     // Check upon the type of orders from the list below that equals to that got received
     let order;
@@ -24,10 +24,13 @@ export async function getAllProducts(collection?: string, sortBy?: string, curso
     }
 
     const queries = [
-        Query.equal('collection', `${collection}`),
         order,
-        Query.limit(1)
+        Query.limit(limits ? limits : 10)
     ];
+
+    if(collection){
+        queries.push(Query.equal('collection', `${collection}`));
+    }
 
     if (cursor) {
         queries.push(Query.cursorAfter(cursor));

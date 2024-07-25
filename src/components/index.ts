@@ -12,11 +12,12 @@ export { default as MoreProducts } from './home/MoreProducts'
 
 // Collections
 export { default as HeroCollections } from './collections/HeroCollections';
-export { default as Perfumes } from './collections/Perfumes';
+export { default as PerfumesByCollection } from './collections/PerfumesByCollection';
 
 // Perfume
 export { default as Perfume } from './perfume/Perfume';
 export { default as Reviews } from './perfume/Reviews';
+export { default as MorePerfumes } from './perfume/MorePerfumes';
 
 // Auth
 export { default as Auth } from './auth/Auth';

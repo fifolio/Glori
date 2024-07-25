@@ -116,8 +116,11 @@ export default function Perfumes() {
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setProductsTotal(res.total);
-                    setLoadingScreen(false);
                     setLoadingMore(false);
+
+                    setTimeout(() => {
+                        setLoadingScreen(false);
+                    }, 3000)
                 });
         }
 
@@ -131,8 +134,11 @@ export default function Perfumes() {
                 .then((res: any) => {
                     setAllProduct((prevProducts) => [...prevProducts, ...res.documents]);
                     setProductsTotal(res.total);
-                    setLoadingScreen(false);
                     setLoadingMore(false);
+
+                    setTimeout(() => {
+                        setLoadingScreen(false);
+                    }, 3000)
                 });
         }
 
@@ -187,7 +193,7 @@ export default function Perfumes() {
                         <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[95%] sm:mb-32 mb-10 capitalize product-card">
                             <Link to={`/store/${item.store.$id}`}>
                                 <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">
-                                    {item.store.name}
+                                    By {item.store.name}
                                 </Badge>
                             </Link>
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 // UI
-import { Brands, HeroCollections, Newsletter, Perfumes } from "@/components";
+import { Brands, HeroCollections, Newsletter, PerfumesByCollection } from "@/components";
 
 // STATES
 import usePerfumeCategory from '@/lib/states/usePerfumeCategory';
@@ -23,7 +23,7 @@ export default function Collections() {
   return (
     <div className="md:container container-fluid">
       <HeroCollections collectionID={`${collectionID}`} />
-      <Perfumes />
+      <PerfumesByCollection />
       <Brands />
       <Newsletter />
     </div>

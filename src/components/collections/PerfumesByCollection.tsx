@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // UI
 import {
@@ -21,19 +21,19 @@ import {
 import { getAllProducts } from '@/backend/services/products/getAllProduct';
 import Loading, { LoadingScreen } from '../ui/loading';
 import { RiArrowUpDownFill } from 'react-icons/ri';
-import usePerfumeCategory from '@/lib/states/usePerfumeCategory';
 
 type Product = {
     $id: string;
 };
 
-export default function Perfumes() {
+export default function PerfumesByCollection() {
 
-    // Get the category from the public state
-    const { category } = usePerfumeCategory();
-
-    // Set the page Sub-Title and Sub-Description
     const
+        // Get the category from the URL
+        { id: category } = useParams();
+
+    const
+        // Set the page Sub-Title and Sub-Description
         [subTitle, setSubTitle] = useState<string>(''),
         [subDescription, setSubDescription] = useState<string>(''),
         [loadingScreen, setLoadingScreen] = useState<boolean>(true),
@@ -62,13 +62,16 @@ export default function Perfumes() {
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setProductsTotal(res.total);
-                    setLoadingScreen(false);
-                    setLoadingMore(false);
+
+                    setTimeout(() => {
+                        setLoadingScreen(false);
+                        setLoadingMore(false);
+                    }, 3000)
                 });
         }
 
         fetchProducts();
-    }, [sortByFilter, category]);
+    }, [sortByFilter]);
 
     // Update when click on Load-More btn
     useEffect(() => {
@@ -77,14 +80,16 @@ export default function Perfumes() {
                 .then((res: any) => {
                     setAllProduct((prevProducts) => [...prevProducts, ...res.documents]);
                     setProductsTotal(res.total);
-                    setLoadingScreen(false);
-                    setLoadingMore(false);
+                    setTimeout(() => {
+                        setLoadingScreen(false);
+                        setLoadingMore(false);
+                    }, 3000)
                 });
         }
 
 
         fetchMoreProducts();
-    }, [cursor, category]);
+    }, [cursor]);
 
     const loadMoreProducts = () => {
         setLoadingMore(true)
@@ -95,14 +100,17 @@ export default function Perfumes() {
 
     // Fetch products when page Url changes
     useEffect(() => {
+
         async function fetchAllProducts() {
             setLoadingScreen(true);
             await getAllProducts(category, sortByFilter)
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setProductsTotal(res.total);
-                    setLoadingScreen(false);
-                    setLoadingMore(false);
+                    setTimeout(() => {
+                        setLoadingScreen(false);
+                        setLoadingMore(false);
+                    }, 3000)
                 });
         }
         fetchAllProducts()
@@ -160,22 +168,6 @@ export default function Perfumes() {
                     {/* Filters */}
                     <div className="sm:flex sm:mt-auto my-8 justify-evenly space-x-3 filters hidden">
 
-                        {/* Filter by brand */}
-                        {/* <Select>
-                            <SelectTrigger className="w-[170px] shadow-sm">
-                                <SelectValue placeholder="Filter by brand" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Filter by Brand</SelectLabel>
-                                </SelectGroup>
-                                <Separator />
-                                <SelectItem value="BrandName1">Brand Name</SelectItem>
-                                <SelectItem value="BrandName2">Brand Name</SelectItem>
-                                <SelectItem value="BrandName3">Brand Name</SelectItem>
-                            </SelectContent>
-                        </Select> */}
-
                         {/* Filter by sort */}
                         <Select onValueChange={e => { setSortByFilter(e) }}>
                             <SelectTrigger className="sm:w-[240px] w-full text-left">
@@ -208,7 +200,7 @@ export default function Perfumes() {
                         <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[95%] sm:mb-32 mb-10 capitalize product-card">
                             <Link to={`/store/${item.store.$id}`}>
                                 <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">
-                                    {item.store.name}
+                                    By {item.store.name}
                                 </Badge>
                             </Link>
 
@@ -285,21 +277,6 @@ export default function Perfumes() {
 
                 {/* Filters Button (For Mobiles) */}
                 <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30">
-                    {/* Filter by brand */}
-                    {/* <Select>
-                        <SelectTrigger className="w-[170px] shadow-sm">
-                            <SelectValue placeholder="Filter by brand" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50">
-                            <SelectGroup>
-                                <SelectLabel>Filter by Brand</SelectLabel>
-                                <Separator />
-                            </SelectGroup>
-                            <SelectItem value="BrandName1">Brand Name</SelectItem>
-                            <SelectItem value="BrandName2">Brand Name</SelectItem>
-                            <SelectItem value="BrandName3">Brand Name</SelectItem>
-                        </SelectContent>
-                    </Select> */}
 
                     {/* Filter by sort */}
                     <Select onValueChange={e => { setSortByFilter(e), scrollTopFunc() }}>
