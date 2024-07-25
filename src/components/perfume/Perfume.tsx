@@ -54,10 +54,13 @@ import useIsLiked from "@/lib/states/useIsLiked"
 import useUserState from "@/lib/states/userStates"
 import useUserId from "@/lib/states/userId"
 import useUpdateCart from "@/lib/states/useUpdateCart"
+import usePerfumeCategory from "@/lib/states/usePerfumeCategory"
 
 
 export default function Perfume() {
 
+    // set the category from the public state
+    const { setCategory } = usePerfumeCategory();
 
     const
         { loggedinUserId } = useUserId(),
@@ -249,6 +252,9 @@ export default function Perfume() {
                         setTitle(results.title)
                         setPrice(results.price)
                         setSizes(results.size)
+
+                        // Set public 'collection' state
+                        setCategory(results.collection)
                     }
                 }
                 setTimeout(() => {

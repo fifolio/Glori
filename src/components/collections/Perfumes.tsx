@@ -21,14 +21,16 @@ import {
 import { getAllProducts } from '@/backend/services/products/getAllProduct';
 import Loading, { LoadingScreen } from '../ui/loading';
 import { RiArrowUpDownFill } from 'react-icons/ri';
+import usePerfumeCategory from '@/lib/states/usePerfumeCategory';
 
 type Product = {
     $id: string;
 };
 
-export default function Collections(category: string) {
+export default function Perfumes() {
 
-    const { id: pageCollection } = useParams();
+    // Get the category from the public state
+    const { category } = usePerfumeCategory();
 
     // Set the page Sub-Title and Sub-Description
     const
@@ -56,7 +58,7 @@ export default function Collections(category: string) {
     useEffect(() => {
         async function fetchProducts() {
             setLoadingScreen(true);
-            await getAllProducts(pageCollection, sortByFilter)
+            await getAllProducts(category, sortByFilter)
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setProductsTotal(res.total);
@@ -66,12 +68,12 @@ export default function Collections(category: string) {
         }
 
         fetchProducts();
-    }, [sortByFilter]);
+    }, [sortByFilter, category]);
 
     // Update when click on Load-More btn
     useEffect(() => {
         async function fetchMoreProducts() {
-            await getAllProducts(pageCollection, sortByFilter, cursor as string)
+            await getAllProducts(category, sortByFilter, cursor as string)
                 .then((res: any) => {
                     setAllProduct((prevProducts) => [...prevProducts, ...res.documents]);
                     setProductsTotal(res.total);
@@ -82,7 +84,7 @@ export default function Collections(category: string) {
 
 
         fetchMoreProducts();
-    }, [cursor]);
+    }, [cursor, category]);
 
     const loadMoreProducts = () => {
         setLoadingMore(true)
@@ -95,7 +97,7 @@ export default function Collections(category: string) {
     useEffect(() => {
         async function fetchAllProducts() {
             setLoadingScreen(true);
-            await getAllProducts(pageCollection, sortByFilter)
+            await getAllProducts(category, sortByFilter)
                 .then((res: any) => {
                     setAllProduct(res.documents);
                     setProductsTotal(res.total);
@@ -104,7 +106,7 @@ export default function Collections(category: string) {
                 });
         }
         fetchAllProducts()
-    }, [pageCollection])
+    }, [category])
 
     useEffect(() => {
         switch (category) {
@@ -138,7 +140,7 @@ export default function Collections(category: string) {
                 break;
         }
 
-    }, [subTitle]);
+    }, [subTitle, category]);
 
     if (loadingScreen) {
         return <LoadingScreen />
