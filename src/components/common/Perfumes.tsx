@@ -63,7 +63,7 @@ type Product = {
     $id: string;
 };
 
-export default function Collections() {
+export default function Perfumes() {
 
     const
         // Check if user logged-in

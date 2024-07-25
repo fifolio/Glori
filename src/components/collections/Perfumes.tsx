@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // UI
 import {
@@ -18,31 +18,93 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
+import { getAllProducts } from '@/backend/services/products/getAllProduct';
+import Loading, { LoadingScreen } from '../ui/loading';
+import { RiArrowUpDownFill } from 'react-icons/ri';
 
+type Product = {
+    $id: string;
+};
 
+export default function Collections(category: string) {
 
-type Collections = {
-    category: string;
-    quantity?: number;
-    title?: string;
-    subTitle?: string;
-    AllowFiltering?: boolean;
-    NavigateToCollectionsPageBtn?: boolean;
-}
-
-export default function Collections({
-    category,
-    quantity,
-    // title,
-    // subtitle,
-    AllowFiltering,
-    NavigateToCollectionsPageBtn
-}: Collections) {
+    const { id: pageCollection } = useParams();
 
     // Set the page Sub-Title and Sub-Description
-    const [subTitle, setSubTitle] = useState<string>('');
-    const [subDescription, setSubDescription] = useState<string>('');
+    const
+        [subTitle, setSubTitle] = useState<string>(''),
+        [subDescription, setSubDescription] = useState<string>(''),
+        [loadingScreen, setLoadingScreen] = useState<boolean>(true),
+        [loadingMore, setLoadingMore] = useState<boolean>(false),
+        [allProduct, setAllProduct] = useState<Product[] | []>([]),
+        [productsTotal, setProductsTotal] = useState<number | null>(null),
+        [cursor, setCursor] = useState<string | null>(null);
+
+    const
+        // Filters
+        [sortByFilter, setSortByFilter] = useState<string>('');
+
+    // Scroll top when click on Link
+    function scrollTopFunc() {
+        window.scrollTo({
+            top: -10,
+            behavior: 'instant'
+        });
+    }
+
+    // Update when using Sort-filter
+    useEffect(() => {
+        async function fetchProducts() {
+            setLoadingScreen(true);
+            await getAllProducts(pageCollection, sortByFilter)
+                .then((res: any) => {
+                    setAllProduct(res.documents);
+                    setProductsTotal(res.total);
+                    setLoadingScreen(false);
+                    setLoadingMore(false);
+                });
+        }
+
+        fetchProducts();
+    }, [sortByFilter]);
+
+    // Update when click on Load-More btn
+    useEffect(() => {
+        async function fetchMoreProducts() {
+            await getAllProducts(pageCollection, sortByFilter, cursor as string)
+                .then((res: any) => {
+                    setAllProduct((prevProducts) => [...prevProducts, ...res.documents]);
+                    setProductsTotal(res.total);
+                    setLoadingScreen(false);
+                    setLoadingMore(false);
+                });
+        }
+
+
+        fetchMoreProducts();
+    }, [cursor]);
+
+    const loadMoreProducts = () => {
+        setLoadingMore(true)
+        if (allProduct.length > 0) {
+            setCursor(allProduct[allProduct.length - 1].$id);
+        }
+    };
+
+    // Fetch products when page Url changes
+    useEffect(() => {
+        async function fetchAllProducts() {
+            setLoadingScreen(true);
+            await getAllProducts(pageCollection, sortByFilter)
+                .then((res: any) => {
+                    setAllProduct(res.documents);
+                    setProductsTotal(res.total);
+                    setLoadingScreen(false);
+                    setLoadingMore(false);
+                });
+        }
+        fetchAllProducts()
+    }, [pageCollection])
 
     useEffect(() => {
         switch (category) {
@@ -75,146 +137,191 @@ export default function Collections({
                 setSubDescription("")
                 break;
         }
-    }, [category]);
 
-    return (
-        <>
+    }, [subTitle]);
 
-            {/* Header section */}
-            <div className="sm:container sm:text-left sm:flex text-center justify-between header mt-10 mb-6">
-                <div className="flex flex-col">
-                    <h2 className="text-2xl font-bold capitalize">{subTitle} Perfumes</h2>
-                    <p className="text-gray-500 dark:text-gray-400">
-                        {subDescription}
-                    </p>
+    if (loadingScreen) {
+        return <LoadingScreen />
+    } else {
+        return (
+            <>
+
+                {/* Header section */}
+                <div className="sm:container sm:text-left sm:flex text-center justify-between header mt-10 mb-6">
+                    <div className="flex flex-col">
+                        <h2 className="text-2xl font-bold capitalize">{subTitle} Perfumes</h2>
+                        <p className="text-gray-500 dark:text-gray-400">
+                            {subDescription}
+                        </p>
+                    </div>
+
+                    {/* Filters */}
+                    <div className="sm:flex sm:mt-auto my-8 justify-evenly space-x-3 filters hidden">
+
+                        {/* Filter by brand */}
+                        {/* <Select>
+                            <SelectTrigger className="w-[170px] shadow-sm">
+                                <SelectValue placeholder="Filter by brand" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Filter by Brand</SelectLabel>
+                                </SelectGroup>
+                                <Separator />
+                                <SelectItem value="BrandName1">Brand Name</SelectItem>
+                                <SelectItem value="BrandName2">Brand Name</SelectItem>
+                                <SelectItem value="BrandName3">Brand Name</SelectItem>
+                            </SelectContent>
+                        </Select> */}
+
+                        {/* Filter by sort */}
+                        <Select onValueChange={e => { setSortByFilter(e) }}>
+                            <SelectTrigger className="sm:w-[240px] w-full text-left">
+                                <RiArrowUpDownFill className="w-4 h-4" />
+                                <SelectValue placeholder={
+                                    sortByFilter === 'newest' ? 'Newest Perfumes' :
+                                        sortByFilter === 'oldest' ? 'Oldest Perfumes' :
+                                            sortByFilter === 'highest' ? 'Price: Highest to Lowest' :
+                                                sortByFilter === 'lowest' ? 'Price: Lowest to Highest' : 'Sort By'
+                                } />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Sort by</SelectLabel>
+                                    <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                    <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                    <SelectItem value="highest">Price: Highest to Lowest</SelectItem>
+                                    <SelectItem value="lowest">Price: Lowest to Highest</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                    </div>
                 </div>
 
-                {/* Filters */}
-                <div className={`${AllowFiltering ? 'sm:flex' : ''} sm:mt-auto my-8 justify-evenly space-x-3 filters hidden`}>
+                {/* Perfumes section */}
+                <div className="flex flex-wrap justify-evenly my-6">
 
+                    {allProduct.map((item: any) => (
+                        <div key={item.$id} className="sm:w-[265px] sm:h-[265px] w-[95%] sm:mb-32 mb-10 capitalize product-card">
+                            <Link to={`/store/${item.store.$id}`}>
+                                <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">
+                                    {item.store.name}
+                                </Badge>
+                            </Link>
+
+                            <Carousel className="hover:cursor-w-resize">
+                                <CarouselContent>
+                                    <CarouselItem><img src={`${item.photos[0]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
+                                    <CarouselItem><img src={`${item.photos[1]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
+                                    <CarouselItem><img src={`${item.photos[2]}`} className='sm:max-h-[300px] sm:w-auto w-full' /></CarouselItem>
+                                </CarouselContent>
+                            </Carousel>
+
+                            <div className="details my-1">
+                                <Link to={`/perfumes/${item.$id}`}>
+                                    <h6 className="font-semibold">{item.title.length > 25 ? item.title.substring(0, 25) : item.title}</h6>
+                                    <p className="text-sm">
+                                        Available sizes: {item.size.sort((a: string, b: string) => parseInt(a) - parseInt(b)).join(', ')}
+                                    </p>
+                                </Link>
+
+                                <div className="flex items-center py-1 w-full">
+                                    <div className="font-bold mr-2 text-lg">
+                                        <span>${item.price}</span>
+                                    </div>
+                                    <div className="w-full">
+                                        <Link to={`/perfumes/${item.$id}`}>
+                                            <Button className="float-right" onClick={scrollTopFunc}>
+                                                View Product
+                                            </Button>
+                                        </Link>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Mobile filters */}
+                            <div className={`container sm:hidden block filters-bottom bg-white w-full fixed py-4 left-0 bottom-0 z-30`}>
+
+                                {/* Filter by sort */}
+                                <Select onValueChange={e => { setSortByFilter(e) }}>
+                                    <SelectTrigger className="sm:w-[240px] w-full text-left">
+                                        <RiArrowUpDownFill className="w-4 h-4" />
+                                        <SelectValue placeholder={
+                                            sortByFilter === 'newest' ? 'Newest Perfumes' :
+                                                sortByFilter === 'oldest' ? 'Oldest Perfumes' :
+                                                    sortByFilter === 'highest' ? 'Price: Highest to Lowest' :
+                                                        sortByFilter === 'lowest' ? 'Price: Lowest to Highest' : 'Sort By'
+                                        } />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Sort by</SelectLabel>
+                                            <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                            <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                            <SelectItem value="highest">Price: Highest to Lowest</SelectItem>
+                                            <SelectItem value="lowest">Price: Lowest to Highest</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Load more button */}
+                <div className="flex justify-center my-6">
+                    {allProduct.length < (productsTotal || 0) && (
+                        <Button disabled={loadingMore} onClick={loadMoreProducts} className="mx-auto flex justify-center w-52 bg-blue-600 hover:bg-blue-800 text-white font-light shadow-md hover:shadow-lg transition-shadow">
+                            {loadingMore ? (
+                                <Loading w={20} />
+                            ) : 'Load More Perfumes'}
+                        </Button>
+                    )}
+                </div>
+
+                {/* Filters Button (For Mobiles) */}
+                <div className="container sm:hidden filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30">
                     {/* Filter by brand */}
-                    <Select>
+                    {/* <Select>
                         <SelectTrigger className="w-[170px] shadow-sm">
                             <SelectValue placeholder="Filter by brand" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="z-50">
                             <SelectGroup>
                                 <SelectLabel>Filter by Brand</SelectLabel>
+                                <Separator />
                             </SelectGroup>
-                            <Separator />
                             <SelectItem value="BrandName1">Brand Name</SelectItem>
                             <SelectItem value="BrandName2">Brand Name</SelectItem>
                             <SelectItem value="BrandName3">Brand Name</SelectItem>
                         </SelectContent>
-                    </Select>
+                    </Select> */}
 
                     {/* Filter by sort */}
-                    <Select>
-                        <SelectTrigger className="w-[170px] shadow-sm">
-                            <SelectValue placeholder="Sort" />
+                    <Select onValueChange={e => { setSortByFilter(e), scrollTopFunc() }}>
+                        <SelectTrigger className="sm:w-[240px] w-full text-left">
+                            <RiArrowUpDownFill className="w-4 h-4" />
+                            <SelectValue placeholder={
+                                sortByFilter === 'newest' ? 'Newest Perfumes' :
+                                    sortByFilter === 'oldest' ? 'Oldest Perfumes' :
+                                        sortByFilter === 'highest' ? 'Price: Highest to Lowest' :
+                                            sortByFilter === 'lowest' ? 'Price: Lowest to Highest' : 'Sort By'
+                            } />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>Sort by</SelectLabel>
-                                <Separator />
+                                <SelectItem value="newest">Newest Perfumes</SelectItem>
+                                <SelectItem value="oldest">Oldest Perfumes</SelectItem>
+                                <SelectItem value="highest">Price: Highest to Lowest</SelectItem>
+                                <SelectItem value="lowest">Price: Lowest to Highest</SelectItem>
                             </SelectGroup>
-                            <SelectItem value="Newest">Newest</SelectItem>
-                            <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
-                            <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
                         </SelectContent>
                     </Select>
-
                 </div>
-            </div>
-
-            {/* Perfumes section */}
-            <div className="flex flex-wrap justify-evenly my-6">
-
-                {[...Array(quantity ? quantity : 20)].map((index) => (
-                    <div key={index} className="sm:w-[280px] sm:h-[280px] w-[85%] sm:mb-32 mb-10 capitalize product-card">
-                        <Badge className="absolute z-20 bg-stone-900 hover:bg-stone-900 text-white rounded-none">Brand</Badge>
-
-                        {/* Preview Images */}
-
-                        {/* <Link to={`/perfumes/${index}`} className="relative z-10"> */}
-                        <Carousel className="hover:cursor-w-resize">
-                            <CarouselContent>
-                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                                <CarouselItem><img src="http://placehold.co/500" /></CarouselItem>
-                            </CarouselContent>
-
-                        </Carousel>
-                        {/* </Link> */}
-
-                        {/* Card Details */}
-                        <div className="details my-1">
-
-                            {/* Title + Description */}
-                            <Link to={`/perfumes/${index}`}>
-                                <h6 className="font-semibold">chanel no 5 eau de toilette</h6>
-                                <p className="text-sm">Fill Your Space with a Cozy Scent</p>
-                            </Link>
-
-                            {/* Price + Buy Button */}
-                            <div className="flex items-center py-1 w-full">
-                                <div className="font-bold mr-5 text-sm">
-                                    <span>$16.99</span>
-                                </div>
-                                <div className="w-full">
-                                    <Button variant="outline" className="w-full font-light shadow-none">Add to Cart</Button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                ))}
-            </div>
-
-            {/* Load more button */}
-            <div className="flex justify-center my-6">
-                <Button className={`${NavigateToCollectionsPageBtn ? 'hidden' : ''} w-52 bg-blue-600 hover:bg-blue-800 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
-                    Show more Perfumes
-                </Button>
-                <Button className={`${NavigateToCollectionsPageBtn ? '' : 'hidden'} w-52 bg-blue-600 hover:bg-blue-800 text-white font-light shadow-md hover:shadow-lg transition-shadow`}>
-                    Explore more Perfumes
-                </Button>
-            </div>
-
-            {/* Filters Button (For Mobiles) */}
-            <div className={`container ${AllowFiltering ? 'sm:hidden' : 'hidden'} filters-bottom bg-white w-full flex justify-evenly fixed py-4 bottom-0 z-30`}>
-                {/* Filter by brand */}
-                <Select>
-                    <SelectTrigger className="w-[170px] shadow-sm">
-                        <SelectValue placeholder="Filter by brand" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50">
-                        <SelectGroup>
-                            <SelectLabel>Filter by Brand</SelectLabel>
-                            <Separator />
-                        </SelectGroup>
-                        <SelectItem value="BrandName1">Brand Name</SelectItem>
-                        <SelectItem value="BrandName2">Brand Name</SelectItem>
-                        <SelectItem value="BrandName3">Brand Name</SelectItem>
-                    </SelectContent>
-                </Select>
-
-                {/* Filter by sort */}
-                <Select>
-                    <SelectTrigger className="w-[170px] shadow-sm">
-                        <SelectValue placeholder="Sort" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Sort by</SelectLabel>
-                            <Separator />
-                        </SelectGroup>
-                        <SelectItem value="Newest">Newest</SelectItem>
-                        <SelectItem value="PriceLowToHigh">Price: Low to High</SelectItem>
-                        <SelectItem value="PriceHighToLow">Price: High to Low</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
