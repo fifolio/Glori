@@ -3,6 +3,7 @@ import { Query } from "appwrite";
 
 export async function getAllProducts(collection?: string, sortBy?: string, cursor?: string) {
 
+    // Check upon the type of orders from the list below that equals to that got received
     let order;
     switch (sortBy) {
         case 'newest':
