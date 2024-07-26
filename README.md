@@ -1,16 +1,18 @@
-<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="Asteroid"></a>🌌 Welcome to Asteroid: Where the Cosmos Unveils its Secrets! 🔭</h1>
+<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="Asteroid"></a>Glori - The House of Fragrances 🌸</h1>
 
 <p class="has-line-data" data-line-start="3" data-line-end="4"><img width="100%" height="100%" src="https://github.com/fifolio/Glori/blob/main/public/images/github/screenshot-home.PNG" alt="N|Solid"></p>
 
 <p class="has-line-data" data-line-start="5" data-line-end="6">
-  Asteroid is a captivating and knowledge-rich platform that orbits around the celestial wonders of Space and Astronomy. Within these virtual pages, a stellar collection of articles and blogs awaits, each crafted by the extraordinary artificial intelligence known as ChatGPT. As your cosmic guide, ChatGPT, powered by OpenAI, delves into the depths of the universe, delivering captivating insights and igniting your curiosity.
+Welcome to Glori, a full-stack perfume store project. This project is a labor of love, combining cutting-edge technology with a passion for exquisite fragrances. Dive into the world of Glori and discover how we bring the art of perfumery to life through code.
   
-  Behind the scenes, the Asteroid platform harnesses the power of Appwrite as its trusty backend companion. This dynamic duo ensures a seamless and immersive experience, seamlessly curating the celestial knowledge that flows through the platform's veins. With the support of a robust SQLite database, the treasure trove of cosmic wisdom is organized and readily accessible, enabling you to embark on an enlightening journey through the stars.
-  
-  So, fasten your seatbelt, embark on this interstellar adventure, and allow the synergy of cutting-edge AI technology, the vastness of space, and the efficiency of Appwrite to transport you to a realm where the mysteries of the universe are revealed in all their splendor. Explore, learn, and expand your cosmic horizons with Asteroid, where the wonders of Space and Astronomy come alive! 🌌✨🚀
+  Behind the scenes, the Asteroid platform harnesses the power of Appwrite as its trusty backend companion. This dynamic duo ensures a seamless and immersive experience, curating celestial knowledge flowing through the platform's veins. With the support of a robust SQLite database, the treasure trove of cosmic wisdom is organized and readily accessible, enabling you to embark on an enlightening journey through the stars.
+
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Project Overview</h2>
+
+Glori is an online perfume store providing users with an elegant and seamless shopping experience. From browsing a curated collection of fragrances to making secure purchases, Glori ensures a smooth and enjoyable journey for every perfume enthusiast.
 </p>
 
-<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Installation</h2>
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Project Overview</h2>
 <p class="has-line-data" data-line-start="8" data-line-end="9">To get started with Asteroid, you’ll need to clone this repository to your local machine:</p>
 <pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git <span class="hljs-built_in">clone</span><a href="https://github.com/fifolio/Asteroid.git"> https://github.com/fifolio/Asteroid.git</a>
 </code></pre>
