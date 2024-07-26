@@ -33,7 +33,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </li>
   <li>
     <a href="https://shadcn.dev/">Shadcn</a>: 
-    Shadcn is a UI component library for React that provides a collection of accessible and customizable components. I used Shadcn to speed up development and ensure a consistent design language across the project.
+    Shadcn is a UI component library for React that provides a collection of accessible and customizable components. I used Shadcn to speed up development and ensure consistent design language across the project.
   </li>
   <li>
     <a href="https://react-icons.github.io/react-icons/">React Icons</a>: 
@@ -49,7 +49,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </li>
   <li>
     <a href="https://github.com/pmndrs/zustand">Zustand</a>: 
-    Zustand is a small, fast state management library for React. I used Zustand for state management in Glori due to its simplicity and efficiency in handling global state.
+    Zustand is a small, fast state management library for React. I used Zustand for state management in Glori due to its simplicity and efficiency in handling global states.
   </li>
   <li>
     <a href="https://www.netlify.com/">Netlify</a>: 
@@ -61,7 +61,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </li>
   <li>
     <a href="https://chat.openai.com/">ChatGPT</a>: 
-    ChatGPT, powered by OpenAI, is an advanced AI language model used for generating human-like text. I used ChatGPT for generating content, assisting with documentation, and providing conversational AI features within the project.
+    ChatGPT, powered by OpenAI, is an advanced AI language model used for generating human-like text. I used ChatGPT for generating content, assisting with documentation, and providing assistance with solving bugs/errors within the project.
   </li>
 </ul>
 
@@ -125,9 +125,9 @@ Glori is an online perfume store providing users with an elegant and seamless sh
     <li>vite: ^5.2.0</li>
   </ul>
   
-<pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git <span class="hljs-built_in">clone</span><a href="https://github.com/fifolio/Asteroid.git"> https://github.com/fifolio/Asteroid.git</a>
+<pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git <span class="hljs-built_in">clone</span><a href="https://github.com/fifolio/Asteroid.git"> https://github.com/fifolio/Glori.git</a>
 </code></pre>
-<p class="has-line-data" data-line-start="13" data-line-end="14">Once you have the repository on your local machine, navigate to the project directory and install the necessary dependencies.</p>
+<p class="has-line-data" data-line-start="13" data-line-end="14">Once the server is up and running, open your browser and navigate to your localhost to explore Glori. Browse through our collections, add your favorite perfumes to the cart, and proceed to checkout.</p>
 
 <h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>Technologies Used</h2>
 <p class="has-line-data" data-line-start="34" data-line-end="35">Asteroid is built using the following technologies:</p>
