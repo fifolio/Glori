@@ -166,8 +166,6 @@ Seeing Glori come to life has been one of the most fulfilling experiences of my 
 I am fully aware that there might still be bugs or unexpected errors to tackle. However, I approach these with confidence and a positive mindset. The knowledge and skills I've gained from this project equip me to face and resolve any challenges that come my way. I embrace these future hurdles with enthusiasm, knowing they are opportunities for further growth.
 
 To anyone embarking on their own projects or facing their own challenges: embrace the journey, relish the learning, and take pride in every step you take. The road might be tough, but the rewards are immense. Remember, every challenge is a chance to learn and improve. Keep pushing forward, stay curious, and never underestimate the power of your perseverance.
-
-Thank you for being a part of this journey with me. Here’s to more challenges, more learning, and more successes in the future!
 				</td>
 			</tr>
 		</tbody>
