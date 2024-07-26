@@ -154,6 +154,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
 			<tr>
 				<td style="border: 1px solid #b3adad; text-align: center; padding: 5px; background: #fffdb8; color: #313030;">
 					As I wrap up this project, I want to take a moment to reflect on the journey that brought Glori to life. Over the past two months, with more than 200 Git commits, I've poured my heart and soul into this personal project. 
+     
 
 My commitment wasn’t solely about adding a new showcase to my portfolio. It was a challenge I embraced with passion and dedication, driven by the desire to tackle something new and grow as a developer.
 
