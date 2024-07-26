@@ -15,19 +15,56 @@ Glori is an online perfume store providing users with an elegant and seamless sh
 <h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Tech Stack</h2>
 <p class="has-line-data" data-line-start="8" data-line-end="9">Glori is built using the following technologies:</p>
 <ul>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Figma</li>
-<li class="has-line-data" data-line-start="36" data-line-end="37">Vite</li>
-<li class="has-line-data" data-line-start="37" data-line-end="38">React</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Tailwind Css</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Shadcn</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">React Icons</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Relume</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Cloudinary</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Zustand</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Netlify</li>
-<li class="has-line-data" data-line-start="38" data-line-end="39">Appwrite (as a Backend)</li>
-<li class="has-line-data" data-line-start="39" data-line-end="40">ChatGPT | Gemini</li>
+  <li>
+    <a href="https://www.figma.com/">Figma</a>: 
+    Figma is a collaborative interface design tool used for designing and prototyping user interfaces. I used Figma to create and refine the UI/UX of Glori, ensuring a visually appealing and user-friendly design.
+  </li>
+  <li>
+    <a href="https://vitejs.dev/">Vite</a>: 
+    Vite is a modern build tool that provides fast development and optimized production builds. I used Vite for its lightning-fast build times and excellent support for modern JavaScript and TypeScript features.
+  </li>
+  <li>
+    <a href="https://reactjs.org/">React</a>: 
+    React is a popular JavaScript library for building user interfaces. I used React to develop the interactive and dynamic components of Glori, leveraging its component-based architecture for efficient UI development.
+  </li>
+  <li>
+    <a href="https://tailwindcss.com/">Tailwind CSS</a>: 
+    Tailwind CSS is a utility-first CSS framework that enables rapid design and styling of components. I used Tailwind CSS to apply consistent and responsive styling to Glori’s interface, enhancing both aesthetics and usability.
+  </li>
+  <li>
+    <a href="https://shadcn.dev/">Shadcn</a>: 
+    Shadcn is a UI component library for React that provides a collection of accessible and customizable components. I used Shadcn to speed up development and ensure a consistent design language across the project.
+  </li>
+  <li>
+    <a href="https://react-icons.github.io/react-icons/">React Icons</a>: 
+    React Icons is a library that provides a collection of popular icons as React components. I used React Icons to incorporate various icons into the Glori project, improving the visual appeal and user experience.
+  </li>
+  <li>
+    <a href="https://www.relume.io/">Relume</a>: 
+    Relume is a design tool for creating and managing design systems. I used Relume to maintain a consistent design system throughout Glori, ensuring that all design elements align with the project's style guide.
+  </li>
+  <li>
+    <a href="https://cloudinary.com/">Cloudinary</a>: 
+    Cloudinary is a cloud-based image and video management platform. I used Cloudinary to handle image uploads and optimization, ensuring high performance and fast load times for product images.
+  </li>
+  <li>
+    <a href="https://github.com/pmndrs/zustand">Zustand</a>: 
+    Zustand is a small, fast state management library for React. I used Zustand for state management in Glori due to its simplicity and efficiency in handling global state.
+  </li>
+  <li>
+    <a href="https://www.netlify.com/">Netlify</a>: 
+    Netlify is a platform for deploying and hosting web applications. I used Netlify to deploy Glori, taking advantage of its continuous deployment and CDN capabilities for fast and reliable hosting.
+  </li>
+  <li>
+    <a href="https://appwrite.io/">Appwrite</a>: 
+    Appwrite is an open-source backend-as-a-service platform. I used Appwrite to handle backend functionalities for Glori, including user authentication, database management, and file storage.
+  </li>
+  <li>
+    <a href="https://chat.openai.com/">ChatGPT | Gemini</a>: 
+    ChatGPT, powered by OpenAI's Gemini model, is an advanced AI language model used for generating human-like text. I used ChatGPT for generating content, assisting with documentation, and providing conversational AI features within the project.
+  </li>
 </ul>
+
 
 <p class="has-line-data" data-line-start="8" data-line-end="9">Glori is built using the Dependencies & DevDependencies technologies:</p>
   <strong>Dependencies:</strong>
