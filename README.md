@@ -60,8 +60,8 @@ Glori is an online perfume store providing users with an elegant and seamless sh
     Appwrite is an open-source backend-as-a-service platform. I used Appwrite to handle backend functionalities for Glori, including user authentication, database management, and file storage.
   </li>
   <li>
-    <a href="https://chat.openai.com/">ChatGPT | Gemini</a>: 
-    ChatGPT, powered by OpenAI's Gemini model, is an advanced AI language model used for generating human-like text. I used ChatGPT for generating content, assisting with documentation, and providing conversational AI features within the project.
+    <a href="https://chat.openai.com/">ChatGPT</a>: 
+    ChatGPT, powered by OpenAI, is an advanced AI language model used for generating human-like text. I used ChatGPT for generating content, assisting with documentation, and providing conversational AI features within the project.
   </li>
 </ul>
 
