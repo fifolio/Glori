@@ -4,8 +4,6 @@
 
 <p class="has-line-data" data-line-start="5" data-line-end="6">
 Welcome to Glorious (or Glori), a full-stack perfume store project. This project is a labor of love, combining cutting-edge technology with a passion for exquisite fragrances. Dive into the world of Glori and discover how we bring the art of perfumery to life through code.
-  
-Behind the scenes, the Asteroid platform harnesses the power of Appwrite as its trusty backend companion. This dynamic duo ensures a seamless and immersive experience, curating celestial knowledge flowing through the platform's veins. With the support of a robust SQLite database, the treasure trove of cosmic wisdom is organized and readily accessible, enabling you to embark on an enlightening journey through the stars.
 
 <h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Project Overview</h2>
 
