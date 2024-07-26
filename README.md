@@ -130,15 +130,21 @@ Glori is an online perfume store providing users with an elegant and seamless sh
 </code></pre>
 <p class="has-line-data" data-line-start="13" data-line-end="14">Once the server is up and running, open your browser and navigate to your localhost to explore Glori. Browse through our collections, add your favorite perfumes to the cart, and proceed to checkout.</p>
 
-<h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>Technologies Used</h2>
-<p class="has-line-data" data-line-start="34" data-line-end="35">Asteroid is built using the following technologies:</p>
-<ul>
-<li class="has-line-data" data-line-start="36" data-line-end="37">Vite</li>
-<li class="has-line-data" data-line-start="37" data-line-end="38">React</li>
-<li class="has-line-data" data-line-start="38" data-line-end="39">Appwrite (as a Backend)</li>
-<li class="has-line-data" data-line-start="39" data-line-end="40">ChatGPT</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Tailwind Css</li>
-<li class="has-line-data" data-line-start="40" data-line-end="42">Figma</li>
-</ul>
+  <h2>Features</h2>
+  <ul>
+    <li><strong>Responsive Design:</strong> Ensures that the application provides an optimal viewing experience across a wide range of devices, from desktops to mobile phones.</li>
+    <li><strong>Advanced Search and Filtering:</strong> Allows users to efficiently find products using various search and filter options, improving the overall user experience.</li>
+    <li><strong>Interactive Product Display:</strong> Features dynamic product displays with high-quality images and interactive elements to enhance user engagement.</li>
+    <li><strong>User Authentication:</strong> Implements secure login and registration processes, utilizing Appwrite for managing user accounts and authentication.</li>
+    <li><strong>Real-time Updates:</strong> Provides live updates on product availability, reviews, and other relevant data to keep users informed with the latest information.</li>
+    <li><strong>Customizable User Profiles:</strong> Allows users to create and manage their profiles, including preferences and personal information, to tailor the shopping experience.</li>
+    <li><strong>Seamless Checkout Process:</strong> Ensures a smooth and efficient checkout process with multiple payment options and a streamlined user interface.</li>
+    <li><strong>Image Optimization:</strong> Utilizes Cloudinary for optimizing and managing product images to ensure fast load times and high-quality visuals.</li>
+    <li><strong>State Management:</strong> Uses Zustand for efficient state management across the application, ensuring consistent and reliable data handling.</li>
+    <li><strong>Deploy and Host:</strong> Hosted on Netlify for fast and reliable deployment, with continuous integration and delivery capabilities.</li>
+    <li><strong>Design System Integration:</strong> Incorporates a consistent design system using Shadcn and Tailwind CSS to maintain a cohesive and visually appealing interface.</li>
+  </ul>
+
+  
 <h2 class="code-line" data-line-start=42 data-line-end=43 ><a id="Contributing_42"></a>Contributing</h1>
 <p class="has-line-data" data-line-start="43" data-line-end="44">If you’d like to contribute to Asteroid, feel free to fork this repository and submit a pull request with your changes. Please make sure to adhere to the project’s coding standards and guidelines.</p>
