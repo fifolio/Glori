@@ -126,7 +126,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </ul>
 
 <h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>Installation</h2>
-<pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git clone</span><a href="https://github.com/fifolio/Asteroid.git">https://github.com/fifolio/Glori.git</a>
+<pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git clone </span><a href="https://github.com/fifolio/Asteroid.git">https://github.com/fifolio/Glori.git</a>
 </code></pre>
 <p class="has-line-data" data-line-start="13" data-line-end="14">Once the server is up and running, open your browser and navigate to your localhost to explore Glori. Browse through our collections, add your favorite perfumes to the cart, and proceed to checkout.</p>
 
