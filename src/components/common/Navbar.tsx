@@ -512,7 +512,7 @@ export default function Navbar() {
                                     {/* Search section */}
                                     <Popover>
                                         <PopoverTrigger asChild>
-                                            <Button variant="outline" className="text-slate-500 border-0 shadow-none pr-5 bg-transparent">
+                                            <Button variant="outline" className="hidden text-slate-500 border-0 shadow-none pr-5 bg-transparent">
                                                 <CiSearch size="20px" />
                                             </Button>
                                         </PopoverTrigger>
