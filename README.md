@@ -133,11 +133,10 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   <h2>Features</h2>
   <ul>
     <li><strong>Responsive Design:</strong> Ensures that the application provides an optimal viewing experience across a wide range of devices, from desktops to mobile phones.</li>
-    <li><strong>Advanced Search and Filtering:</strong> Allows users to efficiently find products using various search and filter options, improving the overall user experience.</li>
+    <li><strong>Advanced Filtering:</strong> Allows users to efficiently find products using various filter options, improving the overall user experience.</li>
     <li><strong>Interactive Product Display:</strong> Features dynamic product displays with high-quality images and interactive elements to enhance user engagement.</li>
     <li><strong>User Authentication:</strong> Implements secure login and registration processes, utilizing Appwrite for managing user accounts and authentication.</li>
-    <li><strong>Real-time Updates:</strong> Provides live updates on product availability, reviews, and other relevant data to keep users informed with the latest information.</li>
-    <li><strong>Customizable User Profiles:</strong> Allows users to create and manage their profiles, including preferences and personal information, to tailor the shopping experience.</li>
+    <li><strong>Customizable User Profiles:</strong> Allows users to create and manage their profiles and stores, including preferences and personal information, to tailor the shopping experience.</li>
     <li><strong>Seamless Checkout Process:</strong> Ensures a smooth and efficient checkout process with multiple payment options and a streamlined user interface.</li>
     <li><strong>Image Optimization:</strong> Utilizes Cloudinary for optimizing and managing product images to ensure fast load times and high-quality visuals.</li>
     <li><strong>State Management:</strong> Uses Zustand for efficient state management across the application, ensuring consistent and reliable data handling.</li>
