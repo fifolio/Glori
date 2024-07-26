@@ -144,6 +144,8 @@ Glori is an online perfume store providing users with an elegant and seamless sh
     <li><strong>Design System Integration:</strong> Incorporates a consistent design system using Shadcn and Tailwind CSS to maintain a cohesive and visually appealing interface.</li>
   </ul>
 
+<hr />
+
 <table style="border: 1px solid #b3adad; border-collapse: collapse; padding: 5px;">
 		<thead>
 			<tr>
