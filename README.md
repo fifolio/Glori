@@ -151,6 +151,13 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </blockquote>
 </section>
 
+<section>
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Screenshots</h2>
+  <figcaption>Home Page of Glori</figcaption>
+ <img src="https://raw.githubusercontent.com/fifolio/Glori/d2f6f78f98bf7870c71fd0148edc450edb5e20ec/public/images/github/glori%20full%20home%20page%20capture.jpg" alt="Home Page of Glori">
+</section>
+
+
 
 <hr />
 
