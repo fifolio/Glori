@@ -148,7 +148,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
 <!-- License Section -->
 <section id="license">
   <h2>License</h2>
-  <p>This project is licensed under the <strong>MIT License</strong> - see the <a href="LICENSE" target="_blank">LICENSE</a> file for details.</p>
+  <p>This project is licensed under the <strong>MIT License</strong>.</p>
 </section>
 
 <!-- Contact Section -->
@@ -156,8 +156,8 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   <h2>Contact</h2>
   <p>If you have any questions or feedback about the Glori project, feel free to reach out:</p>
   <ul>
-    <li><strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a></li>
-    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/your-profile" target="_blank">linkedin.com/in/your-profile</a></li>
-    <li><strong>GitHub:</strong> <a href="https://github.com/your-username" target="_blank">github.com/your-username</a></li>
+    <li><strong>Email:</strong> <a href="mailto:firasdabbabi@gmail.com">FirasDabbabi@gmail.com</a></li>
+    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/fifolio/" target="_blank">linkedin.com/in/fifolio</a></li>
+    <li><strong>GitHub:</strong> <a href="https://github.com/fifolio/Glori" target="_blank">github.com/fifolio/Glori</a></li>
   </ul>
 </section>
