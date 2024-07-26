@@ -142,6 +142,17 @@ Glori is an online perfume store providing users with an elegant and seamless sh
     <li><strong>Design System Integration:</strong> Incorporates a consistent design system using Shadcn and Tailwind CSS to maintain a cohesive and visually appealing interface.</li>
   </ul>
 
+<section id="primary-sitemap">
+  <h2>Primary Sitemap</h2>
+  <p>The primary sitemap for Glori was designed using Relume, ensuring a user-friendly and intuitive navigation experience.</p>
+  <img src="https://raw.githubusercontent.com/fifolio/Glori/34784ec4fd3c044743755e3db689e2627979c4ac/public/images/github/Primary%20Sitemap.png" alt="Primary Sitemap designed with Relume">
+  <figcaption>Primary Sitemap designed with Relume</figcaption>
+  <blockquote>
+    <strong>Note:</strong> While there may be some updates from the primary sitemap to the actual product, the main parts and sections remain the same.
+  </blockquote>
+</section>
+
+
 <hr />
 
 <table style="border: 1px solid #b3adad; border-collapse: collapse; padding: 5px;">
