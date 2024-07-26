@@ -5,12 +5,12 @@
 <p class="has-line-data" data-line-start="5" data-line-end="6">
 Welcome to Glorious (or Glori), a full-stack perfume store project. This project is a labor of love, combining cutting-edge technology with a passion for exquisite fragrances. Dive into the world of Glori and discover how we bring the art of perfumery to life through code.
 
-<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Project Overview</h2>
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>🌟 Project Overview</h2>
 
 Glori is an online perfume store providing users with an elegant and seamless shopping experience. From browsing a curated collection of fragrances to making secure purchases, Glori ensures a smooth and enjoyable journey for every perfume enthusiast.
 </p>
 
-<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Tech Stack</h2>
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>🛠 Tech Stack</h2>
 <p class="has-line-data" data-line-start="8" data-line-end="9">Glori is built using the following technologies:</p>
 <ul>
   <li>
@@ -123,12 +123,12 @@ Glori is an online perfume store providing users with an elegant and seamless sh
     <li>vite: ^5.2.0</li>
   </ul>
 
-<h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>Installation</h2>
+<h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>🚀 Installation</h2>
 <pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git clone </span><a href="https://github.com/fifolio/Glori.git">https://github.com/fifolio/Glori.git</a>
 </code></pre>
 <p class="has-line-data" data-line-start="13" data-line-end="14">Once the server is up and running, open your browser and navigate to your localhost to explore Glori. Browse through our collections, add your favorite perfumes to the cart, and proceed to checkout.</p>
 
-  <h2>Features</h2>
+  <h2>✨ Features</h2>
   <ul>
     <li><strong>Responsive Design:</strong> Ensures that the application provides an optimal viewing experience across a wide range of devices, from desktops to mobile phones.</li>
     <li><strong>Advanced Filtering:</strong> Allows users to efficiently find products using various filter options, improving the overall user experience.</li>
@@ -143,7 +143,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
   </ul>
 
 <section id="primary-sitemap">
-  <h2>Primary Sitemap</h2>
+  <h2>📜 Primary Sitemap</h2>
   <p>The primary sitemap for Glori was designed using Relume, ensuring a user-friendly and intuitive navigation experience.</p>
   <img src="https://raw.githubusercontent.com/fifolio/Glori/34784ec4fd3c044743755e3db689e2627979c4ac/public/images/github/Primary%20Sitemap.png" alt="Primary Sitemap designed with Relume">
   <blockquote>
@@ -152,7 +152,7 @@ Glori is an online perfume store providing users with an elegant and seamless sh
 </section>
 
 <section>
-<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>Screenshots</h2>
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>📸 Screenshots</h2>
   <figcaption>Home Page of Glori | see live: <a target="_blank" href="https://glori.netlify.app/">glori.netlify.app</a></figcaption>
  <img src="https://raw.githubusercontent.com/fifolio/Glori/d2f6f78f98bf7870c71fd0148edc450edb5e20ec/public/images/github/glori%20full%20home%20page%20capture.jpg" alt="Home Page of Glori">
 </section>
@@ -190,13 +190,13 @@ To anyone embarking on their own projects or facing their own challenges: embrac
   
 <!-- License Section -->
 <section id="license">
-  <h2>License</h2>
+  <h2>📄 License</h2>
   <p>This project is licensed under the <strong>MIT License</strong>.</p>
 </section>
 
 <!-- Contact Section -->
 <section id="contact">
-  <h2>Contact</h2>
+  <h2>📬 Contact</h2>
   <p>If you have any questions or feedback about the Glori project, feel free to reach out:</p>
   <ul>
     <li><strong>Email:</strong> <a href="mailto:firasdabbabi@gmail.com">FirasDabbabi@gmail.com</a></li>
