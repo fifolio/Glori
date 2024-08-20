@@ -672,7 +672,14 @@ export default function Cart() {
 
                                             <div className="w-full flex flex-row space-x-3 mb-[5.5px] sm:mt-0 mt-2 ">
                                                 <Button disabled={loadingPaynow} onClick={() => setIsCheckoutDialogOpen(false)} variant="destructive" className="py-5 text-md">Cancel</Button>
-                                                <Button disabled={loadingPaynow} onClick={() => payNow()} className="w-full py-5 bg-blue-600 hover:bg-blue-700">
+                                                <Button disabled={
+                                                loadingPaynow || 
+                                                shoppingDetails.nameOnCard.length < 3 || 
+                                                shoppingDetails.cardNumber.length < 16 ||
+                                                shoppingDetails.expYear == '' || 
+                                                shoppingDetails.expMonth == '' ||
+                                                shoppingDetails.cvc.length < 3
+                                                } onClick={() => payNow()} className="w-full py-5 bg-blue-600 hover:bg-blue-700">
                                                     {loadingPaynow ? (<Loading w={24} />) : 'PAY NOW'}
                                                 </Button>
                                             </div>
