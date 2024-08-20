@@ -577,6 +577,7 @@ export default function Cart() {
                                             <label className="font-bold text-md">Card number</label>
                                             <div>
                                                 <input
+                                                    type="number"
                                                     maxLength={16}
                                                     onChange={e => setShoppingDetails({
                                                         nameOnCard: `${shoppingDetails.nameOnCard}`,
@@ -657,7 +658,7 @@ export default function Cart() {
                                                 <input
                                                     className="w-full px-3 py-2 mb-1 border-[1px] border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                                                     placeholder="000"
-                                                    type="text"
+                                                    type="number"
                                                     maxLength={3}
                                                     value={shoppingDetails.cvc}
                                                     onChange={e => setShoppingDetails({
