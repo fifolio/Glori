@@ -675,10 +675,13 @@ export default function Cart() {
                                                 <Button  disabled={
         loadingPaynow || 
         shoppingDetails.nameOnCard == null ||
+        shoppingDetails.nameOnCard == '' ||
         shoppingDetails.cardNumber == null ||
+        shoppingDetails.cardNumber == '' ||
         shoppingDetails.expYear == null || 
         shoppingDetails.expMonth == null ||
-        shoppingDetails.cvc == null
+        shoppingDetails.cvc == null ||
+        shoppingDetails.cvc == ''
     }  onClick={() => payNow()} className="w-full py-5 bg-blue-600 hover:bg-blue-700">
                                                     {loadingPaynow ? (<Loading w={24} />) : 'PAY NOW'}
                                                 </Button>
