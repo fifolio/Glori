@@ -676,8 +676,8 @@ export default function Cart() {
         loadingPaynow || 
         (shoppingDetails.nameOnCard && shoppingDetails.nameOnCard.length < 3) || 
         (shoppingDetails.cardNumber && shoppingDetails.cardNumber.length < 16) ||
-        !shoppingDetails.expYear || 
-        !shoppingDetails.expMonth ||
+        shoppingDetails.expYear == '' || 
+        shoppingDetails.expMonth == '' ||
         (shoppingDetails.cvc && shoppingDetails.cvc.length < 3)
     }  onClick={() => payNow()} className="w-full py-5 bg-blue-600 hover:bg-blue-700">
                                                     {loadingPaynow ? (<Loading w={24} />) : 'PAY NOW'}
