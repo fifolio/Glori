@@ -674,7 +674,7 @@ export default function Cart() {
                                                 <Button disabled={loadingPaynow} onClick={() => setIsCheckoutDialogOpen(false)} variant="destructive" className="py-5 text-md">Cancel</Button>
                                                 <Button  disabled={
         loadingPaynow || 
-        hoppingDetails.nameOnCard.length < 3 || 
+        shoppingDetails.nameOnCard.length < 3 || 
         shoppingDetails.cardNumber.length < 16 ||
         shoppingDetails.expYear == '' || 
         shoppingDetails.expMonth == '' ||
