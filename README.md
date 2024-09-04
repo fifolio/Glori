@@ -5,9 +5,10 @@
 <p class="has-line-data" data-line-start="5" data-line-end="6">
 Welcome to Glorious (or Glori), a full-stack perfume store project. This project is a labor of love, combining cutting-edge technology with a passion for exquisite fragrances. Dive into the world of Glori and discover how we bring the art of perfumery to life through code.
 
-<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>🌟 Project Overview</h2> | <strong>View Live:</strong> <a href="https://glori.netlify.app" target="_blank">Glori.netlify.app</a>
-
+<h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>🌟 Project Overview</h2> 
 Glori is an online perfume store that provides users with an elegant and seamless shopping experience. From browsing a curated collection of fragrances to making secure purchases, Glori ensures a smooth and enjoyable journey for every perfume enthusiast.
+
+| <strong>View Live:</strong> <a href="https://glori.netlify.app" target="_blank">Glori.netlify.app</a>
 </p>
 
 <h2 class="code-line" data-line-start=7 data-line-end=8 ><a id="Installation_7"></a>🛠 Tech Stack</h2>
