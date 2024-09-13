@@ -64,66 +64,6 @@ Glori is an online perfume store that provides users with an elegant and seamles
   </li>
 </ul>
 
-
-<p class="has-line-data" data-line-start="8" data-line-end="9">Glori is built using the Dependencies & DevDependencies technologies:</p>
-  <strong>Dependencies:</strong>
-  <ul>
-    <li>@hookform/resolvers: ^3.6.0</li>
-    <li>@radix-ui/react-accordion: ^1.1.2</li>
-    <li>@radix-ui/react-alert-dialog: ^1.0.5</li>
-    <li>@radix-ui/react-avatar: ^1.0.4</li>
-    <li>@radix-ui/react-checkbox: ^1.1.1</li>
-    <li>@radix-ui/react-dialog: ^1.0.5</li>
-    <li>@radix-ui/react-dropdown-menu: ^2.0.6</li>
-    <li>@radix-ui/react-icons: ^1.3.0</li>
-    <li>@radix-ui/react-label: ^2.0.2</li>
-    <li>@radix-ui/react-navigation-menu: ^1.1.4</li>
-    <li>@radix-ui/react-popover: ^1.0.7</li>
-    <li>@radix-ui/react-progress: ^1.0.3</li>
-    <li>@radix-ui/react-radio-group: ^1.1.3</li>
-    <li>@radix-ui/react-scroll-area: ^1.0.5</li>
-    <li>@radix-ui/react-select: ^2.0.0</li>
-    <li>@radix-ui/react-separator: ^1.0.3</li>
-    <li>@radix-ui/react-slot: ^1.0.2</li>
-    <li>@radix-ui/react-toast: ^1.1.5</li>
-    <li>@radix-ui/react-toggle: ^1.1.0</li>
-    <li>@radix-ui/react-toggle-group: ^1.1.0</li>
-    <li>appwrite: ^14.0.1</li>
-    <li>axios: ^1.6.8</li>
-    <li>class-variance-authority: ^0.7.0</li>
-    <li>clsx: ^2.1.1</li>
-    <li>embla-carousel-react: ^8.1.1</li>
-    <li>react: ^18.2.0</li>
-    <li>react-dom: ^18.2.0</li>
-    <li>react-hook-form: ^7.51.5</li>
-    <li>react-icons: ^5.2.1</li>
-    <li>react-router-dom: ^6.23.1</li>
-    <li>sonner: ^1.4.41</li>
-    <li>tailwind-merge: ^2.3.0</li>
-    <li>tailwindcss-animate: ^1.0.7</li>
-    <li>yup: ^1.4.0</li>
-    <li>zustand: ^4.5.2</li>
-  </ul>
-</li>
-<li class="has-line-data" data-line-start="39" data-line-end="40">
-  <strong>DevDependencies:</strong>
-  <ul>
-    <li>@types/node: ^20.12.11</li>
-    <li>@types/react: ^18.2.66</li>
-    <li>@types/react-dom: ^18.2.22</li>
-    <li>@typescript-eslint/eslint-plugin: ^7.2.0</li>
-    <li>@typescript-eslint/parser: ^7.2.0</li>
-    <li>@vitejs/plugin-react: ^4.2.1</li>
-    <li>autoprefixer: ^10.4.19</li>
-    <li>eslint: ^8.57.0</li>
-    <li>eslint-plugin-react-hooks: ^4.6.0</li>
-    <li>eslint-plugin-react-refresh: ^0.4.6</li>
-    <li>postcss: ^8.4.38</li>
-    <li>tailwindcss: ^3.4.3</li>
-    <li>typescript: ^5.2.2</li>
-    <li>vite: ^5.2.0</li>
-  </ul>
-
 <h2 class="code-line" data-line-start=33 data-line-end=34 ><a id="Technologies_Used_33"></a>🚀 Installation</h2>
 <pre><code class="has-line-data" data-line-start="11" data-line-end="13" class="language-sh">git clone </span><a href="https://github.com/fifolio/Glori.git">https://github.com/fifolio/Glori.git</a>
 </code></pre>
