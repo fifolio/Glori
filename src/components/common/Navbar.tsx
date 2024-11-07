@@ -383,13 +383,13 @@ export default function Navbar() {
                                                 <Link onClick={scrollTopFunc} to="https://github.com/fifolio/Glori" target="_blank">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">Github Repository</span>
-                                                        <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
+                                                        <p className="text-sm text-muted-foreground min-w-full">Find out how it been made</p>
                                                     </li>
                                                 </Link>
                                                 <Link onClick={scrollTopFunc} to="/about">
                                                     <li className='hover:bg-gray-100 p-3 rounded-md'>
                                                         <span className="text-sm font-semibold">About</span>
-                                                        <p className="text-sm text-muted-foreground min-w-full">Sophisticated fragrances that never go out of style</p>
+                                                        <p className="text-sm text-muted-foreground min-w-full">Explore our exquisite collections & Discover the Glori Difference</p>
                                                     </li>
                                                 </Link>
                                             </ul>
