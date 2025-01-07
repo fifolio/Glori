@@ -54,14 +54,14 @@ export default function Hero() {
             <div className="grid gap-6 md:gap-8 px-4 md:px-6">
                 <div className="space-y-3">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                       Welcome to Our
-                        { 
-                            currentMonth === 3 || currentMonth === 4 || currentMonth === 5 ? ' Spring ' :
-                            currentMonth === 6 || currentMonth === 7 || currentMonth === 8 ? ' Summer ' :
-                            currentMonth === 9 || currentMonth === 10 || currentMonth === 11 ? ' Autumn ' :
-                            currentMonth === 12 || currentMonth === 1 || currentMonth === 2 ? ' Winter ' : ' '
+                        Welcome to Our
+                        {
+                            currentMonth === 2 || currentMonth === 3 || currentMonth === 4 ? ' Spring ' :
+                            currentMonth === 5 || currentMonth === 6 || currentMonth === 7 ? ' Summer ' :
+                            currentMonth === 8 || currentMonth === 9 || currentMonth === 10 ? ' Autumn ' :
+                            currentMonth === 11 || currentMonth === 0 || currentMonth === 1 ? ' Winter ' : ' '
                         }
-                            Collection
+                        Collection
                     </h1>
                     <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                         Discover our latest selection of cozy and stylish {
