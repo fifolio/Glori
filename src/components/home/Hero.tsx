@@ -64,19 +64,12 @@ export default function Hero() {
                         Collection
                     </h1>
                     <p className="max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                        Discover our latest selection of cozy and stylish {
-                            currentMonth === 3 ||
-                                currentMonth === 4 ||
-                                currentMonth === 5 ? ' spring' :
-                                currentMonth === 6 ||
-                                    currentMonth === 7 ||
-                                    currentMonth === 8 ? ' summer' :
-                                    currentMonth === 9 ||
-                                        currentMonth === 10 ||
-                                        currentMonth === 11 ? ' autumn' :
-                                        currentMonth === 12 ||
-                                            currentMonth === 1 ||
-                                            currentMonth === 2 ? ' winter' : ' '
+                        Discover our latest selection of cozy and stylish 
+                        {
+                            currentMonth === 2 || currentMonth === 3 || currentMonth === 4 ? ' Spring ' :
+                            currentMonth === 5 || currentMonth === 6 || currentMonth === 7 ? ' Summer ' :
+                            currentMonth === 8 || currentMonth === 9 || currentMonth === 10 ? ' Autumn ' :
+                            currentMonth === 11 || currentMonth === 0 || currentMonth === 1 ? ' Winter ' : ' '
                         }-inspired Perfumes.
                     </p>
                 </div>
