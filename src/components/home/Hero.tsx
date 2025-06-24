@@ -30,22 +30,22 @@ export default function Hero() {
     const currentMonth: number = new Date().getMonth();
 
 
-    useEffect(() => {
-        const url = "https://api.unsplash.com/photos/random";
-        const query = "perfume";
-        axios.get(url, {
-            params: {
-                query,
-                count: 5,
-                client_id: `${import.meta.env.VITE_UNSPLASH_CLIENT_ID}`,
-                orientation: 'landscape',
-            },
-        }).then((res) => {
-            setSkeleton(false)
-            setImages(res.data as Images[])
-        })
+    // useEffect(() => {
+    //     const url = "https://api.unsplash.com/photos/random";
+    //     const query = "perfume";
+    //     axios.get(url, {
+    //         params: {
+    //             query,
+    //             count: 5,
+    //             client_id: `${import.meta.env.VITE_UNSPLASH_CLIENT_ID}`,
+    //             orientation: 'landscape',
+    //         },
+    //     }).then((res) => {
+    //         setSkeleton(false)
+    //         setImages(res.data as Images[])
+    //     })
 
-    }, []);
+    // }, []);
 
 
 
@@ -80,7 +80,7 @@ export default function Hero() {
 
                         <Skeleton className={`md:h-[400px] h-[155px] w-full rounded-xl ${skeleton ? '' : 'hidden'}`} />
 
-                        {images.map((img) => (
+{/*                         {images.map((img) => (
                             <CarouselItem key={img.id}>
                                 <img
                                     alt="Cozy Blanket"
@@ -91,7 +91,7 @@ export default function Hero() {
                                 />
                             </CarouselItem>
                         ))}
-
+ */}
                     </CarouselContent>
                 </Carousel>
             </div>
