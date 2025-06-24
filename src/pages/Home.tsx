@@ -3,7 +3,7 @@ import {
   Hero, 
 //   MoreProducts, 
   Brands, 
-  // TopSelling ,
+  TopSelling ,
   Newsletter
 } from "@/components";
 
@@ -13,7 +13,7 @@ export default function Home() {
     <div className="md:container container-fluid">
       <Hero />
 {/*       <Features /> */}
-{/*       <TopSelling /> */}
+      <TopSelling />
 {/*       <MoreProducts /> */}
       <Brands />
       <Newsletter />
