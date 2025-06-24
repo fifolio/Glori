@@ -1,5 +1,5 @@
 import { 
-//   Features, 
+  Features, 
   Hero, 
 //   MoreProducts, 
   Brands, 
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="md:container container-fluid">
       <Hero />
-{/*       <Features /> */}
+      <Features />
       <TopSelling />
 {/*       <MoreProducts /> */}
       <Brands />
