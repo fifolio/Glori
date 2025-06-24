@@ -1,10 +1,10 @@
 import { 
-  Brands, 
-  Features, 
-  Hero, 
-  MoreProducts, 
-  Newsletter, 
-  TopSelling 
+//   Brands, 
+//   Features, 
+//   Hero, 
+//   MoreProducts, 
+//   TopSelling ,
+  Newsletter
 } from "@/components";
 
 export default function Home() {
