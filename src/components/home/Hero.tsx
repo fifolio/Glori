@@ -24,7 +24,7 @@ export default function Hero() {
       </p>
     </div>
 
-    <div className="w-full shadow-md">
+    <div className="w-full shadow-md rounded-xl">
       <img
         src="https://amiroud.com/media/wysiwyg/homepage/2023-current/1-perfume.jpg"
         alt={`${season} collection perfume`}
