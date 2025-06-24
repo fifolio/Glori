@@ -1,18 +1,8 @@
 import { useState } from 'react';
 
-// UI components
-import {
-  Carousel,
-  CarouselContent,
-} from "@/components/ui/carousel";
-import { Skeleton } from "@/components/ui/skeleton";
-
 export default function Hero() {
   // Current month for seasonal messaging
   const currentMonth: number = new Date().getMonth();
-
-  // Show loading skeleton
-  const [skeleton] = useState<boolean>(true);
 
   // Determine the season
   const getSeason = (month: number): string => {
