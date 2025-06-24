@@ -2,7 +2,7 @@ import {
 //   Features, 
   Hero, 
 //   MoreProducts, 
-  // Brands, 
+  Brands, 
   // TopSelling ,
   Newsletter
 } from "@/components";
@@ -11,11 +11,11 @@ export default function Home() {
   
   return (
     <div className="md:container container-fluid">
-      <Hero />/
+      <Hero />
 {/*       <Features /> */}
 {/*       <TopSelling /> */}
 {/*       <MoreProducts /> */}
-{/*       <Brands /> */}
+      <Brands />
       <Newsletter />
     </div>
   )
