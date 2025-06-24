@@ -1,7 +1,7 @@
 import { 
   Features, 
   Hero, 
-//   MoreProducts, 
+  MoreProducts, 
   Brands, 
   TopSelling ,
   Newsletter
@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
       <Features />
       <TopSelling />
-{/*       <MoreProducts /> */}
+      <MoreProducts />
       <Brands />
       <Newsletter />
     </div>
