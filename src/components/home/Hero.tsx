@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export default function Hero() {
   // Current month for seasonal messaging
   const currentMonth: number = new Date().getMonth();
